@@ -1,0 +1,16 @@
+# Cache do editor e assets importados — regenerado sozinho, nunca versionar
+.godot/
+
+# Build template do Android, regerado pelo editor
+/android/
+
+# Gerado pelo importador a partir dos CSV de localization/
+*.translation
+
+# Contém caminhos locais da máquina e, em build Android, senha de keystore.
+# Se um dia quiser versionar os presets, remova a credencial antes.
+export_presets.cfg
+export.cfg
+
+# macOS
+.DS_Store
