@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 .claude/skills/pixel-art/scripts/build_sprite.py:*)"
+    ]
+  }
+}
