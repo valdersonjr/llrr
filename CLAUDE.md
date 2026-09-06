@@ -9,7 +9,19 @@
 
 ## Comandos
 
-*(preencher quando existirem: comando de rodar os testes, exportar build, etc. — só o que o Claude não adivinha lendo o projeto)*
+Godot 4.7 via Homebrew, binário `godot` no PATH. Todos os comandos rodam da raiz do projeto.
+
+| O quê | Comando |
+|---|---|
+| Abrir o editor | `godot -e --path .` |
+| Rodar o jogo | `godot --path .` |
+| Rodar uma cena isolada | `godot --path . --scene res://stages/<fase>/<fase>.tscn` |
+| Importar assets novos sem abrir a GUI | `godot --headless --path . --import` |
+| Checar erro de sintaxe e de tipo num script | `godot --headless --path . --check-only --script res://<caminho>.gd` |
+
+- **IMPORTANT:** `--check-only` sai com código **0 mesmo quando o script tem erro de parse**. Não encadeie com `&&` achando que falha — leia a saída e procure por `SCRIPT ERROR`.
+- Rodar o jogo exige `run/main_scene` definido em `project.godot`. Enquanto não existir, use `--scene`.
+- Não há framework de teste instalado (GUT, GdUnit4). Se instalar um, documente o comando aqui.
 
 ## Princípios de arquitetura
 
