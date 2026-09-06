@@ -4,3 +4,5 @@ Configuração exposta ao jogador — o que aparece no menu de opções: volume 
 
 - Pasta pequena por natureza; não vire depósito de constante de jogo. Valor que o jogador não muda (dano de arma, velocidade) é dado da entidade e vai na `data/` dela.
 - A tela de opções em si (nós, layout) é UI e vive em `entities/ui/`; aqui fica só o dado por trás dela.
+
+**Conceito:** seções 6 e 15 de `docs/conceito-de-jogo.md`. Assistência de controle é acessibilidade, não item de loja — estabilização angular existe desde o início e não se cobra créditos por ela.

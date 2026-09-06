@@ -11,7 +11,7 @@ Este documento guarda só a concepção do jogo:
 - o que o mundo promete;
 - onde ficam os limites de escopo.
 
-Decisões de implementação — ferramentas, formatos, testes e distribuição — ficam no documento de arquitetura e plano.
+Decisões de implementação — ferramentas, formatos, testes e distribuição — ficam nos `CLAUDE.md` de cada pasta, anotadas conforme são tomadas.
 
 As quantidades de conteúdo citadas aqui são hipóteses de escopo, não requisitos aprovados.
 

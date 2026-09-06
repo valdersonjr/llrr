@@ -10,3 +10,5 @@ Tudo aqui é "irmão" do player na scene tree: qualquer coisa que existe DENTRO 
 Cada entidade concreta é uma pasta-folha com `art/`, `data/`, `sound/` + cena e script de mesmo nome — o formato exato está em "Estrutura da pasta-folha" no `CLAUDE.md` da raiz.
 
 Regra prática pra decidir entities vs. stages: se a dúvida for "isso é algo que existe dentro de um lugar, ou é o próprio lugar?" — a primeira opção vai aqui, a segunda vai em `stages/`.
+
+**Conceito:** seções 4 (pilotagem), 5 (nave, módulos e dano) e 10 (combate) de `docs/conceito-de-jogo.md`. Leia antes de definir regra de comportamento — os critérios de aceitação do voo estão no fim da seção 4.

@@ -19,3 +19,5 @@ Esta tabela é a fonte de verdade rápida da API global de cada manager. Mantenh
 Classes e funções auxiliares específicas deste jogo, chamadas sob demanda, que não precisam ser autoload. **Não** usam o sufixo `_manager.gd` — assim o sufixo continua significando exatamente "isto é um autoload".
 
 Na dúvida, comece pela categoria 2: só promova a autoload o que de fato precisa rodar o tempo todo.
+
+**Conceito:** seções 8 (tempo), 12 (economia) e 13 (facções) de `docs/conceito-de-jogo.md` — é aqui que esses sistemas viram autoload. O relógio de campanha nunca avança com o jogo fechado.
