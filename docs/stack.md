@@ -7,4 +7,5 @@
 | Linguagem | GDScript, com tipagem estática |
 | Editor de script | embutido do Godot |
 | Versionamento | git / GitHub — `valdersonjr/llrr` |
+| Pixel art | Python 3 + Pillow (`python3 -m pip install Pillow`) |
 | Testes | nenhum framework |
