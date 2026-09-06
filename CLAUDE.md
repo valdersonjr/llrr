@@ -17,6 +17,7 @@ Godot 4.7 via Homebrew, binário `godot` no PATH. Todos os comandos rodam da rai
 | Rodar o jogo | `godot --path .` |
 | Rodar uma cena isolada | `godot --path . --scene res://stages/<fase>/<fase>.tscn` |
 | Importar assets novos sem abrir a GUI | `godot --headless --path . --import` |
+| Fotografar uma cena rodando | `godot --path . --script res://tools/screenshot.gd -- --scene res://<cena>.tscn --out shot.png` |
 | Compilar um sprite `.pix` para PNG | `python3 .claude/skills/pixel-art/scripts/build_sprite.py <arquivo>.pix` |
 | Checar erro de sintaxe e de tipo num script | `godot --headless --path . --check-only --script res://<caminho>.gd` |
 
@@ -46,6 +47,7 @@ res://
 ├── localization/        # ver localization/CLAUDE.md — textos localizados
 ├── stages/              # ver stages/CLAUDE.md
 │   └── tilesets/            # ver stages/tilesets/CLAUDE.md
+├── tools/               # ver tools/CLAUDE.md — ferramenta de dev, não entra no build
 └── utilities/           # ver utilities/CLAUDE.md
 ```
 
