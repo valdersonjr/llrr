@@ -20,6 +20,11 @@ const ACOES := ["empuxo", "girar_esquerda", "girar_direita",
 const PLATAFORMA_LARGA := Vector2(112.0, 356.0)
 ## Trecho de terreno plano sem plataforma nenhuma.
 const CHAO_NU := Vector2(24.0, 352.0)
+const CASCOS := [
+	"res://entities/player/utilitario_leve/utilitario_leve.tscn",
+	"res://entities/player/cargueiro_resistente/cargueiro_resistente.tscn",
+	"res://entities/player/interceptador/interceptador.tscn",
+]
 ## Distância do topo do deck até a origem da nave com os pés encostados.
 const ALTURA_DOS_PES := 15.0
 
@@ -27,12 +32,18 @@ var _falhas := 0
 var _nave: Nave
 var _plataforma: PlataformaDePouso
 var _camera: CameraSeguidora
+var _fase: Node
 
 
 func _initialize() -> void:
 	var fase := (load(CENA) as PackedScene).instantiate()
 	root.add_child(fase)
+	_fase = fase
 	_nave = fase.get_node("UtilitarioLeve")
+	if _nave == null:
+		push_error("voo_check: a fase não tem a nave esperada")
+		quit(1)
+		return
 	_plataforma = fase.get_node("PlataformaLarga")
 	_camera = fase.get_node("Camera")
 	_rodar.call_deferred()
@@ -56,6 +67,8 @@ func _rodar() -> void:
 	await _carga_vai_e_volta_pelo_deck()
 	await _camera_olha_a_frente()
 	await _dano_muda_o_casco()
+	print("")
+	await _os_tres_cascos_pousam()
 	print("\nvoo_check: %d falha(s)" % _falhas)
 	quit(_falhas)
 
@@ -205,6 +218,31 @@ func _dano_muda_o_casco() -> void:
 		"três texturas distintas" if vistos[0] != vistos[2] else "textura não mudou")
 	_nave.integridade = maximo
 	_nave._atualizar_casco()
+
+
+## Cada casco tem sua própria colisão, seus próprios pés e sua própria
+## tolerância. Um pousar não diz nada sobre os outros dois.
+func _os_tres_cascos_pousam() -> void:
+	for caminho in CASCOS:
+		var nave: Nave = (load(caminho) as PackedScene).instantiate()
+		_fase.add_child(nave)
+		await _passos(2)
+		nave.gravidade = 40.0
+		nave.global_position = Vector2(PLATAFORMA_LARGA.x,
+			PLATAFORMA_LARGA.y - nave.altura_dos_pes - 6.0)
+		nave.velocity = Vector2.ZERO
+		nave.giro = 0.0
+		nave.estado = Nave.Estado.VOANDO
+		await _passos(150)
+		var inteiro := is_equal_approx(nave.integridade, nave.casco.integridade_maxima)
+		_conferir("%s pousa limpo e reconhece a plataforma" % nave.casco.nome,
+			nave.estado == Nave.Estado.POUSADA
+				and nave.plataforma_sob_a_nave() != null and inteiro,
+			"casco em %.0f%%, aceleração %.0f p/s²" % [
+				nave.integridade / nave.casco.integridade_maxima * 100.0,
+				nave.aceleracao_disponivel()])
+		nave.queue_free()
+		await _passos(3)
 
 
 # --- utilidades -------------------------------------------------------------

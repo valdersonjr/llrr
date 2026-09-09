@@ -38,6 +38,10 @@ const SEMENTE_DO_CEU := 20260906
 @export var serra_media: PackedVector2Array = PackedVector2Array()
 ## Posições em x onde cair pedra solta. O y sai do próprio perfil.
 @export var pedras: PackedFloat32Array = PackedFloat32Array()
+## Cascos disponíveis para troca. Ferramenta de protótipo: sentir os três
+## papéis é o que responde a pergunta da seção 18, e ninguém sente um casco
+## lendo a tabela dele.
+@export var cascos: Array[PackedScene] = []
 
 @onready var _nave: Nave = $UtilitarioLeve
 @onready var _camera: CameraSeguidora = $Camera
@@ -51,9 +55,17 @@ const SEMENTE_DO_CEU := 20260906
 @onready var _serra_media: Polygon2D = $FundoSerraMedia/SerraMedia
 @onready var _pedras: Node2D = $Pedras
 
+var _indice_do_casco: int = 0
+
 
 func _ready() -> void:
 	_montar_terreno()
+	_ligar_nave()
+	_pausa.pediu_reinicio.connect(_reiniciar)
+	queue_redraw()
+
+
+func _ligar_nave() -> void:
 	_nave.gravidade = gravidade_local
 	_nave.pousou.connect(_ao_pousar)
 	_nave.decolou.connect(_ao_decolar)
@@ -62,13 +74,30 @@ func _ready() -> void:
 	_camera.alvo = _nave
 	_hud.acompanhar(_nave)
 	_pausa.acompanhar(_nave)
-	_pausa.pediu_reinicio.connect(_reiniciar)
-	queue_redraw()
+
+
+## Troca o casco no lugar, guardando só a posição. Estado de voo não passa
+## junto de propósito: cada casco tem tanque, casco e porão próprios, e herdar
+## os do anterior seria mentira sobre o que se está pilotando.
+func _trocar_casco() -> void:
+	if cascos.size() < 2:
+		return
+	_indice_do_casco = (_indice_do_casco + 1) % cascos.size()
+	var nova: Nave = cascos[_indice_do_casco].instantiate()
+	nova.position = Vector2(_nave.global_position.x,
+		_nave.global_position.y - 24.0)
+	_nave.queue_free()
+	add_child(nova)
+	_nave = nova
+	_ligar_nave()
+	_hud.avisar("CASCO: %s" % nova.casco.nome.to_upper(), Hud.COR_APAGADO)
 
 
 func _unhandled_input(evento: InputEvent) -> void:
 	if evento.is_action_pressed("operar_carga"):
 		_operar_carga()
+	elif evento.is_action_pressed("trocar_casco"):
+		_trocar_casco()
 
 
 func _reiniciar() -> void:

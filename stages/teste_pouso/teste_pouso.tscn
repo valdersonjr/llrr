@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bteste0pouso01"]
+[gd_scene load_steps=14 format=3 uid="uid://bteste0pouso01"]
 
 [ext_resource type="Script" path="res://stages/teste_pouso/teste_pouso.gd" id="1_fase"]
 [ext_resource type="PackedScene" path="res://entities/estruturas/plataforma_de_pouso/plataforma_de_pouso.tscn" id="2_plataforma"]
 [ext_resource type="PackedScene" path="res://entities/player/utilitario_leve/utilitario_leve.tscn" id="3_nave"]
+[ext_resource type="PackedScene" path="res://entities/player/cargueiro_resistente/cargueiro_resistente.tscn" id="10_carga"]
+[ext_resource type="PackedScene" path="res://entities/player/interceptador/interceptador.tscn" id="11_inter"]
 [ext_resource type="PackedScene" path="res://entities/ui/hud/hud.tscn" id="4_hud"]
 [ext_resource type="Script" path="res://common/camera_seguidora.gd" id="5_camera"]
 [ext_resource type="Texture2D" path="res://stages/teste_pouso/art/rocha.png" id="7_rocha"]
@@ -28,6 +30,7 @@ tamanho_do_mundo = Vector2(768, 470)
 serra_distante = PackedVector2Array(0, 252, 44, 244, 88, 249, 126, 231, 168, 236, 214, 226, 252, 240, 296, 216, 344, 228, 386, 218, 430, 234, 478, 210, 522, 222, 568, 213, 616, 231, 664, 219, 712, 228, 768, 214, 860, 230, 960, 214, 1090, 236)
 serra_media = PackedVector2Array(-320, 288, -230, 266, -140, 286, -60, 258, 0, 294, 38, 286, 78, 292, 118, 270, 156, 280, 198, 262, 240, 284, 286, 254, 330, 268, 372, 258, 416, 276, 462, 248, 508, 262, 552, 251, 600, 272, 648, 250, 700, 265, 768, 256, 850, 268, 940, 250, 1090, 272)
 pedras = PackedFloat32Array(28, 194, 216, 252, 300, 424, 452, 470, 512, 690, 726)
+cascos = Array[PackedScene]([ExtResource("3_nave"), ExtResource("10_carga"), ExtResource("11_inter")])
 
 [node name="FundoCeu" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.16, 0.16)
