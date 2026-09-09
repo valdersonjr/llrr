@@ -54,12 +54,12 @@ func _process(delta: float) -> void:
 
 func _atualizar_barras() -> void:
 	var casco := _nave.casco
-	var combustivel := _nave.combustivel / casco.combustivel_maximo
+	var combustivel := _nave.combustivel_fracao()
 	_barra_combustivel.size.x = roundf(LARGURA_BARRA * combustivel)
 	_barra_combustivel.color = COR_ALERTA if combustivel < 0.12 \
 		else (COR_ATENCAO if combustivel < 0.3 else COR_BOM)
 
-	var integridade := _nave.integridade / casco.integridade_maxima
+	var integridade := _nave.integridade_fracao()
 	_barra_integridade.size.x = roundf(LARGURA_BARRA * integridade)
 	_barra_integridade.color = COR_ALERTA if integridade < 0.35 else COR_OK
 

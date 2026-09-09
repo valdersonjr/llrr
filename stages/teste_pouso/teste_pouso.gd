@@ -24,6 +24,13 @@ const PEDRA_PEQUENA := preload("res://stages/teste_pouso/art/pedra_pequena.png")
 const PEDRA_GRANDE := preload("res://stages/teste_pouso/art/pedra_grande.png")
 const ESTRELAS := 110
 const SEMENTE_DO_CEU := 20260906
+## Fração da altura do mundo em que ainda cai estrela. Abaixo disso é terreno.
+const ALTURA_DO_CAMPO_DE_ESTRELAS := 0.7
+## Onde o casco novo aparece em relação ao antigo. Um pouco acima, para ele não
+## nascer enterrado quando o casco novo tem perna mais longa.
+const FOLGA_AO_TROCAR_DE_CASCO := 24.0
+## Pixels de tremor por ponto de dano. Impacto que destrói sacode o teto.
+const TREMOR_POR_DANO := 0.09
 
 ## Condição física da região. A nave não decide a própria gravidade.
 @export var gravidade_local: float = 40.0
@@ -86,7 +93,7 @@ func _trocar_casco() -> void:
 	if nova == null:
 		return
 	nova.position = Vector2(_nave.global_position.x,
-		_nave.global_position.y - 24.0)
+		_nave.global_position.y - FOLGA_AO_TROCAR_DE_CASCO)
 	_nave.queue_free()
 	add_child(nova)
 	_nave = nova
@@ -167,7 +174,7 @@ func _draw() -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = SEMENTE_DO_CEU
 	for _i in ESTRELAS:
-		var p := Vector2(rng.randf() * tamanho_do_mundo.x, rng.randf() * tamanho_do_mundo.y * 0.7)
+		var p := Vector2(rng.randf() * tamanho_do_mundo.x, rng.randf() * tamanho_do_mundo.y * ALTURA_DO_CAMPO_DE_ESTRELAS)
 		var brilho := rng.randf_range(0.3, 1.0)
 		draw_rect(Rect2(p.floor(), Vector2.ONE), Color(COR_ESTRELA, brilho))
 
@@ -239,7 +246,7 @@ func _ao_decolar() -> void:
 
 
 func _ao_impactar(dano: float, velocidade: float, desalinhamento: float) -> void:
-	_camera.sacudir(dano * 0.09)
+	_camera.sacudir(dano * TREMOR_POR_DANO)
 	_hud.avisar("IMPACTO: -%d%% ESTRUTURA, %d P/S A %d° DA SUPERFÍCIE" % [
 		roundi(dano), roundi(velocidade), roundi(desalinhamento)], Hud.COR_ALERTA)
 

@@ -151,8 +151,9 @@ func _parada_no_chao_nao_anda() -> void:
 
 func _pouso_limpo_na_plataforma() -> void:
 	await _pousar_de(PLATAFORMA_LARGA, 8.0, 150)
-	var inteira := is_equal_approx(_nave.integridade, _nave.casco.integridade_maxima)
-	_conferir("pouso limpo não custa casco", inteira, "casco em %.0f%%" % _nave.integridade)
+	var inteira := _nave.intacta()
+	_conferir("pouso limpo não custa casco", inteira,
+		"casco em %.0f%%" % (_nave.integridade_fracao() * 100.0))
 	_conferir("contato estável vira POUSADA", _nave.estado == Nave.Estado.POUSADA,
 		"estado = %s" % _texto_estado())
 	_conferir("reconhece a plataforma sob as duas pernas",
@@ -161,7 +162,7 @@ func _pouso_limpo_na_plataforma() -> void:
 
 func _pouso_duro_custa_casco() -> void:
 	await _pousar_de(PLATAFORMA_LARGA, 60.0, 150)
-	var perdeu := _nave.casco.integridade_maxima - _nave.integridade
+	var perdeu := (1.0 - _nave.integridade_fracao()) * 100.0
 	_conferir("pouso duro custa casco mas é sobrevivível",
 		perdeu > 0.0 and _nave.integridade > 0.0,
 		"caiu de 60 px, perdeu %.0f%% do casco" % perdeu)
@@ -230,7 +231,6 @@ func _dano_muda_o_casco() -> void:
 	var estados: Array[int] = []
 	for fracao in [1.0, 0.4, 0.1]:
 		_nave.integridade = maximo * fracao
-		_nave._atualizar_casco()
 		estados.append(_nave.estado_de_dano())
 		vistos.append(corpo.texture)
 	_conferir("integridade percorre os três estados de casco", estados == [0, 1, 2],
@@ -239,7 +239,6 @@ func _dano_muda_o_casco() -> void:
 		vistos[0] != vistos[1] and vistos[1] != vistos[2],
 		"três texturas distintas" if vistos[0] != vistos[2] else "textura não mudou")
 	_nave.integridade = maximo
-	_nave._atualizar_casco()
 
 
 ## Cada casco tem sua própria colisão, seus próprios pés e sua própria
@@ -256,13 +255,12 @@ func _os_tres_cascos_pousam() -> void:
 		nave.giro = 0.0
 		nave.estado = Nave.Estado.VOANDO
 		await _passos(150)
-		var inteiro := is_equal_approx(nave.integridade, nave.casco.integridade_maxima)
+		var inteiro := nave.intacta()
 		_conferir("%s pousa limpo e reconhece a plataforma" % nave.casco.nome,
 			nave.estado == Nave.Estado.POUSADA
 				and nave.plataforma_sob_a_nave() != null and inteiro,
 			"casco em %.0f%%, aceleração %.0f p/s²" % [
-				nave.integridade / nave.casco.integridade_maxima * 100.0,
-				nave.aceleracao_disponivel()])
+				nave.integridade_fracao() * 100.0, nave.aceleracao_disponivel()])
 		nave.queue_free()
 		await _passos(3)
 
@@ -294,11 +292,10 @@ func _o_servico_devolve_a_nave_ao_trabalho() -> void:
 	var relogio_antes := Relogio.segundos
 	var feito: Dictionary = _plataforma.servir(_nave)
 	_conferir("o serviço repara e abastece",
-		not feito.is_empty()
-			and is_equal_approx(_nave.integridade, _nave.casco.integridade_maxima)
+		not feito.is_empty() and _nave.intacta()
 			and is_equal_approx(_nave.combustivel, _nave.casco.combustivel_maximo),
 		"casco em %.0f%%, tanque em %.1f t" % [
-			_nave.integridade / _nave.casco.integridade_maxima * 100.0, _nave.combustivel])
+			_nave.integridade_fracao() * 100.0, _nave.combustivel])
 	_conferir("e cobra tempo de campanha por isso",
 		Relogio.segundos - relogio_antes > 0.0,
 		"%.1f h" % ((Relogio.segundos - relogio_antes) / 3600.0))

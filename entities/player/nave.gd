@@ -48,9 +48,8 @@ const LIMIAR_IMPACTO := 3.0
 const ATRITO_SOLO := 260.0
 const LIMIAR_REPOUSO := 6.0
 const LIMIAR_GIRO_REPOUSO := 4.0
-const QUADROS_CHAMA_POR_SEGUNDO := 14.0
 ## Frações de integridade acima das quais cada estado de casco vale.
-const LIMIARES_DE_DANO := [0.6, 0.25]
+const LIMIARES_DE_DANO: Array[float] = [0.6, 0.25]
 
 @export var casco: Casco
 ## Definida pela região, não pela nave — cada corpo celeste tem a sua.
@@ -65,20 +64,16 @@ const LIMIARES_DE_DANO := [0.6, 0.25]
 ## quem posiciona a nave precisa dela para não enterrá-la nem soltá-la no ar.
 @export var altura_dos_pes: float = 15.0
 
-@export_group("Dano")
-## Texturas do casco do íntegro ao crítico. A cena do casco define quais são;
-## esta classe só troca conforme a integridade. Dano precisa mudar a forma, não
-## só a cor — a seção 14 proíbe distinguir estado só pela cor.
-@export var texturas_de_dano: Array[Texture2D] = []
-
-@export_group("Chama")
-@export var quadros_chama: Array[Texture2D] = []
-## Altura desenhada da chama, em pixels. O acelerador corta o region_rect
-## nessa altura, então a chama encurta sem sair do grid de pixel.
-@export var altura_chama: int = 13
 
 var combustivel: float = 0.0
-var integridade: float = 0.0
+## Atribuir integridade atualiza o sprite junto. Antes era responsabilidade de
+## quem escrevia lembrar de chamar `_atualizar_casco()`, e quem esquecesse
+## ficava com um casco intacto na tela e destruído nos números.
+var integridade: float = 0.0:
+	set(valor):
+		integridade = valor if casco == null else clampf(valor, 0.0, casco.integridade_maxima)
+		if is_node_ready():
+			_apresentacao.atualizar(0.0, _empuxo_aplicado(), estado_de_dano())
 ## Velocidade angular em graus/s.
 var giro: float = 0.0
 var estado: Estado = Estado.VOANDO
@@ -89,17 +84,10 @@ var _comando_lateral: float = 0.0
 ## Fração da autoridade angular que a estabilização automática usou.
 var _comando_estabilizacao: float = 0.0
 var _tempo_estavel: float = 0.0
-var _relogio_chama: float = 0.0
-var _quadro_chama: int = 0
-var _dano_mostrado: int = -1
 
 @onready var _pe_esquerdo: RayCast2D = $PeEsquerdo
 @onready var _pe_direito: RayCast2D = $PeDireito
-## Um casco pode ter mais de um bocal — o cargueiro tem dois. A cena agrupa
-## as chamas sob um nó e esta classe acende todas juntas.
-@onready var _chamas: Array[Node] = $Chamas.get_children()
-@onready var _corpo: Sprite2D = $Corpo
-@onready var _luz_motor: PointLight2D = $LuzDoMotor
+@onready var _apresentacao: ApresentacaoDaNave = $Apresentacao
 
 
 func _ready() -> void:
@@ -107,7 +95,6 @@ func _ready() -> void:
 	combustivel = casco.combustivel_maximo
 	integridade = casco.integridade_maxima
 	carga = clampf(carga, 0.0, casco.capacidade_carga)
-	_atualizar_casco()
 
 
 func _unhandled_input(evento: InputEvent) -> void:
@@ -131,8 +118,7 @@ func soltar_comandos() -> void:
 	_comando_lateral = 0.0
 	_comando_estabilizacao = 0.0
 	if is_node_ready():
-		for chama in _chamas:
-			(chama as Sprite2D).visible = false
+		_apresentacao.apagar()
 
 
 func _physics_process(delta: float) -> void:
@@ -159,7 +145,7 @@ func _physics_process(delta: float) -> void:
 	_resolver_contatos(velocidade_antes)
 	_atualizar_estado(delta)
 	_assentar(delta)
-	_atualizar_chama(delta)
+	_apresentacao.atualizar(delta, _empuxo_aplicado(), estado_de_dano())
 
 
 # --- leitura de estado, para HUD e para quem escuta -------------------------
@@ -178,9 +164,29 @@ func aceleracao_angular() -> float:
 	return casco.torque_manobra / massa()
 
 
+## Empuxo que o motor está de fato entregando, de 0 a 1. Sem combustível não
+## há empuxo, e é isso que a apresentação desenha.
+func _empuxo_aplicado() -> float:
+	return _acelerador if combustivel > 0.0 else 0.0
+
+
+## Quanto resta do casco, de 0 a 1. Quem só quer mostrar uma barra ou comparar
+## com um limiar não precisa saber que existe `casco.integridade_maxima`.
+func integridade_fracao() -> float:
+	return 0.0 if casco == null else integridade / casco.integridade_maxima
+
+
+func combustivel_fracao() -> float:
+	return 0.0 if casco == null else combustivel / casco.combustivel_maximo
+
+
+func intacta() -> bool:
+	return casco != null and is_equal_approx(integridade, casco.integridade_maxima)
+
+
 ## 0 íntegro, 1 degradado, 2 crítico.
 func estado_de_dano() -> int:
-	var fracao := integridade / casco.integridade_maxima
+	var fracao := integridade_fracao()
 	for i in LIMIARES_DE_DANO.size():
 		if fracao > LIMIARES_DE_DANO[i]:
 			return i
@@ -202,7 +208,6 @@ func reparar() -> void:
 	integridade = casco.integridade_maxima
 	if estado == Estado.DESTRUIDA:
 		estado = Estado.VOANDO
-	_atualizar_casco()
 
 
 func abastecer() -> void:
@@ -328,7 +333,6 @@ func _resolver_contatos(velocidade_antes: Vector2) -> void:
 		return
 
 	integridade = maxf(integridade - dano, 0.0)
-	_atualizar_casco()
 	impacto.emit(dano, pior_impacto, desalinhamento)
 	if integridade <= 0.0 and estado != Estado.DESTRUIDA:
 		estado = Estado.DESTRUIDA
@@ -386,35 +390,3 @@ func _assentada(pernas: int) -> bool:
 		and velocity.length() <= LIMIAR_REPOUSO \
 		and absf(giro) <= LIMIAR_GIRO_REPOUSO \
 		and absf(inclinacao()) <= casco.pouso_angulo_maximo
-
-
-# --- apresentação -----------------------------------------------------------
-
-func _atualizar_casco() -> void:
-	var estado := estado_de_dano()
-	if estado == _dano_mostrado or estado >= texturas_de_dano.size():
-		return
-	_dano_mostrado = estado
-	_corpo.texture = texturas_de_dano[estado]
-
-
-func _atualizar_chama(delta: float) -> void:
-	var acesa := _acelerador > 0.02 and combustivel > 0.0
-	for chama in _chamas:
-		(chama as Sprite2D).visible = acesa
-	# O motor é emissivo: ele ilumina o terreno e o próprio casco, não só
-	# desenha uma chama. É o que faz o pouso ler à noite.
-	_luz_motor.energy = 0.8 * _acelerador if acesa else 0.0
-	if not acesa:
-		return
-	var corte := Rect2(0.0, 0.0, 16.0, roundf(altura_chama * _acelerador))
-	for chama in _chamas:
-		(chama as Sprite2D).region_rect = corte
-	if quadros_chama.size() < 2:
-		return
-	_relogio_chama += delta
-	if _relogio_chama >= 1.0 / QUADROS_CHAMA_POR_SEGUNDO:
-		_relogio_chama = 0.0
-		_quadro_chama = (_quadro_chama + 1) % quadros_chama.size()
-		for chama in _chamas:
-			(chama as Sprite2D).texture = quadros_chama[_quadro_chama]

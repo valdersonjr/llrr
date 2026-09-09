@@ -43,6 +43,15 @@ Uma subclasse cujo corpo inteiro é constante não faz nada: ela só embrulha n�
 
 `catalogo_de_cascos.gd` é a fábrica: quem responde "que cascos existem" e sabe instanciá-los. A lista mora num `.tres`, então acrescentar um casco não recompila nada nem exige lembrar de atualizá-lo em dois lugares.
 
+## Simulação e apresentação são classes diferentes
+
+`nave.gd` simula: inércia, massa, combustível, contato, avaliação de pouso.
+`apresentacao_da_nave.gd` desenha: chama, textura de dano, luz do motor.
+
+O fluxo é de mão única — a nave manda, a apresentação desenha. A apresentação **não** conhece `Nave`, não lê o pai, e recebe só o empuxo aplicado e o estado de dano. Por isso dá para trocá-la sem tocar em física, e por isso partícula de dano, sopro de manobra e alerta de cabine vão para lá, não para dentro do código de voo.
+
+Cada cena de casco tem o seu nó `Apresentacao` com as texturas dele.
+
 ## Decisões que o código não explica sozinho
 
 | Decisão | Por quê |
@@ -52,6 +61,8 @@ Uma subclasse cujo corpo inteiro é constante não faz nada: ela só embrulha n�
 | O atrito de apoio roda **depois** de `move_and_slide()` | Os raycasts das pernas enxergam o chão alguns pixels antes do toque. Usá-los antes do movimento zerava a descida antes de a colisão existir, e nenhum pouso chegava a ser rápido o bastante para causar dano. |
 | A gravidade vem da região, não da nave | Cada corpo celeste tem a sua (seção 7). `Nave.gravidade` começa em 0 — vácuo — e quem a define é a fase. |
 | Perder o foco da janela solta os comandos | Seção 6 promete que voltar de uma suspensão nunca deixa o propulsor travado ligado. Só zerar as variáveis não basta: o SO pode continuar reportando a tecla presa, então `soltar_comandos()` também chama `Input.action_release`. |
+| Atribuir `integridade` atualiza o sprite sozinho | É propriedade com setter, não campo solto. Antes cabia a quem escrevia lembrar de pedir a atualização, e quem esquecesse ficava com casco intacto na tela e destruído nos números. |
+| Quem lê pergunta a fração, não os dois números | `integridade_fracao()`, `combustivel_fracao()` e `intacta()` existem para HUD, fase e harness não repetirem `x / casco.maximo` em doze lugares. |
 | O casco tem três texturas, não uma | `texturas_de_dano` vem da cena do casco e `Nave` troca conforme a integridade (íntegro > 60%, degradado > 25%, crítico abaixo). Perder casco tem que aparecer na nave, não só na barra — é a seção 2, consequência legível. |
 | O dano do contato é uma regra só | A tolerância do trem de pouso encolhe conforme o desalinhamento: "você bateu rápido demais para o ângulo em que estava". Encostar torto devagar não quebra nada. |
 

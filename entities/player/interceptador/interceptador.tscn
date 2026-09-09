@@ -1,22 +1,14 @@
 [gd_scene load_steps=12 format=3 uid="uid://bnaveinter0001"]
 
 [ext_resource type="Script" path="res://entities/player/nave.gd" id="1_nave"]
+[ext_resource type="Script" path="res://entities/player/apresentacao_da_nave.gd" id="8_apresentacao"]
+[ext_resource type="Texture2D" path="res://entities/player/luz_do_motor.tres" id="9_luz"]
 [ext_resource type="Resource" path="res://entities/player/interceptador/data/interceptador.tres" id="2_casco"]
 [ext_resource type="Texture2D" path="res://entities/player/interceptador/art/interceptador.png" id="3_corpo"]
 [ext_resource type="Texture2D" path="res://entities/player/utilitario_leve/art/chama_1.png" id="4_chama1"]
 [ext_resource type="Texture2D" path="res://entities/player/utilitario_leve/art/chama_2.png" id="5_chama2"]
 
-[sub_resource type="Gradient" id="Gradient_luz"]
-offsets = PackedFloat32Array(0, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_luz"]
-gradient = SubResource("Gradient_luz")
-width = 96
-height = 96
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
 [sub_resource type="RectangleShape2D" id="R_asa"]
 size = Vector2(6, 5)
 
@@ -36,20 +28,22 @@ motion_mode = 1
 script = ExtResource("1_nave")
 casco = ExtResource("2_casco")
 altura_dos_pes = 14.0
+
+[node name="Apresentacao" type="Node2D" parent="."]
+script = ExtResource("8_apresentacao")
 texturas_de_dano = Array[Texture2D]([ExtResource("3_corpo")])
 quadros_chama = Array[Texture2D]([ExtResource("4_chama1"), ExtResource("5_chama2")])
 altura_chama = 13
-
-[node name="LuzDoMotor" type="PointLight2D" parent="."]
+[node name="LuzDoMotor" type="PointLight2D" parent="Apresentacao"]
 position = Vector2(0, 15)
 color = Color(1, 0.616, 0.361, 1)
 energy = 0.0
-texture = SubResource("GradientTexture2D_luz")
+texture = ExtResource("9_luz")
 texture_scale = 1.1
 
-[node name="Chamas" type="Node2D" parent="."]
+[node name="Chamas" type="Node2D" parent="Apresentacao"]
 
-[node name="Chama" type="Sprite2D" parent="Chamas"]
+[node name="Chama" type="Sprite2D" parent="Apresentacao/Chamas"]
 position = Vector2(0, 12)
 texture = ExtResource("4_chama1")
 centered = false
@@ -57,7 +51,7 @@ offset = Vector2(-8, 0)
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 13)
 
-[node name="Corpo" type="Sprite2D" parent="."]
+[node name="Corpo" type="Sprite2D" parent="Apresentacao"]
 position = Vector2(0, 3)
 texture = ExtResource("3_corpo")
 
