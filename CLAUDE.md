@@ -18,11 +18,12 @@ Godot 4.7 via Homebrew, binário `godot` no PATH. Todos os comandos rodam da rai
 | Rodar uma cena isolada | `godot --path . --scene res://stages/<fase>/<fase>.tscn` |
 | Importar assets novos sem abrir a GUI | `godot --headless --path . --import` |
 | Fotografar uma cena rodando | `godot --path . --script res://tools/screenshot.gd -- --scene res://<cena>.tscn --out shot.png` |
+| Conferir os critérios de voo | `godot --headless --path . --script res://tools/voo_check.gd` |
 | Compilar um sprite `.pix` para PNG | `python3 .claude/skills/pixel-art/scripts/build_sprite.py <arquivo>.pix` |
 | Checar erro de sintaxe e de tipo num script | `godot --headless --path . --check-only --script res://<caminho>.gd` |
 
 - **IMPORTANT:** `--check-only` sai com código **0 mesmo quando o script tem erro de parse**. Não encadeie com `&&` achando que falha — leia a saída e procure por `SCRIPT ERROR`.
-- Rodar o jogo exige `run/main_scene` definido em `project.godot`. Enquanto não existir, use `--scene`.
+- `run/main_scene` aponta para `stages/teste_pouso/teste_pouso.tscn`, a fase de protótipo de voo. Para subir outra fase sem mexer nisso, use `--scene`.
 - Não há framework de teste instalado (GUT, GdUnit4). Se instalar um, documente o comando aqui.
 
 ## Princípios de arquitetura
@@ -43,6 +44,7 @@ res://
 ├── docs/                # notas e referências avulsas; tem .gdignore, o Godot não enxerga
 ├── entities/            # ver entities/CLAUDE.md
 │   ├── items/               # ver entities/items/CLAUDE.md
+│   ├── player/              # ver entities/player/CLAUDE.md
 │   └── ui/                  # ver entities/ui/CLAUDE.md
 ├── localization/        # ver localization/CLAUDE.md — textos localizados
 ├── stages/              # ver stages/CLAUDE.md
@@ -74,6 +76,8 @@ entities/<categoria>/<entidade>/
 |---|---|
 | Novo personagem/NPC/inimigo | `entities/<categoria>/` |
 | Novo item/upgrade/habilidade | `entities/items/<subtipo>/` (crie o subtipo se não existir) |
+| Plataforma, mina ou construção fixa do mundo | `entities/estruturas/` |
+| Casco novo da nave do jogador | `entities/player/<casco>/` — ver `entities/player/CLAUDE.md` |
 | Nova tela ou elemento de UI | `entities/ui/` |
 | Arte, som ou dado de uma entidade específica | `art/` / `sound/` / `data/` dentro da pasta da própria entidade |
 | Nova fase/área/mapa | `stages/<nome>/` |

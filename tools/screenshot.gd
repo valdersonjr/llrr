@@ -6,10 +6,16 @@ extends SceneTree
 ##
 ## Uso:
 ##   godot --path . --script res://tools/screenshot.gd -- \
-##       --scene res://stages/<fase>/<fase>.tscn --out shot.png [--frames 60]
+##       --scene res://stages/<fase>/<fase>.tscn --out shot.png [--frames 60] \
+##       [--acao pausa]
+##
+## `--acao` dispara uma ação de input na metade dos quadros, antes de
+## capturar. É o jeito de fotografar o que só existe depois de uma tecla —
+## menu de pausa, tela aberta, propulsor ligado.
 
 var _cena: String = ""
 var _saida: String = "shot.png"
+var _acao: String = ""
 var _quadros: int = 60
 var _contador: int = 0
 var _erro: bool = false
@@ -32,6 +38,10 @@ func _initialize() -> void:
 				i += 1
 				if i < args.size():
 					_quadros = int(args[i])
+			"--acao":
+				i += 1
+				if i < args.size():
+					_acao = args[i]
 		i += 1
 
 	if _cena.is_empty():
@@ -62,6 +72,12 @@ func _process(_delta: float) -> bool:
 		return true
 
 	_contador += 1
+	if not _acao.is_empty() and _contador == int(_quadros / 2.0):
+		var evento := InputEventAction.new()
+		evento.action = _acao
+		evento.pressed = true
+		Input.parse_input_event(evento)
+		print("screenshot: disparou a ação %s" % _acao)
 	if _contador < _quadros:
 		return false
 
