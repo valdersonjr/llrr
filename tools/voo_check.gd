@@ -1,4 +1,4 @@
-extends SceneTree
+extends Node
 ## Confere o voo contra os critérios de aceitação do conceito.
 ##
 ## A seção 4 de `docs/conceito-de-jogo.md` termina com uma lista de "sinais de
@@ -7,8 +7,13 @@ extends SceneTree
 ## Não é framework de teste — é o jeito de checar a física sem depender de
 ## alguém segurando W na hora certa.
 ##
+## Roda como cena, não como `--script`: um script passado em `--script` é
+## compilado antes de os autoloads existirem, e aí qualquer script de jogo que
+## use um deles falha a compilação — inclusive os que a ferramenta só queria
+## carregar.
+##
 ## Uso:
-##   godot --headless --path . --script res://tools/voo_check.gd
+##   godot --headless --path . --scene res://tools/voo_check.tscn
 ##
 ## Sai com o número de falhas como código de saída.
 
@@ -28,6 +33,12 @@ const CASCOS := [
 ## Distância do topo do deck até a origem da nave com os pés encostados.
 const ALTURA_DOS_PES := 15.0
 
+## Cão de guarda. Sem ele, qualquer erro que mate a corrotina deixa o processo
+## rodando para sempre: `quit()` só é chamado no fim da sequência, e um script
+## que não carrega nunca chega lá. Isso já travou a verificação três vezes.
+const LIMITE_DE_QUADROS := 9000
+
+var _quadros := 0
 var _falhas := 0
 var _nave: Nave
 var _plataforma: PlataformaDePouso
@@ -35,22 +46,32 @@ var _camera: CameraSeguidora
 var _fase: Node
 
 
-func _initialize() -> void:
+func _ready() -> void:
 	var fase := (load(CENA) as PackedScene).instantiate()
-	root.add_child(fase)
+	# Diferido: em `_ready` a raiz ainda está montando os filhos dela.
+	get_tree().root.add_child.call_deferred(fase)
 	_fase = fase
 	_nave = fase.get_node("UtilitarioLeve")
 	if _nave == null:
 		push_error("voo_check: a fase não tem a nave esperada")
-		quit(1)
+		get_tree().quit(1)
 		return
 	_plataforma = fase.get_node("PlataformaLarga")
 	_camera = fase.get_node("Camera")
 	_rodar.call_deferred()
 
 
+func _process(_delta: float) -> void:
+	_quadros += 1
+	if _quadros <= LIMITE_DE_QUADROS:
+		return
+	push_error("voo_check: %d quadros sem terminar — algo travou" % LIMITE_DE_QUADROS)
+	print("\nvoo_check: TRAVOU depois de %d quadros" % LIMITE_DE_QUADROS)
+	get_tree().quit(1)
+
+
 func _rodar() -> void:
-	await physics_frame
+	await get_tree().physics_frame
 	print("voo_check — critérios da seção 4 do conceito\n")
 	await _vacuo_nao_freia()
 	await _peso_reduz_aceleracao()
@@ -69,8 +90,11 @@ func _rodar() -> void:
 	await _dano_muda_o_casco()
 	print("")
 	await _os_tres_cascos_pousam()
+	print("")
+	await _o_relogio_para_na_pausa()
+	await _o_servico_devolve_a_nave_ao_trabalho()
 	print("\nvoo_check: %d falha(s)" % _falhas)
-	quit(_falhas)
+	get_tree().quit(_falhas)
 
 
 # --- critérios de pilotagem -------------------------------------------------
@@ -245,6 +269,46 @@ func _os_tres_cascos_pousam() -> void:
 		await _passos(3)
 
 
+# --- relógio e serviço de porto -----------------------------------------------
+
+## Seção 8: o relógio de campanha só avança com o jogo aberto, e a seção 6
+## promete que inspecionar a situação pausado não é punido.
+func _o_relogio_para_na_pausa() -> void:
+	await _preparar(Vector2(250, 120))
+	var antes := Relogio.segundos
+	await _passos(30)
+	var correndo := Relogio.segundos - antes
+	get_tree().paused = true
+	var pausado_em := Relogio.segundos
+	await _passos(30)
+	var na_pausa := Relogio.segundos - pausado_em
+	get_tree().paused = false
+	_conferir("o relógio corre em voo", correndo > 0.0, "%.0f s de campanha" % correndo)
+	_conferir("e para na pausa", is_zero_approx(na_pausa), "%.4f s de campanha" % na_pausa)
+
+
+## Seção 5: sempre existe um caminho verificável de volta ao trabalho. Sem
+## isso, dano vira beco sem saída e o jogador só tem reiniciar.
+func _o_servico_devolve_a_nave_ao_trabalho() -> void:
+	await _pousar_de(PLATAFORMA_LARGA, 2.0, 90)
+	_nave.integridade = _nave.casco.integridade_maxima * 0.3
+	_nave.combustivel = _nave.casco.combustivel_maximo * 0.2
+	var relogio_antes := Relogio.segundos
+	var feito: Dictionary = _plataforma.servir(_nave)
+	_conferir("o serviço repara e abastece",
+		not feito.is_empty()
+			and is_equal_approx(_nave.integridade, _nave.casco.integridade_maxima)
+			and is_equal_approx(_nave.combustivel, _nave.casco.combustivel_maximo),
+		"casco em %.0f%%, tanque em %.1f t" % [
+			_nave.integridade / _nave.casco.integridade_maxima * 100.0, _nave.combustivel])
+	_conferir("e cobra tempo de campanha por isso",
+		Relogio.segundos - relogio_antes > 0.0,
+		"%.1f h" % ((Relogio.segundos - relogio_antes) / 3600.0))
+	_conferir("plataforma sem oficina não presta serviço",
+		(_fase.get_node("PlataformaEstreita") as PlataformaDePouso).servir(_nave).is_empty(),
+		"o Pilar Sul recusa")
+
+
 # --- utilidades -------------------------------------------------------------
 
 func _medir_aceleracao(carga: float) -> float:
@@ -281,7 +345,7 @@ func _preparar(posicao: Vector2, gravidade := 0.0, rotacao := 0.0) -> void:
 
 func _passos(quantidade: int) -> void:
 	for _i in quantidade:
-		await physics_frame
+		await get_tree().physics_frame
 
 
 func _texto_estado() -> String:

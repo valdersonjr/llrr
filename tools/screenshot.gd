@@ -1,13 +1,16 @@
-extends SceneTree
+extends Node
 ## Sobe uma cena, espera alguns quadros e salva um PNG da tela.
 ##
 ## Existe para o agente conferir visualmente o que programou, do mesmo jeito
 ## que confere um sprite. Não é código de jogo e não vai para o build.
 ##
 ## Uso:
-##   godot --path . --script res://tools/screenshot.gd -- \
+##   godot --path . --scene res://tools/screenshot.tscn -- \
 ##       --scene res://stages/<fase>/<fase>.tscn --out shot.png [--frames 60] \
 ##       [--acao pausa]
+##
+## Roda como cena, não como `--script`: script passado em `--script` é
+## compilado antes de os autoloads existirem, e a fase que ele carrega usa um.
 ##
 ## `--acao` dispara uma ação de input na metade dos quadros, antes de
 ## capturar. É o jeito de fotografar o que só existe depois de uma tecla —
@@ -21,7 +24,7 @@ var _contador: int = 0
 var _erro: bool = false
 
 
-func _initialize() -> void:
+func _ready() -> void:
 	var args: PackedStringArray = OS.get_cmdline_user_args()
 	var i: int = 0
 	while i < args.size():
@@ -47,29 +50,30 @@ func _initialize() -> void:
 	if _cena.is_empty():
 		push_error("screenshot: faltou --scene")
 		_erro = true
-		quit(1)
+		get_tree().quit(1)
 		return
 
 	if not ResourceLoader.exists(_cena):
 		push_error("screenshot: cena não encontrada: %s" % _cena)
 		_erro = true
-		quit(1)
+		get_tree().quit(1)
 		return
 
 	var packed: PackedScene = load(_cena)
 	if packed == null:
 		push_error("screenshot: falha ao carregar %s" % _cena)
 		_erro = true
-		quit(1)
+		get_tree().quit(1)
 		return
 
-	root.add_child(packed.instantiate())
+	# Diferido: em `_ready` a raiz ainda está montando os filhos dela.
+	get_tree().root.add_child.call_deferred(packed.instantiate())
 	print("screenshot: cena %s, %d quadros" % [_cena, _quadros])
 
 
-func _process(_delta: float) -> bool:
+func _process(_delta: float) -> void:
 	if _erro:
-		return true
+		return
 
 	_contador += 1
 	if not _acao.is_empty() and _contador == int(_quadros / 2.0):
@@ -79,21 +83,20 @@ func _process(_delta: float) -> bool:
 		Input.parse_input_event(evento)
 		print("screenshot: disparou a ação %s" % _acao)
 	if _contador < _quadros:
-		return false
+		return
 
-	var img: Image = root.get_texture().get_image()
+	var img: Image = get_viewport().get_texture().get_image()
 	if img == null:
 		push_error("screenshot: não consegui capturar a tela")
-		quit(1)
-		return true
+		get_tree().quit(1)
+		return
 
 	var abs_path: String = ProjectSettings.globalize_path(_saida) if _saida.begins_with("res://") else _saida
 	var err: int = img.save_png(abs_path)
 	if err != OK:
 		push_error("screenshot: falha ao salvar %s (erro %d)" % [abs_path, err])
-		quit(1)
-		return true
+		get_tree().quit(1)
+		return
 
 	print("screenshot: salvo em %s (%dx%d)" % [abs_path, img.get_width(), img.get_height()])
-	quit(0)
-	return true
+	get_tree().quit(0)

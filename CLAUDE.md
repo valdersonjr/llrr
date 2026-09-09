@@ -17,12 +17,13 @@ Godot 4.7 via Homebrew, binário `godot` no PATH. Todos os comandos rodam da rai
 | Rodar o jogo | `godot --path .` |
 | Rodar uma cena isolada | `godot --path . --scene res://stages/<fase>/<fase>.tscn` |
 | Importar assets novos sem abrir a GUI | `godot --headless --path . --import` |
-| Fotografar uma cena rodando | `godot --path . --script res://tools/screenshot.gd -- --scene res://<cena>.tscn --out shot.png` |
-| Conferir os critérios de voo | `godot --headless --path . --script res://tools/voo_check.gd` |
+| Fotografar uma cena rodando | `godot --path . --scene res://tools/screenshot.tscn -- --scene res://<cena>.tscn --out shot.png` |
+| Conferir os critérios de voo | `godot --headless --path . --scene res://tools/voo_check.tscn` |
 | Compilar um sprite `.pix` para PNG | `python3 .claude/skills/pixel-art/scripts/build_sprite.py <arquivo>.pix` |
 | Checar erro de sintaxe e de tipo num script | `godot --headless --path . --check-only --script res://<caminho>.gd` |
 
 - **IMPORTANT:** `--check-only` sai com código **0 mesmo quando o script tem erro de parse**. Não encadeie com `&&` achando que falha — leia a saída e procure por `SCRIPT ERROR`.
+- **IMPORTANT:** `--check-only` também **não carrega os autoloads**. Script que usa um deles acusa `Identifier not found` ali e funciona no jogo. Para esses, a verificação real é subir o jogo (`--quit-after`) ou rodar `voo_check`.
 - `run/main_scene` aponta para `stages/teste_pouso/teste_pouso.tscn`, a fase de protótipo de voo. Para subir outra fase sem mexer nisso, use `--scene`.
 - Não há framework de teste instalado (GUT, GdUnit4). Se instalar um, documente o comando aqui.
 

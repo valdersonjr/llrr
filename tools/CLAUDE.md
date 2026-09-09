@@ -7,4 +7,8 @@ Ferramenta de desenvolvimento, não código de jogo. Nada daqui roda numa partid
 
 **IMPORTANT:** se um arquivo daqui passar a ser chamado durante o jogo, ele não é mais ferramenta — mova para `utilities/` e siga a regra de autoload de lá.
 
+**IMPORTANT:** as ferramentas daqui rodam como **cena** (`--scene res://tools/<nome>.tscn`), não como `--script`. Um script passado em `--script` vira o próprio `SceneTree` e é compilado **antes de os autoloads existirem** — e aí todo script de jogo que use um deles falha a compilação, inclusive os que a ferramenta só queria carregar. O sintoma é ruim de ler: a cena carrega com os nós no tipo base errado, e a ferramenta trava sem mensagem clara.
+
+Por isso `voo_check.gd` tem cão de guarda: passou do teto de quadros, ele acusa e sai com erro. Sem isso, qualquer falha que mate a corrotina deixa o processo rodando para sempre, porque `quit()` só é chamado no fim da sequência.
+
 `screenshot.gd` precisa de janela real: não funciona com `--headless`, porque o driver dummy não renderiza nada para capturar. `voo_check.gd` só usa física, então roda headless.
