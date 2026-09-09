@@ -69,15 +69,15 @@ func _texto_telemetria() -> String:
 	var velocidade := _nave.velocity.length()
 	var inclinacao := _nave.inclinacao()
 
-	var texto := _linha("VERT", "%+d p/s" % roundi(vertical), velocidade > casco.pouso_velocidade_maxima)
-	texto += _linha("HORIZ", "%+d p/s" % roundi(horizontal), velocidade > casco.pouso_velocidade_maxima)
+	var texto := _linha("VERT", "%+d P/S" % roundi(vertical), velocidade > casco.pouso_velocidade_maxima)
+	texto += _linha("HORIZ", "%+d P/S" % roundi(horizontal), velocidade > casco.pouso_velocidade_maxima)
 	texto += _linha("INCL", "%+d°" % roundi(inclinacao), absf(inclinacao) > casco.pouso_angulo_maximo)
-	texto += _linha("GIRO", "%+d °/s" % roundi(_nave.giro), absf(_nave.giro) > casco.pouso_giro_maximo)
-	texto += _linha("CARGA", "%.1f / %.0f t" % [_nave.carga, casco.capacidade_carga],
+	texto += _linha("GIRO", "%+d °/S" % roundi(_nave.giro), absf(_nave.giro) > casco.pouso_giro_maximo)
+	texto += _linha("CARGA", "%.1f / %.0f T" % [_nave.carga, casco.capacidade_carga],
 		_nave.carga >= casco.capacidade_carga)
-	texto += _linha("MASSA", "%.1f t" % _nave.massa(), false)
-	texto += _linha("ACEL", "%d p/s²" % roundi(_nave.aceleracao_disponivel()), _nave.combustivel <= 0.0)
-	texto += _linha("ESTAB", "ligada" if _nave.estabilizacao_ativa else "desligada",
+	texto += _linha("MASSA", "%.1f T" % _nave.massa(), false)
+	texto += _linha("ACEL", "%d P/S²" % roundi(_nave.aceleracao_disponivel()), _nave.combustivel <= 0.0)
+	texto += _linha("ESTAB", "LIGADA" if _nave.estabilizacao_ativa else "DESLIGADA",
 		not _nave.estabilizacao_ativa)
 	return texto + "[color=#%s]%s[/color]" % [COR_APAGADO.to_html(false), _texto_estado()]
 
@@ -91,10 +91,10 @@ func _linha(rotulo: String, valor: String, alerta: bool) -> String:
 func _texto_estado() -> String:
 	match _nave.estado:
 		Nave.Estado.TOCANDO:
-			return "tocando"
+			return "TOCANDO"
 		Nave.Estado.POUSADA:
-			return "pousada"
+			return "POUSADA"
 		Nave.Estado.DESTRUIDA:
-			return "destruida"
+			return "DESTRUÍDA"
 		_:
-			return "em voo"
+			return "EM VOO"

@@ -41,18 +41,18 @@ color = Color(0.145, 0.173, 0.263, 1)
 
 [node name="PlataformaLarga" parent="." instance=ExtResource("2_plataforma")]
 position = Vector2(112, 356)
-nome = "Depósito Norte"
+nome = "DEPÓSITO NORTE"
 carga_disponivel = 6.0
 segmentos = 3
 
 [node name="PlataformaMedia" parent="." instance=ExtResource("2_plataforma")]
 position = Vector2(360, 284)
-nome = "Torre Média"
+nome = "TORRE MÉDIA"
 segmentos = 2
 
 [node name="PlataformaEstreita" parent="." instance=ExtResource("2_plataforma")]
 position = Vector2(620, 222)
-nome = "Pilar Sul"
+nome = "PILAR SUL"
 segmentos = 1
 
 [node name="Terreno" type="StaticBody2D" parent="."]

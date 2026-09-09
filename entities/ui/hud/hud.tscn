@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhudvoo000001"]
+[gd_scene load_steps=3 format=3 uid="uid://dhudvoo000001"]
 
 [ext_resource type="Script" path="res://entities/ui/hud/hud.gd" id="1_hud"]
+[ext_resource type="Theme" path="res://entities/ui/tema_lunar.tres" id="2_tema"]
 
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -10,6 +11,18 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+theme = ExtResource("2_tema")
+
+[node name="FundoBarras" type="ColorRect" parent="Raiz"]
+offset_right = 101.0
+offset_bottom = 21.0
+color = Color(0.051, 0.059, 0.102, 0.55)
+
+[node name="FundoTelemetria" type="ColorRect" parent="Raiz"]
+offset_left = 252.0
+offset_right = 384.0
+offset_bottom = 117.0
+color = Color(0.051, 0.059, 0.102, 0.55)
 
 [node name="RotuloCombustivel" type="Label" parent="Raiz"]
 offset_left = 4.0
@@ -17,20 +30,26 @@ offset_top = 1.0
 offset_right = 34.0
 offset_bottom = 11.0
 theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
-theme_override_font_sizes/font_size = 8
 text = "COMB"
 
+[node name="MolduraCombustivel" type="ColorRect" parent="Raiz"]
+offset_left = 39.0
+offset_top = 2.0
+offset_right = 97.0
+offset_bottom = 9.0
+color = Color(0.169, 0.192, 0.271, 1)
+
 [node name="FundoCombustivel" type="ColorRect" parent="Raiz"]
-offset_left = 34.0
+offset_left = 40.0
 offset_top = 3.0
-offset_right = 90.0
+offset_right = 96.0
 offset_bottom = 8.0
 color = Color(0.137, 0.165, 0.322, 1)
 
 [node name="BarraCombustivel" type="ColorRect" parent="Raiz"]
-offset_left = 34.0
+offset_left = 40.0
 offset_top = 3.0
-offset_right = 90.0
+offset_right = 96.0
 offset_bottom = 8.0
 color = Color(0.353, 0.71, 0.322, 1)
 
@@ -40,29 +59,34 @@ offset_top = 10.0
 offset_right = 34.0
 offset_bottom = 20.0
 theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
-theme_override_font_sizes/font_size = 8
 text = "CASCO"
 
+[node name="MolduraIntegridade" type="ColorRect" parent="Raiz"]
+offset_left = 39.0
+offset_top = 11.0
+offset_right = 97.0
+offset_bottom = 18.0
+color = Color(0.169, 0.192, 0.271, 1)
+
 [node name="FundoIntegridade" type="ColorRect" parent="Raiz"]
-offset_left = 34.0
+offset_left = 40.0
 offset_top = 12.0
-offset_right = 90.0
+offset_right = 96.0
 offset_bottom = 17.0
 color = Color(0.137, 0.165, 0.322, 1)
 
 [node name="BarraIntegridade" type="ColorRect" parent="Raiz"]
-offset_left = 34.0
+offset_left = 40.0
 offset_top = 12.0
-offset_right = 90.0
+offset_right = 96.0
 offset_bottom = 17.0
 color = Color(0.659, 0.682, 0.769, 1)
 
 [node name="Telemetria" type="RichTextLabel" parent="Raiz"]
-offset_left = 292.0
+offset_left = 256.0
 offset_top = 1.0
 offset_right = 382.0
 offset_bottom = 134.0
-theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
 scroll_active = false
 autowrap_mode = 0
@@ -71,5 +95,4 @@ autowrap_mode = 0
 offset_top = 198.0
 offset_right = 384.0
 offset_bottom = 210.0
-theme_override_font_sizes/font_size = 8
 horizontal_alignment = 1

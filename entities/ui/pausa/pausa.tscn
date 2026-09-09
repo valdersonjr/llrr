@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpausamenu0001"]
+[gd_scene load_steps=3 format=3 uid="uid://cpausamenu0001"]
 
 [ext_resource type="Script" path="res://entities/ui/pausa/pausa.gd" id="1_pausa"]
+[ext_resource type="Theme" path="res://entities/ui/tema_lunar.tres" id="2_tema"]
 
 [node name="Pausa" type="CanvasLayer"]
 process_mode = 3
@@ -12,6 +13,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+theme = ExtResource("2_tema")
 
 [node name="Borda" type="ColorRect" parent="Painel"]
 offset_left = 95.0
@@ -33,7 +35,6 @@ offset_top = 47.0
 offset_right = 288.0
 offset_bottom = 63.0
 theme_override_colors/font_color = Color(0.659, 0.682, 0.769, 1)
-theme_override_font_sizes/font_size = 12
 text = "PAUSADO"
 horizontal_alignment = 1
 
@@ -44,7 +45,6 @@ offset_right = 172.0
 offset_bottom = 154.0
 theme_override_colors/font_color = Color(0.949, 0.757, 0.306, 1)
 theme_override_constants/line_spacing = 1
-theme_override_font_sizes/font_size = 8
 text = "W  ↑
 A D  ← →
 Q  E
@@ -61,14 +61,13 @@ offset_right = 284.0
 offset_bottom = 154.0
 theme_override_colors/font_color = Color(0.659, 0.682, 0.769, 1)
 theme_override_constants/line_spacing = 1
-theme_override_font_sizes/font_size = 8
-text = "empuxo
-girar
-translação lateral
-carga, se pousada
-estabilização
-reiniciar a região
-continuar"
+text = "EMPUXO
+GIRAR
+TRANSLAÇÃO LATERAL
+CARGA, SE POUSADA
+ESTABILIZAÇÃO
+REINICIAR A REGIÃO
+CONTINUAR"
 
 [node name="Rodape" type="Label" parent="Painel"]
 offset_left = 96.0
@@ -76,6 +75,5 @@ offset_top = 161.0
 offset_right = 288.0
 offset_bottom = 173.0
 theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
-theme_override_font_sizes/font_size = 8
-text = "o tempo está parado"
+text = "O TEMPO ESTÁ PARADO"
 horizontal_alignment = 1

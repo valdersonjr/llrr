@@ -81,19 +81,19 @@ func _reiniciar() -> void:
 ## descarrega, com ele vazio embarca o que couber.
 func _operar_carga() -> void:
 	if _nave.estado != Nave.Estado.POUSADA:
-		_hud.avisar("carga só com a nave pousada", Hud.COR_ATENCAO)
+		_hud.avisar("CARGA SÓ COM A NAVE POUSADA", Hud.COR_ATENCAO)
 		return
 	var plataforma := _nave.plataforma_sob_a_nave() as PlataformaDePouso
 	if plataforma == null:
-		_hud.avisar("não há plataforma sob as duas pernas", Hud.COR_ATENCAO)
+		_hud.avisar("NÃO HÁ PLATAFORMA SOB AS DUAS PERNAS", Hud.COR_ATENCAO)
 		return
 	var movido := plataforma.transferir(_nave)
 	if is_zero_approx(movido):
-		_hud.avisar("%s não tem carga esperando" % plataforma.como_se_chama(), Hud.COR_ATENCAO)
+		_hud.avisar("%s NÃO TEM CARGA ESPERANDO" % plataforma.como_se_chama(), Hud.COR_ATENCAO)
 	elif movido > 0.0:
-		_hud.avisar("embarcou %.1f t em %s" % [movido, plataforma.como_se_chama()], Hud.COR_BOM)
+		_hud.avisar("EMBARCOU %.1f T EM %s" % [movido, plataforma.como_se_chama()], Hud.COR_BOM)
 	else:
-		_hud.avisar("descarregou %.1f t em %s" % [-movido, plataforma.como_se_chama()], Hud.COR_BOM)
+		_hud.avisar("DESCARREGOU %.1f T EM %s" % [-movido, plataforma.como_se_chama()], Hud.COR_BOM)
 
 
 ## O céu é desenhado pelo próprio nó da fase: `_draw()` do pai roda antes dos
@@ -171,22 +171,22 @@ func altura_do_terreno(x: float) -> float:
 
 func _ao_pousar(plataforma: Node) -> void:
 	if plataforma == null:
-		_hud.avisar("pousada fora da plataforma", Hud.COR_ATENCAO)
+		_hud.avisar("POUSADA FORA DA PLATAFORMA", Hud.COR_ATENCAO)
 		return
 	var plat := plataforma as PlataformaDePouso
-	_hud.avisar("pousada em %s — %d px de deck" % [plat.como_se_chama(), roundi(plat.largura())],
+	_hud.avisar("POUSADA EM %s — %d PX DE DECK" % [plat.como_se_chama(), roundi(plat.largura())],
 		Hud.COR_BOM)
 
 
 func _ao_decolar() -> void:
-	_hud.avisar("decolou", Hud.COR_APAGADO)
+	_hud.avisar("DECOLOU", Hud.COR_APAGADO)
 
 
 func _ao_impactar(dano: float, velocidade: float, desalinhamento: float) -> void:
 	_camera.sacudir(dano * 0.09)
-	_hud.avisar("impacto: -%d%% casco, %d p/s a %d° da superfície" % [
+	_hud.avisar("IMPACTO: -%d%% CASCO, %d P/S A %d° DA SUPERFÍCIE" % [
 		roundi(dano), roundi(velocidade), roundi(desalinhamento)], Hud.COR_ALERTA)
 
 
 func _ao_destruir() -> void:
-	_hud.avisar("nave destruída — R reinicia", Hud.COR_ALERTA)
+	_hud.avisar("NAVE DESTRUÍDA — R REINICIA", Hud.COR_ALERTA)
