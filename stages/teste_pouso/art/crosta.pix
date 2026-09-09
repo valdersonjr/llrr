@@ -1,0 +1,22 @@
+# Faixa de superfície iluminada, aplicada como Line2D sobre o perfil do
+# terreno. É ela que faz o chão ter uma face que o sol pega, em vez de
+# ser um polígono chapado com um contorno em volta.
+name: crosta
+size: 32x6
+light: top-left
+
+palette:
+  . transparent
+  A #0f1322  rocha, sombra profunda
+  B #161b2e  rocha, sombra
+  C #1f2740  rocha, base
+  D #2a3352  rocha, luz
+  E #39456a  rocha, aresta iluminada
+
+pixels:
+EEE.........................EEEE
+DDDEEEEEEEEEEEEEEEEEEEEEEEEEDDDD
+CCCDDDDDDDDDDDDDDDDDDDDDDDDDCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+BBBCCCCCCCCCCCCCCCCCCCCCCCCCBBBB
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
