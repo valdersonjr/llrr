@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cscreenshot001"]
+[gd_scene format=3 uid="uid://bbr8ffkxaerc7"]
 
 [ext_resource type="Script" path="res://tools/screenshot.gd" id="1_shot"]
 

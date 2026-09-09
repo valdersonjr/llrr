@@ -119,7 +119,7 @@ func _pedir_servico() -> void:
 	if feito.is_empty():
 		_hud.avisar("NADA A REPARAR NEM ABASTECER", Hud.COR_APAGADO)
 		return
-	_hud.avisar("SERVIÇO: +%d%% CASCO, +%.1f T — %d H DE CAMPANHA" % [
+	_hud.avisar("SERVIÇO: +%d%% ESTRUTURA, +%.1f T — %d H" % [
 		roundi(feito["casco"] / _nave.casco.integridade_maxima * 100.0),
 		feito["combustivel"], roundi(feito["duracao"] / 3600.0)], Hud.COR_BOM)
 
@@ -239,7 +239,7 @@ func _ao_decolar() -> void:
 
 func _ao_impactar(dano: float, velocidade: float, desalinhamento: float) -> void:
 	_camera.sacudir(dano * 0.09)
-	_hud.avisar("IMPACTO: -%d%% CASCO, %d P/S A %d° DA SUPERFÍCIE" % [
+	_hud.avisar("IMPACTO: -%d%% ESTRUTURA, %d P/S A %d° DA SUPERFÍCIE" % [
 		roundi(dano), roundi(velocidade), roundi(desalinhamento)], Hud.COR_ALERTA)
 
 

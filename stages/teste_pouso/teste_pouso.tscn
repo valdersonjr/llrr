@@ -1,105 +1,95 @@
-[gd_scene load_steps=14 format=3 uid="uid://bteste0pouso01"]
+[gd_scene format=3 uid="uid://c5iiqarfi6b53"]
 
-[ext_resource type="Script" path="res://stages/teste_pouso/teste_pouso.gd" id="1_fase"]
-[ext_resource type="PackedScene" path="res://entities/estruturas/plataforma_de_pouso/plataforma_de_pouso.tscn" id="2_plataforma"]
-[ext_resource type="PackedScene" path="res://entities/player/utilitario_leve/utilitario_leve.tscn" id="3_nave"]
-[ext_resource type="PackedScene" path="res://entities/player/cargueiro_resistente/cargueiro_resistente.tscn" id="10_carga"]
-[ext_resource type="PackedScene" path="res://entities/player/interceptador/interceptador.tscn" id="11_inter"]
-[ext_resource type="PackedScene" path="res://entities/ui/hud/hud.tscn" id="4_hud"]
-[ext_resource type="Script" path="res://common/camera_seguidora.gd" id="5_camera"]
-[ext_resource type="Texture2D" path="res://stages/teste_pouso/art/rocha.png" id="7_rocha"]
-[ext_resource type="Texture2D" path="res://stages/teste_pouso/art/crosta.png" id="8_crosta"]
-[ext_resource type="Texture2D" path="res://stages/teste_pouso/art/planeta_distante.png" id="9_planeta"]
-[ext_resource type="PackedScene" path="res://entities/ui/pausa/pausa.tscn" id="6_pausa"]
+[ext_resource type="Script" uid="uid://d3lqy3bijg6le" path="res://stages/teste_pouso/teste_pouso.gd" id="1_fase"]
+[ext_resource type="PackedScene" uid="uid://cfpkcikitrm3y" path="res://entities/estruturas/plataforma_de_pouso/plataforma_de_pouso.tscn" id="2_plataforma"]
+[ext_resource type="PackedScene" uid="uid://vyxr5hk8liwu" path="res://entities/player/utilitario_leve/utilitario_leve.tscn" id="3_nave"]
+[ext_resource type="PackedScene" uid="uid://dhudvoo000001" path="res://entities/ui/hud/hud.tscn" id="4_hud"]
+[ext_resource type="Script" uid="uid://6hlghorikgap" path="res://common/camera_seguidora.gd" id="5_camera"]
+[ext_resource type="PackedScene" uid="uid://b4bivf3d0rm3y" path="res://entities/ui/pausa/pausa.tscn" id="6_pausa"]
+[ext_resource type="Texture2D" uid="uid://bk2ic2bpv3k13" path="res://stages/teste_pouso/art/rocha.png" id="7_rocha"]
+[ext_resource type="Texture2D" uid="uid://eq5ppaxvhlqg" path="res://stages/teste_pouso/art/crosta.png" id="8_crosta"]
+[ext_resource type="Texture2D" uid="uid://bcp8crm86weg7" path="res://stages/teste_pouso/art/planeta_distante.png" id="9_planeta"]
+[ext_resource type="PackedScene" uid="uid://vyw8lqfiliwu" path="res://entities/player/cargueiro_resistente/cargueiro_resistente.tscn" id="10_carga"]
+[ext_resource type="PackedScene" uid="uid://vyxfysd0liwu" path="res://entities/player/interceptador/interceptador.tscn" id="11_inter"]
 
 [sub_resource type="Environment" id="Environment_brilho"]
 background_mode = 3
 glow_enabled = true
 glow_normalized = true
 glow_intensity = 0.45
-glow_strength = 1.0
 glow_bloom = 0.04
-glow_blend_mode = 1
-glow_hdr_threshold = 1.0
 
-[node name="TestePouso" type="Node2D"]
+[node name="TestePouso" type="Node2D" unique_id=112673534]
 script = ExtResource("1_fase")
-gravidade_local = 40.0
 perfil = PackedVector2Array(0, 352, 48, 352, 56, 360, 168, 360, 178, 348, 240, 342, 276, 300, 312, 288, 408, 288, 436, 316, 498, 330, 534, 318, 558, 252, 588, 226, 652, 226, 674, 264, 708, 332, 768, 346)
-tamanho_do_mundo = Vector2(768, 470)
 serra_distante = PackedVector2Array(0, 252, 44, 244, 88, 249, 126, 231, 168, 236, 214, 226, 252, 240, 296, 216, 344, 228, 386, 218, 430, 234, 478, 210, 522, 222, 568, 213, 616, 231, 664, 219, 712, 228, 768, 214, 860, 230, 960, 214, 1090, 236)
 serra_media = PackedVector2Array(-320, 288, -230, 266, -140, 286, -60, 258, 0, 294, 38, 286, 78, 292, 118, 270, 156, 280, 198, 262, 240, 284, 286, 254, 330, 268, 372, 258, 416, 276, 462, 248, 508, 262, 552, 251, 600, 272, 648, 250, 700, 265, 768, 256, 850, 268, 940, 250, 1090, 272)
 pedras = PackedFloat32Array(28, 194, 216, 252, 300, 424, 452, 470, 512, 690, 726)
 cascos = Array[PackedScene]([ExtResource("3_nave"), ExtResource("10_carga"), ExtResource("11_inter")])
 
-[node name="FundoCeu" type="Parallax2D" parent="."]
+[node name="FundoCeu" type="Parallax2D" parent="." unique_id=51013983]
 scroll_scale = Vector2(0.16, 0.16)
-repeat_size = Vector2(0, 0)
 
-[node name="PlanetaDistante" type="Sprite2D" parent="FundoCeu"]
+[node name="PlanetaDistante" type="Sprite2D" parent="FundoCeu" unique_id=2121024725]
 position = Vector2(624, 78)
 texture = ExtResource("9_planeta")
 
-[node name="FundoSerraDistante" type="Parallax2D" parent="."]
+[node name="FundoSerraDistante" type="Parallax2D" parent="." unique_id=923350624]
 scroll_scale = Vector2(0.38, 0.38)
-repeat_size = Vector2(0, 0)
 
-[node name="SerraDistante" type="Polygon2D" parent="FundoSerraDistante"]
+[node name="SerraDistante" type="Polygon2D" parent="FundoSerraDistante" unique_id=1037857879]
 color = Color(0.106, 0.129, 0.212, 1)
 
-[node name="FundoSerraMedia" type="Parallax2D" parent="."]
+[node name="FundoSerraMedia" type="Parallax2D" parent="." unique_id=949107885]
 scroll_scale = Vector2(0.66, 0.66)
-repeat_size = Vector2(0, 0)
 
-[node name="SerraMedia" type="Polygon2D" parent="FundoSerraMedia"]
+[node name="SerraMedia" type="Polygon2D" parent="FundoSerraMedia" unique_id=2060170002]
 color = Color(0.145, 0.173, 0.263, 1)
 
-[node name="PlataformaLarga" parent="." instance=ExtResource("2_plataforma")]
+[node name="PlataformaLarga" parent="." unique_id=413412920 instance=ExtResource("2_plataforma")]
 position = Vector2(112, 356)
 nome = "DEPÓSITO NORTE"
 carga_disponivel = 6.0
 oferece_servico = true
 segmentos = 3
 
-[node name="PlataformaMedia" parent="." instance=ExtResource("2_plataforma")]
+[node name="PlataformaMedia" parent="." unique_id=873333990 instance=ExtResource("2_plataforma")]
 position = Vector2(360, 284)
 nome = "TORRE MÉDIA"
-segmentos = 2
 
-[node name="PlataformaEstreita" parent="." instance=ExtResource("2_plataforma")]
+[node name="PlataformaEstreita" parent="." unique_id=604460350 instance=ExtResource("2_plataforma")]
 position = Vector2(620, 222)
 nome = "PILAR SUL"
 segmentos = 1
 
-[node name="Terreno" type="StaticBody2D" parent="."]
-collision_layer = 1
+[node name="Terreno" type="StaticBody2D" parent="." unique_id=53868997]
 collision_mask = 0
 
-[node name="Visual" type="Polygon2D" parent="Terreno"]
+[node name="Visual" type="Polygon2D" parent="Terreno" unique_id=363414414]
 texture_repeat = 2
 texture = ExtResource("7_rocha")
 
-[node name="Detalhe" type="Polygon2D" parent="Terreno"]
+[node name="Detalhe" type="Polygon2D" parent="Terreno" unique_id=1617166267]
 modulate = Color(1, 1, 1, 0.45)
 texture_repeat = 2
 texture = ExtResource("7_rocha")
 texture_offset = Vector2(11, 7)
 texture_scale = Vector2(0.41, 0.41)
 
-[node name="Crosta" type="Line2D" parent="Terreno"]
+[node name="Crosta" type="Line2D" parent="Terreno" unique_id=1969964365]
 width = 6.0
 texture = ExtResource("8_crosta")
 texture_mode = 1
 joint_mode = 2
 
-[node name="Colisao" type="CollisionPolygon2D" parent="Terreno"]
+[node name="Colisao" type="CollisionPolygon2D" parent="Terreno" unique_id=1443839356]
 
-[node name="Pedras" type="Node2D" parent="."]
+[node name="Pedras" type="Node2D" parent="." unique_id=534151411]
 
-[node name="UtilitarioLeve" parent="." instance=ExtResource("3_nave")]
+[node name="UtilitarioLeve" parent="." unique_id=377843312 instance=ExtResource("3_nave")]
 position = Vector2(250, 196)
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="." unique_id=1059750452]
 position = Vector2(250, 196)
 limit_left = 0
 limit_top = 0
@@ -108,12 +98,10 @@ limit_bottom = 470
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 script = ExtResource("5_camera")
-antecipacao = 0.4
-antecipacao_maxima = 40.0
 
-[node name="Ambiente" type="WorldEnvironment" parent="."]
+[node name="Ambiente" type="WorldEnvironment" parent="." unique_id=229436965]
 environment = SubResource("Environment_brilho")
 
-[node name="Hud" parent="." instance=ExtResource("4_hud")]
+[node name="Hud" parent="." unique_id=91255258 instance=ExtResource("4_hud")]
 
-[node name="Pausa" parent="." instance=ExtResource("6_pausa")]
+[node name="Pausa" parent="." unique_id=1179898589 instance=ExtResource("6_pausa")]

@@ -71,7 +71,12 @@ func _texto_telemetria() -> String:
 	var velocidade := _nave.velocity.length()
 	var inclinacao := _nave.inclinacao()
 
-	var texto := _linha("VERT", "%+d P/S" % roundi(vertical), velocidade > casco.pouso_velocidade_maxima)
+	# O chassi vem antes dos números: sem isto o jogador não sabe que existem
+	# outros cascos, nem qual está pilotando depois de trocar. Sem rótulo
+	# porque "CASCO CARGUEIRO RESISTENTE" não cabe na coluna.
+	var texto := "[color=#%s]%s[/color]\n" % [
+		COR_OK.to_html(false), casco.nome.to_upper()]
+	texto += _linha("VERT", "%+d P/S" % roundi(vertical), velocidade > casco.pouso_velocidade_maxima)
 	texto += _linha("HORIZ", "%+d P/S" % roundi(horizontal), velocidade > casco.pouso_velocidade_maxima)
 	texto += _linha("INCL", "%+d°" % roundi(inclinacao), absf(inclinacao) > casco.pouso_angulo_maximo)
 	texto += _linha("GIRO", "%+d °/S" % roundi(_nave.giro), absf(_nave.giro) > casco.pouso_giro_maximo)
@@ -81,6 +86,7 @@ func _texto_telemetria() -> String:
 	texto += _linha("ACEL", "%d P/S²" % roundi(_nave.aceleracao_disponivel()), _nave.combustivel <= 0.0)
 	texto += _linha("ESTAB", "LIGADA" if _nave.estabilizacao_ativa else "DESLIGADA",
 		not _nave.estabilizacao_ativa)
+
 	return texto + "[color=#%s]%s[/color]" % [COR_APAGADO.to_html(false), _texto_estado()]
 
 

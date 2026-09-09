@@ -59,7 +59,7 @@ offset_top = 10.0
 offset_right = 34.0
 offset_bottom = 20.0
 theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
-text = "CASCO"
+text = "ESTRUT"
 
 [node name="MolduraIntegridade" type="ColorRect" parent="Raiz"]
 offset_left = 39.0
