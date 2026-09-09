@@ -98,6 +98,8 @@ func _unhandled_input(evento: InputEvent) -> void:
 		_operar_carga()
 	elif evento.is_action_pressed("trocar_casco"):
 		_trocar_casco()
+	elif evento.is_action_pressed("servico"):
+		_pedir_servico()
 
 
 func _reiniciar() -> void:
@@ -106,15 +108,39 @@ func _reiniciar() -> void:
 	get_tree().reload_current_scene()
 
 
-## Uma tecla só resolve embarque e desembarque: com o porão cheio a nave
-## descarrega, com ele vazio embarca o que couber.
-func _operar_carga() -> void:
-	if _nave.estado != Nave.Estado.POUSADA:
-		_hud.avisar("CARGA SÓ COM A NAVE POUSADA", Hud.COR_ATENCAO)
+func _pedir_servico() -> void:
+	var plataforma := _plataforma_sob_a_nave_pousada()
+	if plataforma == null:
 		return
+	if not plataforma.oferece_servico:
+		_hud.avisar("%s NÃO TEM OFICINA" % plataforma.como_se_chama(), Hud.COR_ATENCAO)
+		return
+	var feito := plataforma.servir(_nave)
+	if feito.is_empty():
+		_hud.avisar("NADA A REPARAR NEM ABASTECER", Hud.COR_APAGADO)
+		return
+	_hud.avisar("SERVIÇO: +%d%% CASCO, +%.1f T — %d H DE CAMPANHA" % [
+		roundi(feito["casco"] / _nave.casco.integridade_maxima * 100.0),
+		feito["combustivel"], roundi(feito["duracao"] / 3600.0)], Hud.COR_BOM)
+
+
+## A plataforma sob a nave, se ela estiver pousada. Devolve null e avisa o
+## jogador quando não estiver — as duas operações de deck exigem o mesmo.
+func _plataforma_sob_a_nave_pousada() -> PlataformaDePouso:
+	if _nave.estado != Nave.Estado.POUSADA:
+		_hud.avisar("SÓ COM A NAVE POUSADA", Hud.COR_ATENCAO)
+		return null
 	var plataforma := _nave.plataforma_sob_a_nave() as PlataformaDePouso
 	if plataforma == null:
 		_hud.avisar("NÃO HÁ PLATAFORMA SOB AS DUAS PERNAS", Hud.COR_ATENCAO)
+	return plataforma
+
+
+## Uma tecla só resolve embarque e desembarque: com o porão cheio a nave
+## descarrega, com ele vazio embarca o que couber.
+func _operar_carga() -> void:
+	var plataforma := _plataforma_sob_a_nave_pousada()
+	if plataforma == null:
 		return
 	var movido := plataforma.transferir(_nave)
 	if is_zero_approx(movido):

@@ -23,6 +23,7 @@ var _tempo_aviso := 0.0
 @onready var _barra_integridade: ColorRect = $Raiz/BarraIntegridade
 @onready var _telemetria: RichTextLabel = $Raiz/Telemetria
 @onready var _aviso: Label = $Raiz/Aviso
+@onready var _relogio: Label = $Raiz/Relogio
 
 
 func _ready() -> void:
@@ -47,6 +48,7 @@ func _process(delta: float) -> void:
 	if _nave == null:
 		return
 	_atualizar_barras()
+	_relogio.text = Relogio.como_texto()
 	_telemetria.text = _texto_telemetria()
 
 

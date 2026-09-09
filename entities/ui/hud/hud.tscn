@@ -15,7 +15,7 @@ theme = ExtResource("2_tema")
 
 [node name="FundoBarras" type="ColorRect" parent="Raiz"]
 offset_right = 101.0
-offset_bottom = 21.0
+offset_bottom = 31.0
 color = Color(0.051, 0.059, 0.102, 0.55)
 
 [node name="FundoTelemetria" type="ColorRect" parent="Raiz"]
@@ -81,6 +81,13 @@ offset_top = 12.0
 offset_right = 96.0
 offset_bottom = 17.0
 color = Color(0.659, 0.682, 0.769, 1)
+
+[node name="Relogio" type="Label" parent="Raiz"]
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 101.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
 
 [node name="Telemetria" type="RichTextLabel" parent="Raiz"]
 offset_left = 256.0

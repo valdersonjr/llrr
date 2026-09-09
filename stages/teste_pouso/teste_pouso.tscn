@@ -58,6 +58,7 @@ color = Color(0.145, 0.173, 0.263, 1)
 position = Vector2(112, 356)
 nome = "DEPÓSITO NORTE"
 carga_disponivel = 6.0
+oferece_servico = true
 segmentos = 3
 
 [node name="PlataformaMedia" parent="." instance=ExtResource("2_plataforma")]

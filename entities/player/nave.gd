@@ -196,6 +196,19 @@ func pernas_em_contato() -> int:
 	return int(_pe_esquerdo.is_colliding()) + int(_pe_direito.is_colliding())
 
 
+## Restaura o casco e o estado de dano visível. Quem cobra por isso é quem
+## chamou — a nave não conhece porto nem preço.
+func reparar() -> void:
+	integridade = casco.integridade_maxima
+	if estado == Estado.DESTRUIDA:
+		estado = Estado.VOANDO
+	_atualizar_casco()
+
+
+func abastecer() -> void:
+	combustivel = casco.combustivel_maximo
+
+
 ## Embarca até `toneladas` no porão e devolve quanto de fato coube.
 func carregar(toneladas: float) -> float:
 	var coube := clampf(toneladas, 0.0, casco.capacidade_carga - carga)
