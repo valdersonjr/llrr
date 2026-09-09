@@ -10,7 +10,7 @@ Sufixo `_manager.gd`, registrados em Project Settings → Autoload. Sistemas que
 
 | Autoload | Arquivo | Responsabilidade | Sinais principais |
 |---|---|---|---|
-| *(preencher conforme forem criados)* | | | |
+| `Relogio` | `relogio_manager.gd` | Relógio de campanha. Só avança com o jogo aberto e para em pausa, por `PROCESS_MODE_PAUSABLE`. `avancar()` salta à frente — é o que serviço de porto e cruzeiro usam. `duracao_de_servico()` diz quanto custa um serviço. | `avancou(segundos)`, `virou_o_dia(dia)` |
 
 Esta tabela é a fonte de verdade rápida da API global de cada manager. Mantenha-a sincronizada com Project Settings → Autoload sempre que um autoload for criado, removido ou ganhar um sinal/método novo — documentar aqui evita ter que abrir o script só pra saber o que ele expõe.
 
