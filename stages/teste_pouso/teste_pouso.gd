@@ -31,9 +31,9 @@ const SEMENTE_DO_CEU := 20260906
 ## saem daqui — um lugar só para editar o relevo.
 @export var perfil: PackedVector2Array = PackedVector2Array()
 @export var tamanho_do_mundo := Vector2(768.0, 470.0)
-## Cristas de fundo. Contraste baixo é o que as coloca longe — não é preguiça,
-## é profundidade: sem elas o horizonte é uma linha só e a região não tem
-## tamanho.
+## Cristas de fundo. Contraste baixo é o que as coloca longe, e o parallax
+## confirma: o que está longe desliza menos. Elas passam da largura do mundo
+## de propósito — deslizando, a borda do polígono entraria em quadro.
 @export var serra_distante: PackedVector2Array = PackedVector2Array()
 @export var serra_media: PackedVector2Array = PackedVector2Array()
 ## Posições em x onde cair pedra solta. O y sai do próprio perfil.
@@ -47,8 +47,8 @@ const SEMENTE_DO_CEU := 20260906
 @onready var _visual_terreno: Polygon2D = $Terreno/Visual
 @onready var _detalhe_terreno: Polygon2D = $Terreno/Detalhe
 @onready var _crosta: Line2D = $Terreno/Crosta
-@onready var _serra_distante: Polygon2D = $SerraDistante
-@onready var _serra_media: Polygon2D = $SerraMedia
+@onready var _serra_distante: Polygon2D = $FundoSerraDistante/SerraDistante
+@onready var _serra_media: Polygon2D = $FundoSerraMedia/SerraMedia
 @onready var _pedras: Node2D = $Pedras
 
 

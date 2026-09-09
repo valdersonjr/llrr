@@ -25,18 +25,30 @@ script = ExtResource("1_fase")
 gravidade_local = 40.0
 perfil = PackedVector2Array(0, 352, 48, 352, 56, 360, 168, 360, 178, 348, 240, 342, 276, 300, 312, 288, 408, 288, 436, 316, 498, 330, 534, 318, 558, 252, 588, 226, 652, 226, 674, 264, 708, 332, 768, 346)
 tamanho_do_mundo = Vector2(768, 470)
-serra_distante = PackedVector2Array(0, 252, 44, 244, 88, 249, 126, 231, 168, 236, 214, 226, 252, 240, 296, 216, 344, 228, 386, 218, 430, 234, 478, 210, 522, 222, 568, 213, 616, 231, 664, 219, 712, 228, 768, 214)
-serra_media = PackedVector2Array(0, 294, 38, 286, 78, 292, 118, 270, 156, 280, 198, 262, 240, 284, 286, 254, 330, 268, 372, 258, 416, 276, 462, 248, 508, 262, 552, 251, 600, 272, 648, 250, 700, 265, 768, 256)
+serra_distante = PackedVector2Array(0, 252, 44, 244, 88, 249, 126, 231, 168, 236, 214, 226, 252, 240, 296, 216, 344, 228, 386, 218, 430, 234, 478, 210, 522, 222, 568, 213, 616, 231, 664, 219, 712, 228, 768, 214, 860, 230, 960, 214, 1090, 236)
+serra_media = PackedVector2Array(-320, 288, -230, 266, -140, 286, -60, 258, 0, 294, 38, 286, 78, 292, 118, 270, 156, 280, 198, 262, 240, 284, 286, 254, 330, 268, 372, 258, 416, 276, 462, 248, 508, 262, 552, 251, 600, 272, 648, 250, 700, 265, 768, 256, 850, 268, 940, 250, 1090, 272)
 pedras = PackedFloat32Array(28, 194, 216, 252, 300, 424, 452, 470, 512, 690, 726)
 
-[node name="PlanetaDistante" type="Sprite2D" parent="."]
+[node name="FundoCeu" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.16, 0.16)
+repeat_size = Vector2(0, 0)
+
+[node name="PlanetaDistante" type="Sprite2D" parent="FundoCeu"]
 position = Vector2(624, 78)
 texture = ExtResource("9_planeta")
 
-[node name="SerraDistante" type="Polygon2D" parent="."]
+[node name="FundoSerraDistante" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.38, 0.38)
+repeat_size = Vector2(0, 0)
+
+[node name="SerraDistante" type="Polygon2D" parent="FundoSerraDistante"]
 color = Color(0.106, 0.129, 0.212, 1)
 
-[node name="SerraMedia" type="Polygon2D" parent="."]
+[node name="FundoSerraMedia" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.66, 0.66)
+repeat_size = Vector2(0, 0)
+
+[node name="SerraMedia" type="Polygon2D" parent="FundoSerraMedia"]
 color = Color(0.145, 0.173, 0.263, 1)
 
 [node name="PlataformaLarga" parent="." instance=ExtResource("2_plataforma")]
