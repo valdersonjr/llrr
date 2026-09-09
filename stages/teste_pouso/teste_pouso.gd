@@ -38,10 +38,9 @@ const SEMENTE_DO_CEU := 20260906
 @export var serra_media: PackedVector2Array = PackedVector2Array()
 ## Posições em x onde cair pedra solta. O y sai do próprio perfil.
 @export var pedras: PackedFloat32Array = PackedFloat32Array()
-## Cascos disponíveis para troca. Ferramenta de protótipo: sentir os três
-## papéis é o que responde a pergunta da seção 18, e ninguém sente um casco
-## lendo a tabela dele.
-@export var cascos: Array[PackedScene] = []
+## De onde vêm os cascos. A região aponta para o catálogo em vez de manter a
+## própria lista: uma fase pode oferecer um subconjunto sem duplicar nada.
+@export var catalogo_de_cascos: CatalogoDeCascos
 
 @onready var _nave: Nave = $UtilitarioLeve
 @onready var _camera: CameraSeguidora = $Camera
@@ -80,10 +79,12 @@ func _ligar_nave() -> void:
 ## junto de propósito: cada casco tem tanque, casco e porão próprios, e herdar
 ## os do anterior seria mentira sobre o que se está pilotando.
 func _trocar_casco() -> void:
-	if cascos.size() < 2:
+	if catalogo_de_cascos == null or catalogo_de_cascos.quantidade() < 2:
 		return
-	_indice_do_casco = (_indice_do_casco + 1) % cascos.size()
-	var nova: Nave = cascos[_indice_do_casco].instantiate()
+	_indice_do_casco = catalogo_de_cascos.seguinte(_indice_do_casco)
+	var nova := catalogo_de_cascos.criar(_indice_do_casco)
+	if nova == null:
+		return
 	nova.position = Vector2(_nave.global_position.x,
 		_nave.global_position.y - 24.0)
 	_nave.queue_free()

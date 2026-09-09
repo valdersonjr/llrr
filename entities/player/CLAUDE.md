@@ -26,6 +26,23 @@ Casco novo entra comparando a mancha preta dele com essas três, não desenhando
 
 **Estados de dano são opcionais por casco.** Quem não tiver as três texturas em `texturas_de_dano` simplesmente não muda de aparência — `_atualizar_casco()` sai fora quando o índice não existe. Hoje só o utilitário leve tem os três.
 
+## Por que dado, e não uma subclasse por casco
+
+A pergunta aparece sempre: "não deveria haver uma interface `Nave` e um tipo por casco?" O papel dessa interface já existe, e é o **`Casco`** — o `Resource` que define o contrato que todo casco preenche. O que não existe, de propósito, é uma subclasse por casco.
+
+| | Subclasse por casco | Como está |
+|---|---|---|
+| Casco novo | escrever classe, compilar, registrar | duplicar um `.tres`, digitar números no Inspector |
+| Ajustar peso | editar código, compilar, rodar | arrastar um slider com o jogo aberto |
+| Quem ajusta | quem programa | quem projeta o jogo |
+| Casco × módulo | uma classe por combinação | duas listas que se combinam |
+
+Uma subclasse cujo corpo inteiro é constante não faz nada: ela só embrulha números em sintaxe mais cara de mudar. E o conceito prevê 18–24 módulos além dos três cascos — inheritance não expressa combinação, ela multiplica classes.
+
+**A regra:** `<casco>.gd extends Nave` só quando o casco tiver **comportamento** que a base não tem. Número diferente não é comportamento diferente. No dia em que um casco precisar, por exemplo, de dois estágios de propulsão, aí sim ele ganha script.
+
+`catalogo_de_cascos.gd` é a fábrica: quem responde "que cascos existem" e sabe instanciá-los. A lista mora num `.tres`, então acrescentar um casco não recompila nada nem exige lembrar de atualizá-lo em dois lugares.
+
 ## Decisões que o código não explica sozinho
 
 | Decisão | Por quê |

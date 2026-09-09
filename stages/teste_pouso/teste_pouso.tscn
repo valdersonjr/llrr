@@ -9,8 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bk2ic2bpv3k13" path="res://stages/teste_pouso/art/rocha.png" id="7_rocha"]
 [ext_resource type="Texture2D" uid="uid://eq5ppaxvhlqg" path="res://stages/teste_pouso/art/crosta.png" id="8_crosta"]
 [ext_resource type="Texture2D" uid="uid://bcp8crm86weg7" path="res://stages/teste_pouso/art/planeta_distante.png" id="9_planeta"]
-[ext_resource type="PackedScene" uid="uid://vyw8lqfiliwu" path="res://entities/player/cargueiro_resistente/cargueiro_resistente.tscn" id="10_carga"]
-[ext_resource type="PackedScene" uid="uid://vyxfysd0liwu" path="res://entities/player/interceptador/interceptador.tscn" id="11_inter"]
+[ext_resource type="Resource" path="res://entities/player/cascos.tres" id="10_catalogo"]
 
 [sub_resource type="Environment" id="Environment_brilho"]
 background_mode = 3
@@ -22,10 +21,10 @@ glow_bloom = 0.04
 [node name="TestePouso" type="Node2D" unique_id=112673534]
 script = ExtResource("1_fase")
 perfil = PackedVector2Array(0, 352, 48, 352, 56, 360, 168, 360, 178, 348, 240, 342, 276, 300, 312, 288, 408, 288, 436, 316, 498, 330, 534, 318, 558, 252, 588, 226, 652, 226, 674, 264, 708, 332, 768, 346)
-serra_distante = PackedVector2Array(0, 252, 44, 244, 88, 249, 126, 231, 168, 236, 214, 226, 252, 240, 296, 216, 344, 228, 386, 218, 430, 234, 478, 210, 522, 222, 568, 213, 616, 231, 664, 219, 712, 228, 768, 214, 860, 230, 960, 214, 1090, 236)
+serra_distante = PackedVector2Array(-320, 244, -220, 232, -120, 248, -40, 226, 0, 252, 44, 244, 88, 249, 126, 231, 168, 236, 214, 226, 252, 240, 296, 216, 344, 228, 386, 218, 430, 234, 478, 210, 522, 222, 568, 213, 616, 231, 664, 219, 712, 228, 768, 214, 860, 230, 960, 214, 1090, 236)
 serra_media = PackedVector2Array(-320, 288, -230, 266, -140, 286, -60, 258, 0, 294, 38, 286, 78, 292, 118, 270, 156, 280, 198, 262, 240, 284, 286, 254, 330, 268, 372, 258, 416, 276, 462, 248, 508, 262, 552, 251, 600, 272, 648, 250, 700, 265, 768, 256, 850, 268, 940, 250, 1090, 272)
 pedras = PackedFloat32Array(28, 194, 216, 252, 300, 424, 452, 470, 512, 690, 726)
-cascos = Array[PackedScene]([ExtResource("3_nave"), ExtResource("10_carga"), ExtResource("11_inter")])
+catalogo_de_cascos = ExtResource("10_catalogo")
 
 [node name="FundoCeu" type="Parallax2D" parent="." unique_id=51013983]
 scroll_scale = Vector2(0.16, 0.16)

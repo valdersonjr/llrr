@@ -25,11 +25,9 @@ const ACOES := ["empuxo", "girar_esquerda", "girar_direita",
 const PLATAFORMA_LARGA := Vector2(112.0, 356.0)
 ## Trecho de terreno plano sem plataforma nenhuma.
 const CHAO_NU := Vector2(24.0, 352.0)
-const CASCOS := [
-	"res://entities/player/utilitario_leve/utilitario_leve.tscn",
-	"res://entities/player/cargueiro_resistente/cargueiro_resistente.tscn",
-	"res://entities/player/interceptador/interceptador.tscn",
-]
+## Vem do catálogo, não de uma lista aqui: casco novo entra na verificação
+## sozinho, sem ninguém lembrar de acrescentá-lo em dois lugares.
+const CATALOGO := preload("res://entities/player/cascos.tres")
 ## Distância do topo do deck até a origem da nave com os pés encostados.
 const ALTURA_DOS_PES := 15.0
 
@@ -247,8 +245,8 @@ func _dano_muda_o_casco() -> void:
 ## Cada casco tem sua própria colisão, seus próprios pés e sua própria
 ## tolerância. Um pousar não diz nada sobre os outros dois.
 func _os_tres_cascos_pousam() -> void:
-	for caminho in CASCOS:
-		var nave: Nave = (load(caminho) as PackedScene).instantiate()
+	for i in CATALOGO.quantidade():
+		var nave := CATALOGO.criar(i)
 		_fase.add_child(nave)
 		await _passos(2)
 		nave.gravidade = 40.0

@@ -14,7 +14,7 @@ mouse_filter = 2
 theme = ExtResource("2_tema")
 
 [node name="FundoBarras" type="ColorRect" parent="Raiz"]
-offset_right = 101.0
+offset_right = 107.0
 offset_bottom = 31.0
 color = Color(0.051, 0.059, 0.102, 0.55)
 
@@ -27,65 +27,65 @@ color = Color(0.051, 0.059, 0.102, 0.55)
 [node name="RotuloCombustivel" type="Label" parent="Raiz"]
 offset_left = 4.0
 offset_top = 1.0
-offset_right = 34.0
+offset_right = 42.0
 offset_bottom = 11.0
 theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
 text = "COMB"
 
 [node name="MolduraCombustivel" type="ColorRect" parent="Raiz"]
-offset_left = 39.0
+offset_left = 45.0
 offset_top = 2.0
-offset_right = 97.0
+offset_right = 103.0
 offset_bottom = 9.0
 color = Color(0.169, 0.192, 0.271, 1)
 
 [node name="FundoCombustivel" type="ColorRect" parent="Raiz"]
-offset_left = 40.0
+offset_left = 46.0
 offset_top = 3.0
-offset_right = 96.0
+offset_right = 102.0
 offset_bottom = 8.0
 color = Color(0.137, 0.165, 0.322, 1)
 
 [node name="BarraCombustivel" type="ColorRect" parent="Raiz"]
-offset_left = 40.0
+offset_left = 46.0
 offset_top = 3.0
-offset_right = 96.0
+offset_right = 102.0
 offset_bottom = 8.0
 color = Color(0.353, 0.71, 0.322, 1)
 
 [node name="RotuloIntegridade" type="Label" parent="Raiz"]
 offset_left = 4.0
 offset_top = 10.0
-offset_right = 34.0
+offset_right = 42.0
 offset_bottom = 20.0
 theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
 text = "ESTRUT"
 
 [node name="MolduraIntegridade" type="ColorRect" parent="Raiz"]
-offset_left = 39.0
+offset_left = 45.0
 offset_top = 11.0
-offset_right = 97.0
+offset_right = 103.0
 offset_bottom = 18.0
 color = Color(0.169, 0.192, 0.271, 1)
 
 [node name="FundoIntegridade" type="ColorRect" parent="Raiz"]
-offset_left = 40.0
+offset_left = 46.0
 offset_top = 12.0
-offset_right = 96.0
+offset_right = 102.0
 offset_bottom = 17.0
 color = Color(0.137, 0.165, 0.322, 1)
 
 [node name="BarraIntegridade" type="ColorRect" parent="Raiz"]
-offset_left = 40.0
+offset_left = 46.0
 offset_top = 12.0
-offset_right = 96.0
+offset_right = 102.0
 offset_bottom = 17.0
 color = Color(0.659, 0.682, 0.769, 1)
 
 [node name="Relogio" type="Label" parent="Raiz"]
 offset_left = 4.0
 offset_top = 20.0
-offset_right = 101.0
+offset_right = 107.0
 offset_bottom = 30.0
 theme_override_colors/font_color = Color(0.42, 0.443, 0.522, 1)
 

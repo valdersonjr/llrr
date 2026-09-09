@@ -12,34 +12,48 @@ extends Resource
 
 @export_group("Massa")
 ## Casco vazio, sem combustível nem carga.
-@export var massa_seca: float = 8.0
-@export var capacidade_carga: float = 6.0
-@export var combustivel_maximo: float = 5.0
+@export_range(1.0, 60.0, 0.5, "or_greater", "suffix:t") var massa_seca: float = 8.0
+## Quanto o porão leva. Carga pesa: entra direto na massa.
+@export_range(0.0, 80.0, 0.5, "or_greater", "suffix:t") var capacidade_carga: float = 6.0
+## O tanque também pesa, e vai ficando leve conforme queima.
+@export_range(0.5, 40.0, 0.5, "or_greater", "suffix:t") var combustivel_maximo: float = 5.0
 
 @export_group("Propulsão")
 ## Empuxo do motor principal, no eixo da nave.
-@export var empuxo_principal: float = 1320.0
+@export_range(100.0, 12000.0, 10.0, "or_greater") var empuxo_principal: float = 1320.0
 ## Empuxo dos propulsores de manobra, translação lateral.
-@export var empuxo_manobra: float = 340.0
-@export var torque_manobra: float = 1900.0
+@export_range(20.0, 3000.0, 10.0, "or_greater") var empuxo_manobra: float = 340.0
+@export_range(100.0, 12000.0, 10.0, "or_greater") var torque_manobra: float = 1900.0
 ## Teto de velocidade angular, em graus/s.
-@export var giro_maximo: float = 120.0
+@export_range(20.0, 360.0, 5.0, "suffix:°/s") var giro_maximo: float = 120.0
 
 @export_group("Consumo")
 ## Toneladas por segundo com o acelerador no máximo.
-@export var consumo_principal: float = 0.22
+@export_range(0.01, 3.0, 0.01, "or_greater", "suffix:t/s") var consumo_principal: float = 0.22
 ## Toneladas por segundo por eixo de manobra ativo — inclui a estabilização.
-@export var consumo_manobra: float = 0.05
+@export_range(0.005, 1.0, 0.005, "or_greater", "suffix:t/s") var consumo_manobra: float = 0.05
 
 @export_group("Estrutura")
-@export var integridade_maxima: float = 100.0
+@export_range(10.0, 500.0, 5.0, "or_greater") var integridade_maxima: float = 100.0
 
 @export_group("Trem de pouso")
 ## Velocidade de contato que as pernas absorvem sem dano, alinhada.
-@export var pouso_velocidade_maxima: float = 30.0
+@export_range(5.0, 120.0, 1.0, "suffix:px/s") var pouso_velocidade_maxima: float = 30.0
 ## Desalinhamento tolerado entre a nave e a normal da superfície.
-@export var pouso_angulo_maximo: float = 12.0
+@export_range(1.0, 45.0, 1.0, "suffix:°") var pouso_angulo_maximo: float = 12.0
 ## Giro residual tolerado no contato, em graus/s.
-@export var pouso_giro_maximo: float = 20.0
+@export_range(1.0, 90.0, 1.0, "suffix:°/s") var pouso_giro_maximo: float = 20.0
 ## Tempo parada e nivelada até o contato virar pouso de fato.
-@export var pouso_tempo_estavel: float = 0.6
+@export_range(0.0, 3.0, 0.05, "suffix:s") var pouso_tempo_estavel: float = 0.6
+
+
+## Aceleração com o tanque cheio e o porão vazio, em px/s². É o primeiro
+## número que o jogador sente, e o que decide se o casco sobe da plataforma.
+func aceleracao_leve() -> float:
+	return empuxo_principal / (massa_seca + combustivel_maximo)
+
+
+## A mesma coisa com o porão cheio. Se cair abaixo da gravidade da região, o
+## casco simplesmente não decola carregado — é aqui que se vê o preço.
+func aceleracao_carregada() -> float:
+	return empuxo_principal / (massa_seca + combustivel_maximo + capacidade_carga)
