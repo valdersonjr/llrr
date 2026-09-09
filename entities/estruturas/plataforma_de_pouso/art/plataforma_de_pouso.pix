@@ -1,0 +1,41 @@
+# Segmento de plataforma de pouso, 32x16, repetido na horizontal pela cena —
+# a largura é o que comunica dificuldade, então ela é parâmetro, não arte nova.
+#
+# A laje é sombreada como superfície plana vista de canto: quase toda a
+# variação é vertical. A treliça fica na sombra própria do deck. A baliza é
+# emissiva e derrama alguns pixels quentes na chapa em volta.
+name: plataforma_de_pouso
+size: 32x16
+light: top-left
+
+palette:
+  . transparent
+  K #141a2e  contorno
+  n #2c3040  metal, sombra profunda
+  m #464d60  metal, sombra
+  M #6f7789  metal, meio
+  N #9aa2b4  metal, luz
+  E #cdd4e2  metal, brilho
+  q #6b4a3c  derrame quente fraco
+  Q #a06a45  derrame quente forte
+  g #e0a83c  baliza
+  G #ffe9a8  baliza, núcleo
+  R #7d93cc  luz de borda
+
+pixels:
+...............GG...............
+...............gg...............
+EEEEEEEEEEEEQQQQQQQQEEEEEEEEEEEE
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+.....mMmn..............mMmn.....
+.....mMmn..............mMmn.....
+.....mMmn..............mMmn.....
+.....mMmn..............mMmn.....
+.....MMMMMMMMMMMMMMMMMMMMMM.....
+.....mMmn..............mMmn.....
+.....mMmn..............mMmn.....
+.....mMmn..............mMmn.....
+.....mMmn..............mMmn.....
+...MMMMMMMM..........MMMMMMMM...

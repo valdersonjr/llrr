@@ -2,7 +2,8 @@
 
 Tudo aqui é "irmão" do player na scene tree: qualquer coisa que existe DENTRO de uma fase, com que o jogador pode interagir ou que aparece no mundo.
 
-- `player/` — nave/personagem controlado pelo jogador.
+- `player/` — a nave do jogador. Ver `player/CLAUDE.md` para o padrão dos cascos.
+- `estruturas/` — o que é construído e fica parado no mundo: plataforma de pouso, mina, base.
 - `<categoria_npc_ou_inimigo>/` — agrupe por tipo/categoria, não numa pasta genérica "inimigos".
 - `items/` — ver `items/CLAUDE.md` nesta mesma pasta para o padrão de herança.
 - `ui/` — HUD e telas que vivem como nó na scene tree. Fica aqui dentro, não como pasta de topo separada, porque é conteúdo com que o player interage. Ver `ui/CLAUDE.md`.

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cplatpouso0001"]
+
+[ext_resource type="Script" path="res://entities/estruturas/plataforma_de_pouso/plataforma_de_pouso.gd" id="1_plat"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/plataforma_de_pouso/art/plataforma_de_pouso.png" id="2_deck"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_deck"]
+resource_local_to_scene = true
+size = Vector2(64, 4)
+
+[node name="PlataformaDePouso" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_plat")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+texture = ExtResource("2_deck")
+centered = false
+offset = Vector2(-32, -2)
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 16)
+
+[node name="Colisao" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_deck")
