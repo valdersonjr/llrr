@@ -45,6 +45,7 @@ const SEMENTE_DO_CEU := 20260906
 @onready var _pausa: Pausa = $Pausa
 @onready var _colisao_terreno: CollisionPolygon2D = $Terreno/Colisao
 @onready var _visual_terreno: Polygon2D = $Terreno/Visual
+@onready var _detalhe_terreno: Polygon2D = $Terreno/Detalhe
 @onready var _crosta: Line2D = $Terreno/Crosta
 @onready var _serra_distante: Polygon2D = $SerraDistante
 @onready var _serra_media: Polygon2D = $SerraMedia
@@ -122,6 +123,10 @@ func _montar_terreno() -> void:
 	var poligono := _com_base(perfil)
 	_colisao_terreno.polygon = poligono
 	_visual_terreno.polygon = poligono
+	# A mesma rocha numa escala maior e translúcida por cima: em área grande a
+	# grade de 32px do ladrilho aparece, e duas frequências sobrepostas a
+	# desmancham sem precisar de textura nova.
+	_detalhe_terreno.polygon = poligono
 	# A crosta é uma Line2D com textura em TILE, não uma borda de 1px: assim ela
 	# acompanha a inclinação e o chão passa a ter uma face que o sol pega.
 	_crosta.points = perfil
