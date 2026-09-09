@@ -61,6 +61,10 @@ const LIMIARES_DE_DANO := [0.6, 0.25]
 ## (seção 4). Gasta combustível como qualquer outro comando de manobra.
 @export var estabilizacao_ativa: bool = true
 
+## Distância da origem da nave até a sola, em pixels. Cada casco tem a sua, e
+## quem posiciona a nave precisa dela para não enterrá-la nem soltá-la no ar.
+@export var altura_dos_pes: float = 15.0
+
 @export_group("Dano")
 ## Texturas do casco do íntegro ao crítico. A cena do casco define quais são;
 ## esta classe só troca conforme a integridade. Dano precisa mudar a forma, não
@@ -91,7 +95,9 @@ var _dano_mostrado: int = -1
 
 @onready var _pe_esquerdo: RayCast2D = $PeEsquerdo
 @onready var _pe_direito: RayCast2D = $PeDireito
-@onready var _chama: Sprite2D = $Chama
+## Um casco pode ter mais de um bocal — o cargueiro tem dois. A cena agrupa
+## as chamas sob um nó e esta classe acende todas juntas.
+@onready var _chamas: Array[Node] = $Chamas.get_children()
 @onready var _corpo: Sprite2D = $Corpo
 @onready var _luz_motor: PointLight2D = $LuzDoMotor
 
@@ -125,7 +131,8 @@ func soltar_comandos() -> void:
 	_comando_lateral = 0.0
 	_comando_estabilizacao = 0.0
 	if is_node_ready():
-		_chama.visible = false
+		for chama in _chamas:
+			(chama as Sprite2D).visible = false
 
 
 func _physics_process(delta: float) -> void:
@@ -380,17 +387,21 @@ func _atualizar_casco() -> void:
 
 func _atualizar_chama(delta: float) -> void:
 	var acesa := _acelerador > 0.02 and combustivel > 0.0
-	_chama.visible = acesa
+	for chama in _chamas:
+		(chama as Sprite2D).visible = acesa
 	# O motor é emissivo: ele ilumina o terreno e o próprio casco, não só
 	# desenha uma chama. É o que faz o pouso ler à noite.
 	_luz_motor.energy = 0.8 * _acelerador if acesa else 0.0
 	if not acesa:
 		return
-	_chama.region_rect = Rect2(0.0, 0.0, 16.0, roundf(altura_chama * _acelerador))
+	var corte := Rect2(0.0, 0.0, 16.0, roundf(altura_chama * _acelerador))
+	for chama in _chamas:
+		(chama as Sprite2D).region_rect = corte
 	if quadros_chama.size() < 2:
 		return
 	_relogio_chama += delta
 	if _relogio_chama >= 1.0 / QUADROS_CHAMA_POR_SEGUNDO:
 		_relogio_chama = 0.0
 		_quadro_chama = (_quadro_chama + 1) % quadros_chama.size()
-		_chama.texture = quadros_chama[_quadro_chama]
+		for chama in _chamas:
+			(chama as Sprite2D).texture = quadros_chama[_quadro_chama]

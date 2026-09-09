@@ -26,6 +26,7 @@ collision_mask = 1
 motion_mode = 1
 script = ExtResource("1_nave")
 casco = ExtResource("2_casco")
+altura_dos_pes = 15.0
 texturas_de_dano = Array[Texture2D]([ExtResource("3_corpo"), ExtResource("6_deg"), ExtResource("7_cri")])
 quadros_chama = Array[Texture2D]([ExtResource("4_chama1"), ExtResource("5_chama2")])
 altura_chama = 13
@@ -37,7 +38,9 @@ energy = 0.0
 texture = SubResource("GradientTexture2D_luz")
 texture_scale = 1.0
 
-[node name="Chama" type="Sprite2D" parent="."]
+[node name="Chamas" type="Node2D" parent="."]
+
+[node name="Chama" type="Sprite2D" parent="Chamas"]
 position = Vector2(0, 10)
 texture = ExtResource("4_chama1")
 centered = false

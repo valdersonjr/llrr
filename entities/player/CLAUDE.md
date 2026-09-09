@@ -8,7 +8,23 @@ A nave do jogador: um script de comportamento, um recurso de dados, uma pasta-fo
 - `casco.gd` (`class_name Casco`) — o recurso com os números: massa, empuxo, consumo, tolerância do trem de pouso.
 - `<casco>/` — pasta-folha com `art/`, `data/<casco>.tres` e a cena, no formato da raiz.
 
-Os três cascos previstos (utilitário leve, cargueiro resistente, interceptador) diferem por `.tres`, não por código — por isso a cena do casco **não** tem script próprio, ela aponta para `nave.gd` e carrega o seu `Casco`. Só crie `<casco>.gd extends Nave` quando o casco tiver comportamento que a base não tem. Número diferente não é comportamento diferente.
+Os três cascos (utilitário leve, cargueiro resistente, interceptador) diferem por `.tres` e por cena, não por código — nenhum tem script próprio, todos apontam para `nave.gd`. Só crie `<casco>.gd extends Nave` quando o casco tiver comportamento que a base não tem. Número diferente não é comportamento diferente.
+
+O que muda de cena para cena: o sprite, a colisão, quantos bocais, e `altura_dos_pes`, que é como quem posiciona a nave sabe onde está a sola.
+
+## A família de formas
+
+As três silhuetas foram desenhadas juntas e julgadas em preto, que é o único jeito de garantir que se distinguem:
+
+| Casco | Mancha |
+|---|---|
+| Utilitário leve | quadro aberto, com dois vazios laterais |
+| Cargueiro resistente | laje maciça e fechada, dois bocais |
+| Interceptador | cunha estreita com asas em flecha |
+
+Casco novo entra comparando a mancha preta dele com essas três, não desenhando bonito sozinho.
+
+**Estados de dano são opcionais por casco.** Quem não tiver as três texturas em `texturas_de_dano` simplesmente não muda de aparência — `_atualizar_casco()` sai fora quando o índice não existe. Hoje só o utilitário leve tem os três.
 
 ## Decisões que o código não explica sozinho
 
