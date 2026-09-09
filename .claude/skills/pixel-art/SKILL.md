@@ -71,13 +71,21 @@ O `.pix` é a fonte de verdade e vai para o git junto do PNG. Editar arte = troc
 
 **Contorno nunca é preto puro, e nunca some no fundo.** Este é um jogo espacial: o fundo é escuro quase sempre. Um contorno `#16161f` sobre um céu `#14161f` faz a nave dissolver. Use contorno **mais claro que o fundo esperado**, ou uma versão escurecida da cor adjacente em vez de um contorno único. Confira sempre nos dois fundos do `--inspect`.
 
-**Paleta limitada, com hue shifting.** 4 a 9 cores por sprite. A rampa de sombra desloca a matiz para o azul/roxo; a de luz, para o amarelo/laranja. Só escurecer a mesma matiz produz rampa morta e cinzenta.
+**Paleta deliberada, com hue shifting.** Rampas de 4 a 6 tons por material, e quantas famílias de material o objeto precisar — o limite é coerência, não contagem de cor. A rampa de sombra desloca a matiz para o azul/roxo; a de luz, para o amarelo/laranja. Só escurecer a mesma matiz produz rampa morta e cinzenta.
 
 **Luz consistente:** `top-left` em todo o projeto. Se um asset precisar de outra luz, declare no `light:` e justifique.
 
 **Zero antialiasing automático.** Nada de borda suave. AA manual só no interior da forma, nunca no contorno externo — contorno com meio-tom brilha contra fundo variável.
 
 **Sem jaggies.** Uma diagonal vai 1-1-1 ou 2-2-2, nunca 1-2-1-3. Cluster de pixel inconsistente é o que mais denuncia amador.
+
+**Tom por limiar fixo, não por normalização.** Se você espalhar a variação de luz de uma peça pela rampa inteira, até uma superfície quase plana sai com contraste máximo e a forma vira um borrão claro. Fixe o que cada tom significa e use o mesmo corte em todo sprite — assim um `c` de casco quer dizer a mesma coisa na nave e no inimigo.
+
+**Contorno seletivo.** A aresta que está em plena luz não recebe contorno. O topo iluminado de uma chapa **é** a silhueta: escurecê-lo apaga justamente a face que a luz atinge, e o deck inteiro vira uma faixa preta.
+
+**Luz de borda só na sombra.** Sobre um tom já claro ela não lê como borda, só engorda a mancha. E o azul dela não pode ser o azul do céu, senão a silhueta some no fundo.
+
+**Peça fina não leva contorno nem borda.** Num tubo de 3px a aresta come dois terços da largura e o strut vira um risco claro. Deixe a rampa sozinha separar a forma.
 
 **Sem pillow shading.** Não sombreie seguindo o contorno para dentro, como um travesseiro. A sombra segue o volume e a direção da luz.
 
@@ -87,11 +95,14 @@ O `.pix` é a fonte de verdade e vai para o git junto do PNG. Editar arte = troc
 
 Vem da seção 14 de `docs/conceito-de-jogo.md`. Leia antes de começar uma série nova.
 
-- **Retrô anos 80 com leitura moderna.** Não é fidelidade a hardware específico.
+- **Pixel art moderna.** O pixel é o meio, não uma emulação de máquina antiga. Nada de CRT, scanline, ou dithering usado como muleta de paleta pobre. A ficção é dos anos 80; o acabamento não.
+- **Luz declarada.** Uma luz principal vinda de `top-left`, preenchimento de ambiente frio, e luz de borda onde a forma encostaria no fundo. A sombra recebe a cor do ambiente — sombra é azulada porque o céu é azulado, não porque é a base escurecida.
+- **Emissivo derrama luz.** Motor, cabine e alertas iluminam o que está perto: alguns pixels quentes no casco ao redor da fonte, e luz 2D de verdade na cena.
+- **Atmosfera é trabalho do motor.** Brilho nos emissivos, luz 2D, profundidade e partículas ficam na cena, não desenhadas no sprite. O sprite continua nítido.
 - **Cor sozinha nunca distingue inimigo, aliado e objetivo.** A diferença tem que estar na silhueta e na forma. Um jogador com daltonismo precisa jogar.
 - **Silhuetas por facção.** Corporação, colonos rebeldes e piratas têm linguagem de forma distinta — não a mesma nave repintada.
 - **Paletas por planeta.** O ambiente muda de paleta; a nave do jogador se mantém reconhecível.
-- **Indicadores de dano consistentes.** Íntegro, degradado e desativado usam o mesmo vocabulário visual em todo asset.
+- **Indicadores de dano consistentes.** Íntegro, degradado e crítico usam o mesmo vocabulário em todo asset, e o que muda é **forma**: peça arrancada, estrutura amassada, furo que aparece na silhueta. Fuligem só acompanha. Um estado que só troca de cor não passa — o jogador daltônico precisa ler o dano.
 - Os três cascos são **utilitário leve, cargueiro resistente e interceptador**. Silhuetas que se distinguem a 32px e em preto.
 
 ## Onde os arquivos vão
@@ -118,4 +129,4 @@ Commit segue o `CLAUDE.md`: `content(entities): adiciona sprite do casco utilit�
 - `textures/canvas_textures/default_texture_filter=0` (Nearest). Sem isso toda pixel art sai borrada.
 - `window/stretch/mode="canvas_items"` com `scale_mode="integer"`.
 
-A nave é desenhada com **o nariz para cima** (repouso pousado). A rotação 0 do Godot aponta para a direita, então a cena aplica o offset — não redesenhe o sprite deitado.
+A nave é desenhada com **o nariz para cima** (repouso pousado), e é assim que ela fica em `rotation == 0`: o "para frente" da nave é `Vector2.UP`, não o `Vector2.RIGHT` padrão do Godot, então a cena **não** aplica offset nenhum. Nunca redesenhe o sprite deitado.

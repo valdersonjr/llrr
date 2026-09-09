@@ -1,6 +1,6 @@
 # Lunar RPG — Conceito e direção de jogo
 
-**Versão 0.2** · atualizado em 6 de setembro de 2026
+**Versão 0.3** · atualizado em 9 de setembro de 2026
 
 Documento vivo: ele muda quando as ideias mudarem. O registro do que mudou fica na seção 20.
 
@@ -19,7 +19,7 @@ Os termos próprios do projeto estão explicados no glossário, na seção 19.
 
 ## 1. A ideia central
 
-Um RPG singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander e na ficção científica visual dos anos 80.
+Um RPG singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander. O mundo é o do cinema espacial dos anos 80 — naves usadas, indústria pesada, trabalho sujo. O acabamento é pixel art moderna: a referência é o assunto, não a aparência de jogo antigo.
 
 A nave é o personagem principal. Transporte, mineração, resgate, combate e política usam os mesmos recursos e produzem as mesmas consequências:
 
@@ -28,7 +28,7 @@ A nave é o personagem principal. Transporte, mineração, resgate, combate e po
 
 O que o jogo se propõe a entregar:
 
-- Mundo e pilotagem 2D, com estética retrô dos anos 80.
+- Mundo e pilotagem 2D em pixel art moderna.
 - Nave controlada diretamente, com inércia, pouso, combustível, carga e melhorias.
 - Contratos de transporte, resgate e mineração; créditos e progressão.
 - Planetas com diferenças físicas, econômicas e políticas.
@@ -378,11 +378,16 @@ Cada estado muda contratos, fiscalização, disponibilidade e preços através d
 
 ## 14. Direção visual e sonora
 
-**Estética retrô com leitura moderna**
+**Pixel art moderna**
 
+Pixel art aqui é meio de expressão, não emulação de hardware antigo. Nada de CRT, scanline ou ruído de tubo: o jogo não finge ser de outra época.
+
+- Paleta rica, com rampas longas e deslocamento de matiz. A sombra recebe a cor do ambiente; escurecer a mesma matiz produz rampa morta.
+- Luz declarada: uma luz principal, preenchimento de ambiente e luz de borda onde a forma precisa se separar do fundo.
+- O que emite luz — motor, cabine, painéis, alertas — derrama luz no que está por perto.
+- Atmosfera é trabalho do motor, não do sprite: brilho nos emissivos, luzes 2D, camadas de profundidade e partículas. O desenho continua nítido; o clima vem da cena.
 - A interface fica em camada própria e escalável, para não sacrificar texto econômico em tela pequena.
 - O filtro de pixelização é separado do que o jogo considera colisão. Nenhuma escolha estética deixa o casco tremido ou a mira imprecisa.
-- CRT, scanlines, brilho e ruído são opcionais e nunca chegam a comer a informação de missão. A interface fica fora da distorção.
 
 **Identificação**
 
@@ -414,7 +419,7 @@ Os textos são preparados para inglês e português brasileiro.
 - Se pilotar e mirar ao mesmo tempo sobrecarregarem o jogador, revisar controle, torre e pausa antes de adicionar armas.
 - Se a viagem não produzir decisões, simplificá-la antes de sofisticar as órbitas.
 - Se a economia criar contratos inviáveis ou pobreza sem saída, corrigir as regras antes de abrir novos mercados.
-- Se a estética retrô prejudicar a leitura, ajustar a apresentação antes do acabamento.
+- Se atmosfera ou efeito visual prejudicarem a leitura, cortar o efeito antes de mexer no resto.
 
 ## 17. Riscos do produto
 
@@ -430,7 +435,7 @@ Os textos são preparados para inglês e português brasileiro.
 ## 18. Perguntas em aberto
 
 - Nome e ambientação final.
-- Estilo visual dominante.
+- Clima visual dominante dentro da pixel art moderna, e a paleta de cada corpo celeste.
 - Duração comercial pretendida.
 - Existência de um modo com perda permanente.
 - Qual sensação de voo o jogo quer exatamente. Essa decisão só faz sentido diante de um protótipo, não de uma descrição.
@@ -458,5 +463,6 @@ Os textos são preparados para inglês e português brasileiro.
 
 | Versão | Data | O que mudou |
 | --- | --- | --- |
+| 0.3 | 2026-09-09 | Direção de arte trocada de "estética retrô dos anos 80" para pixel art moderna, com luz, emissivos e atmosfera declarados. A referência aos anos 80 fica, mas como assunto da ficção, não como aparência de jogo antigo. CRT e scanline saíram. |
 | 0.2 | 2026-09-06 | Reescrita para linguagem direta: parágrafos longos viraram listas, voz padronizada em "o jogador", glossário e histórico adicionados. Nenhuma decisão de design mudou. |
 | 0.1 | 2026-09-06 | Primeira versão do conceito. |
