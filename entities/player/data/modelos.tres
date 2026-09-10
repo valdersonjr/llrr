@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="CatalogoDeCascos" format=3 uid="uid://dvedvqeexf2nq"]
+[gd_resource type="Resource" script_class="CatalogoDeModelos" format=3 uid="uid://dvedvqeexf2nq"]
 
-[ext_resource type="Script" path="res://entities/player/catalogo_de_cascos.gd" id="1_catalogo"]
+[ext_resource type="Script" path="res://entities/player/catalogo_de_modelos.gd" id="1_catalogo"]
 [ext_resource type="PackedScene" path="res://entities/player/utilitario_leve/utilitario_leve.tscn" id="2_leve"]
 [ext_resource type="PackedScene" path="res://entities/player/cargueiro_resistente/cargueiro_resistente.tscn" id="3_carga"]
 [ext_resource type="PackedScene" path="res://entities/player/interceptador/interceptador.tscn" id="4_inter"]
 
 [resource]
 script = ExtResource("1_catalogo")
-cascos = Array[PackedScene]([ExtResource("2_leve"), ExtResource("3_carga"), ExtResource("4_inter")])
+modelos = Array[PackedScene]([ExtResource("2_leve"), ExtResource("3_carga"), ExtResource("4_inter")])

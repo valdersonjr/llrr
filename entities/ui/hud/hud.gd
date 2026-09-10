@@ -2,10 +2,13 @@ class_name Hud
 extends CanvasLayer
 ## Instrumentos de voo: o que o jogador precisa para decidir se pode pousar.
 ##
-## Nada aqui é enfeite — combustível, casco, as quatro medidas que o trem de
-## pouso avalia, e a massa, que explica por que a nave acelera diferente com
-## o tanque cheio. Valor fora do limite do trem de pouso acende em laranja:
-## a informação chega pela cor E pelo número, nunca só pela cor.
+## Nada aqui é enfeite — as quatro medidas que o trem de pouso avalia, e a
+## massa, que explica por que a nave acelera diferente carregada. Valor fora do
+## limite do trem de pouso acende em laranja: a informação chega pela cor E pelo
+## número, nunca só pela cor.
+##
+## Não há barra nenhuma. O jogo não tem dano nem recurso consumível, então não
+## sobrou grandeza contínua para uma barra mostrar.
 
 const COR_OK := Color("a8aec4")
 const COR_ALERTA := Color("ef7d57")
@@ -13,17 +16,13 @@ const COR_BOM := Color("5ab552")
 const COR_ATENCAO := Color("f2c14e")
 const COR_APAGADO := Color("6b7185")
 
-const LARGURA_BARRA := 56.0
 const DURACAO_AVISO := 3.5
 
 var _nave: Nave
 var _tempo_aviso := 0.0
 
-@onready var _barra_combustivel: ColorRect = $Raiz/BarraCombustivel
-@onready var _barra_integridade: ColorRect = $Raiz/BarraIntegridade
 @onready var _telemetria: RichTextLabel = $Raiz/Telemetria
 @onready var _aviso: Label = $Raiz/Aviso
-@onready var _relogio: Label = $Raiz/Relogio
 
 
 func _ready() -> void:
@@ -47,43 +46,29 @@ func _process(delta: float) -> void:
 			_aviso.text = ""
 	if _nave == null:
 		return
-	_atualizar_barras()
-	_relogio.text = Relogio.como_texto()
 	_telemetria.text = _texto_telemetria()
 
 
-func _atualizar_barras() -> void:
-	var casco := _nave.casco
-	var combustivel := _nave.combustivel_fracao()
-	_barra_combustivel.size.x = roundf(LARGURA_BARRA * combustivel)
-	_barra_combustivel.color = COR_ALERTA if combustivel < 0.12 \
-		else (COR_ATENCAO if combustivel < 0.3 else COR_BOM)
-
-	var integridade := _nave.integridade_fracao()
-	_barra_integridade.size.x = roundf(LARGURA_BARRA * integridade)
-	_barra_integridade.color = COR_ALERTA if integridade < 0.35 else COR_OK
-
-
 func _texto_telemetria() -> String:
-	var casco := _nave.casco
+	var modelo := _nave.modelo
 	var vertical := _nave.velocity.y
 	var horizontal := _nave.velocity.x
 	var velocidade := _nave.velocity.length()
 	var inclinacao := _nave.inclinacao()
 
 	# O chassi vem antes dos números: sem isto o jogador não sabe que existem
-	# outros cascos, nem qual está pilotando depois de trocar. Sem rótulo
+	# outros modelos, nem qual está pilotando depois de trocar. Sem rótulo
 	# porque "CASCO CARGUEIRO RESISTENTE" não cabe na coluna.
 	var texto := "[color=#%s]%s[/color]\n" % [
-		COR_OK.to_html(false), casco.nome.to_upper()]
-	texto += _linha("VERT", "%+d P/S" % roundi(vertical), velocidade > casco.pouso_velocidade_maxima)
-	texto += _linha("HORIZ", "%+d P/S" % roundi(horizontal), velocidade > casco.pouso_velocidade_maxima)
-	texto += _linha("INCL", "%+d°" % roundi(inclinacao), absf(inclinacao) > casco.pouso_angulo_maximo)
-	texto += _linha("GIRO", "%+d °/S" % roundi(_nave.giro), absf(_nave.giro) > casco.pouso_giro_maximo)
-	texto += _linha("CARGA", "%.1f / %.0f T" % [_nave.carga, casco.capacidade_carga],
-		_nave.carga >= casco.capacidade_carga)
+		COR_OK.to_html(false), modelo.nome.to_upper()]
+	texto += _linha("VERT", "%+d P/S" % roundi(vertical), velocidade > modelo.pouso_velocidade_maxima)
+	texto += _linha("HORIZ", "%+d P/S" % roundi(horizontal), velocidade > modelo.pouso_velocidade_maxima)
+	texto += _linha("INCL", "%+d°" % roundi(inclinacao), absf(inclinacao) > modelo.pouso_angulo_maximo)
+	texto += _linha("GIRO", "%+d °/S" % roundi(_nave.giro), absf(_nave.giro) > modelo.pouso_giro_maximo)
+	texto += _linha("CARGA", "%.1f / %.0f T" % [_nave.carga, modelo.capacidade_carga],
+		_nave.carga >= modelo.capacidade_carga)
 	texto += _linha("MASSA", "%.1f T" % _nave.massa(), false)
-	texto += _linha("ACEL", "%d P/S²" % roundi(_nave.aceleracao_disponivel()), _nave.combustivel <= 0.0)
+	texto += _linha("ACEL", "%d P/S²" % roundi(_nave.aceleracao_disponivel()), false)
 	texto += _linha("ESTAB", "LIGADA" if _nave.estabilizacao_ativa else "DESLIGADA",
 		not _nave.estabilizacao_ativa)
 
@@ -102,7 +87,5 @@ func _texto_estado() -> String:
 			return "TOCANDO"
 		Nave.Estado.POUSADA:
 			return "POUSADA"
-		Nave.Estado.DESTRUIDA:
-			return "DESTRUÍDA"
 		_:
 			return "EM VOO"

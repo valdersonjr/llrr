@@ -1,12 +1,15 @@
 class_name Nave
 extends CharacterBody2D
-## Nave do jogador: inércia, massa, combustível e avaliação de pouso.
+## Nave do jogador: inércia, massa, carga e avaliação de pouso.
 ##
-## Integração manual em vez de RigidBody2D. O pouso precisa de desfecho
-## autoral — raspão, perna quebrada e impacto frontal são coisas diferentes
-## (seção 4 do conceito) — e escrever isso controlando a velocidade é mais
-## direto, e muito mais fácil de depurar, do que calibrar atrito e
-## restituição de um corpo rígido.
+## Integração manual em vez de RigidBody2D. O contato precisa de regra autoral
+## — o que conta como pouso assentado é decisão de design (seção 4 do conceito)
+## — e escrever isso controlando a velocidade é mais direto, e muito mais fácil
+## de depurar, do que calibrar atrito e restituição de um corpo rígido.
+##
+## **A nave não tem dano.** Não existe integridade, casco quebrado nem estado
+## destruído: a seção 5 do conceito removeu o dano do jogo. Bater não tem
+## consequência, e a pergunta de o que substitui isso está na seção 18.
 ##
 ## Convenção de eixo: o "para frente" da nave é `Vector2.UP`, então
 ## `rotation == 0` é a nave em pé, exatamente como o sprite é desenhado.
@@ -17,14 +20,11 @@ extends CharacterBody2D
 
 signal pousou(plataforma: Node)
 signal decolou()
-signal impacto(dano: float, velocidade: float, desalinhamento: float)
-signal destruida()
 
 enum Estado {
-	VOANDO,    ## no ar, sob controle
-	TOCANDO,   ## alguma perna encostou, ainda não assentou
-	POUSADA,   ## parada, nivelada e estável pelo tempo exigido
-	DESTRUIDA, ## integridade zerada, sem controle
+	VOANDO,  ## no ar, sob controle
+	TOCANDO, ## alguma perna encostou, ainda não assentou
+	POUSADA, ## parada, nivelada e estável pelo tempo exigido
 }
 
 const GRUPO_PLATAFORMA := &"plataforma_de_pouso"
@@ -37,43 +37,24 @@ const ACOES_DE_VOO: Array[StringName] = [
 	&"lateral_esquerda", &"lateral_direita",
 ]
 
-## Dano por px/s de velocidade acima do que o trem de pouso absorve.
-const DANO_POR_VELOCIDADE := 1.6
-## Bater de casco custa mais caro que bater de perna.
-const MULTIPLICADOR_CASCO := 2.5
-## Cada grau de desalinhamento acima do limite divide a tolerância por isto.
-const PESO_DESALINHAMENTO := 2.0
-## Abaixo disto o contato é apoio, não impacto: não vale reavaliar todo quadro.
-const LIMIAR_IMPACTO := 3.0
 const ATRITO_SOLO := 260.0
 const LIMIAR_REPOUSO := 6.0
 const LIMIAR_GIRO_REPOUSO := 4.0
-## Frações de integridade acima das quais cada estado de casco vale.
-const LIMIARES_DE_DANO: Array[float] = [0.6, 0.25]
 
-@export var casco: Casco
+@export var modelo: Modelo
 ## Definida pela região, não pela nave — cada corpo celeste tem a sua.
 ## 0 é vácuo, e no vácuo desligar o motor não freia.
 @export var gravidade: float = 0.0
 @export var carga: float = 0.0
 ## Acessibilidade: existe desde o início e não se cobra créditos por ela
-## (seção 4). Gasta combustível como qualquer outro comando de manobra.
+## (seção 4).
 @export var estabilizacao_ativa: bool = true
 
-## Distância da origem da nave até a sola, em pixels. Cada casco tem a sua, e
+## Distância da origem da nave até a sola, em pixels. Cada modelo tem a sua, e
 ## quem posiciona a nave precisa dela para não enterrá-la nem soltá-la no ar.
 @export var altura_dos_pes: float = 15.0
 
 
-var combustivel: float = 0.0
-## Atribuir integridade atualiza o sprite junto. Antes era responsabilidade de
-## quem escrevia lembrar de chamar `_atualizar_casco()`, e quem esquecesse
-## ficava com um casco intacto na tela e destruído nos números.
-var integridade: float = 0.0:
-	set(valor):
-		integridade = valor if casco == null else clampf(valor, 0.0, casco.integridade_maxima)
-		if is_node_ready():
-			_apresentacao.atualizar(0.0, _empuxo_aplicado(), estado_de_dano())
 ## Velocidade angular em graus/s.
 var giro: float = 0.0
 var estado: Estado = Estado.VOANDO
@@ -81,8 +62,8 @@ var estado: Estado = Estado.VOANDO
 var _acelerador: float = 0.0
 var _comando_giro: float = 0.0
 var _comando_lateral: float = 0.0
-## Fração da autoridade angular que a estabilização automática usou.
-var _comando_estabilizacao: float = 0.0
+## A estabilização automática está corrigindo o giro neste quadro.
+var _estabilizando: bool = false
 var _tempo_estavel: float = 0.0
 
 @onready var _pe_esquerdo: RayCast2D = $PeEsquerdo
@@ -91,10 +72,8 @@ var _tempo_estavel: float = 0.0
 
 
 func _ready() -> void:
-	assert(casco != null, "Nave sem casco: defina o Casco na cena do casco.")
-	combustivel = casco.combustivel_maximo
-	integridade = casco.integridade_maxima
-	carga = clampf(carga, 0.0, casco.capacidade_carga)
+	assert(modelo != null, "Nave sem modelo: defina o Modelo na cena do modelo.")
+	carga = clampf(carga, 0.0, modelo.capacidade_carga)
 
 
 func _unhandled_input(evento: InputEvent) -> void:
@@ -116,7 +95,7 @@ func soltar_comandos() -> void:
 	_acelerador = 0.0
 	_comando_giro = 0.0
 	_comando_lateral = 0.0
-	_comando_estabilizacao = 0.0
+	_estabilizando = false
 	if is_node_ready():
 		_apresentacao.apagar()
 
@@ -125,72 +104,38 @@ func _physics_process(delta: float) -> void:
 	_pe_esquerdo.force_raycast_update()
 	_pe_direito.force_raycast_update()
 
-	if estado == Estado.DESTRUIDA:
-		_acelerador = 0.0
-		_comando_giro = 0.0
-		_comando_lateral = 0.0
-		_comando_estabilizacao = 0.0
-	else:
-		_ler_comandos(delta)
-		_consumir_combustivel(delta)
-		_aplicar_rotacao(delta)
-
+	_ler_comandos()
+	_aplicar_rotacao(delta)
 	_aplicar_aceleracao(delta)
-
-	var velocidade_antes := velocity
 	move_and_slide()
 
 	_pe_esquerdo.force_raycast_update()
 	_pe_direito.force_raycast_update()
-	_resolver_contatos(velocidade_antes)
 	_atualizar_estado(delta)
 	_assentar(delta)
-	_apresentacao.atualizar(delta, _empuxo_aplicado(), estado_de_dano())
+	_apresentacao.atualizar(delta, _empuxo_aplicado())
 
 
 # --- leitura de estado, para HUD e para quem escuta -------------------------
 
 func massa() -> float:
-	return casco.massa_seca + combustivel + carga
+	return modelo.massa_seca + carga
 
 
 ## Aceleração que o motor principal consegue entregar agora, em px/s².
-## Cai com carga e com o tanque cheio, e some sem combustível.
+## Cai com carga, e é só isso: voar não custa recurso nenhum.
 func aceleracao_disponivel() -> float:
-	return 0.0 if combustivel <= 0.0 else casco.empuxo_principal / massa()
+	return modelo.empuxo_principal / massa()
 
 
 func aceleracao_angular() -> float:
-	return casco.torque_manobra / massa()
+	return modelo.torque_manobra / massa()
 
 
-## Empuxo que o motor está de fato entregando, de 0 a 1. Sem combustível não
-## há empuxo, e é isso que a apresentação desenha.
+## Empuxo que o motor está de fato entregando, de 0 a 1. É isso que a
+## apresentação desenha.
 func _empuxo_aplicado() -> float:
-	return _acelerador if combustivel > 0.0 else 0.0
-
-
-## Quanto resta do casco, de 0 a 1. Quem só quer mostrar uma barra ou comparar
-## com um limiar não precisa saber que existe `casco.integridade_maxima`.
-func integridade_fracao() -> float:
-	return 0.0 if casco == null else integridade / casco.integridade_maxima
-
-
-func combustivel_fracao() -> float:
-	return 0.0 if casco == null else combustivel / casco.combustivel_maximo
-
-
-func intacta() -> bool:
-	return casco != null and is_equal_approx(integridade, casco.integridade_maxima)
-
-
-## 0 íntegro, 1 degradado, 2 crítico.
-func estado_de_dano() -> int:
-	var fracao := integridade_fracao()
-	for i in LIMIARES_DE_DANO.size():
-		if fracao > LIMIARES_DE_DANO[i]:
-			return i
-	return LIMIARES_DE_DANO.size()
+	return _acelerador
 
 
 ## Inclinação em relação à vertical do mundo, em graus. Negativa para bombordo.
@@ -202,21 +147,9 @@ func pernas_em_contato() -> int:
 	return int(_pe_esquerdo.is_colliding()) + int(_pe_direito.is_colliding())
 
 
-## Restaura o casco e o estado de dano visível. Quem cobra por isso é quem
-## chamou — a nave não conhece porto nem preço.
-func reparar() -> void:
-	integridade = casco.integridade_maxima
-	if estado == Estado.DESTRUIDA:
-		estado = Estado.VOANDO
-
-
-func abastecer() -> void:
-	combustivel = casco.combustivel_maximo
-
-
 ## Embarca até `toneladas` no porão e devolve quanto de fato coube.
 func carregar(toneladas: float) -> float:
-	var coube := clampf(toneladas, 0.0, casco.capacidade_carga - carga)
+	var coube := clampf(toneladas, 0.0, modelo.capacidade_carga - carga)
 	carga += coube
 	return coube
 
@@ -242,36 +175,21 @@ func plataforma_sob_a_nave() -> Node:
 
 # --- comandos ---------------------------------------------------------------
 
-func _ler_comandos(delta: float) -> void:
+func _ler_comandos() -> void:
 	_acelerador = Input.get_action_strength("empuxo")
 	_comando_giro = Input.get_axis("girar_esquerda", "girar_direita")
 	_comando_lateral = Input.get_axis("lateral_esquerda", "lateral_direita")
 
-	_comando_estabilizacao = 0.0
-	if estabilizacao_ativa and is_zero_approx(_comando_giro) and not is_zero_approx(giro):
-		# Só cobra pelo que a estabilização de fato precisou corrigir: parar um
-		# giro residual mínimo custa uma fração do que custa parar um pião.
-		var autoridade := aceleracao_angular() * delta
-		_comando_estabilizacao = minf(absf(giro) / maxf(autoridade, 0.0001), 1.0)
-
-	if combustivel <= 0.0:
-		_acelerador = 0.0
-		_comando_giro = 0.0
-		_comando_lateral = 0.0
-		_comando_estabilizacao = 0.0
-
-
-func _consumir_combustivel(delta: float) -> void:
-	var manobra := absf(_comando_giro) + absf(_comando_lateral) + _comando_estabilizacao
-	var taxa := casco.consumo_principal * _acelerador + casco.consumo_manobra * manobra
-	combustivel = maxf(combustivel - taxa * delta, 0.0)
+	_estabilizando = estabilizacao_ativa \
+		and is_zero_approx(_comando_giro) \
+		and not is_zero_approx(giro)
 
 
 func _aplicar_rotacao(delta: float) -> void:
 	var autoridade := aceleracao_angular() * delta
 	if not is_zero_approx(_comando_giro):
-		giro = clampf(giro + autoridade * _comando_giro, -casco.giro_maximo, casco.giro_maximo)
-	elif _comando_estabilizacao > 0.0:
+		giro = clampf(giro + autoridade * _comando_giro, -modelo.giro_maximo, modelo.giro_maximo)
+	elif _estabilizando:
 		giro = move_toward(giro, 0.0, autoridade)
 	rotation += deg_to_rad(giro) * delta
 
@@ -279,8 +197,8 @@ func _aplicar_rotacao(delta: float) -> void:
 func _aplicar_aceleracao(delta: float) -> void:
 	var m := massa()
 	var aceleracao := Vector2(0.0, gravidade)
-	aceleracao += Vector2.UP.rotated(rotation) * (casco.empuxo_principal * _acelerador / m)
-	aceleracao += Vector2.RIGHT.rotated(rotation) * (casco.empuxo_manobra * _comando_lateral / m)
+	aceleracao += Vector2.UP.rotated(rotation) * (modelo.empuxo_principal * _acelerador / m)
+	aceleracao += Vector2.RIGHT.rotated(rotation) * (modelo.empuxo_manobra * _comando_lateral / m)
 	velocity += aceleracao * delta
 
 
@@ -291,7 +209,7 @@ func _aplicar_aceleracao(delta: float) -> void:
 ## **IMPORTANT:** roda depois de `move_and_slide()`, e o apoio vem das colisões
 ## dela, não dos raycasts das pernas. Os raycasts enxergam o chão alguns pixels
 ## antes do toque; usá-los aqui matava a descida antes da colisão existir e
-## nenhum pouso chegava a ser rápido o bastante para causar dano.
+## nenhum pouso chegava a ser rápido o bastante para ser avaliado direito.
 func _assentar(delta: float) -> void:
 	if get_slide_collision_count() == 0:
 		return
@@ -310,58 +228,9 @@ func _normal_do_apoio() -> Vector2:
 	return soma.normalized() if soma != Vector2.ZERO else Vector2.UP
 
 
-# --- contato e dano ---------------------------------------------------------
-
-func _resolver_contatos(velocidade_antes: Vector2) -> void:
-	var pior: KinematicCollision2D = null
-	var pior_impacto := 0.0
-	for i in get_slide_collision_count():
-		var colisao := get_slide_collision(i)
-		# Relativa à plataforma: pousar sobre algo que se move considera o
-		# movimento dele, não a velocidade absoluta da nave.
-		var relativa := velocidade_antes - colisao.get_collider_velocity()
-		var contra := -relativa.dot(colisao.get_normal())
-		if contra > pior_impacto:
-			pior_impacto = contra
-			pior = colisao
-	if pior == null or pior_impacto < LIMIAR_IMPACTO:
-		return
-
-	var desalinhamento := absf(rad_to_deg(Vector2.UP.rotated(rotation).angle_to(pior.get_normal())))
-	var dano := _dano_do_impacto(pior_impacto, desalinhamento)
-	if dano <= 0.0:
-		return
-
-	integridade = maxf(integridade - dano, 0.0)
-	impacto.emit(dano, pior_impacto, desalinhamento)
-	if integridade <= 0.0 and estado != Estado.DESTRUIDA:
-		estado = Estado.DESTRUIDA
-		destruida.emit()
-
-
-## O trem de pouso absorve tanto menos quanto pior o alinhamento no contato.
-## Uma regra só, e legível: você bateu rápido demais para o ângulo em que
-## estava. Encostar torto devagar não quebra nada — é só encostar torto.
-func _dano_do_impacto(velocidade_contra: float, desalinhamento: float) -> float:
-	var fator_angulo := desalinhamento / casco.pouso_angulo_maximo
-	var fator_giro := absf(giro) / casco.pouso_giro_maximo
-	var penalidade := maxf(0.0, maxf(fator_angulo, fator_giro) - 1.0)
-	var tolerancia := casco.pouso_velocidade_maxima / (1.0 + PESO_DESALINHAMENTO * penalidade)
-	var excesso := maxf(0.0, velocidade_contra - tolerancia)
-	if excesso <= 0.0:
-		return 0.0
-	var dano := excesso * DANO_POR_VELOCIDADE
-	if pernas_em_contato() == 0:
-		dano *= MULTIPLICADOR_CASCO
-	return dano
-
-
 # --- estado do pouso --------------------------------------------------------
 
 func _atualizar_estado(delta: float) -> void:
-	if estado == Estado.DESTRUIDA:
-		return
-
 	var pernas := pernas_em_contato()
 	match estado:
 		Estado.VOANDO:
@@ -373,7 +242,7 @@ func _atualizar_estado(delta: float) -> void:
 				estado = Estado.VOANDO
 			elif _assentada(pernas):
 				_tempo_estavel += delta
-				if _tempo_estavel >= casco.pouso_tempo_estavel:
+				if _tempo_estavel >= modelo.pouso_tempo_estavel:
 					estado = Estado.POUSADA
 					pousou.emit(plataforma_sob_a_nave())
 			else:
@@ -389,4 +258,4 @@ func _assentada(pernas: int) -> bool:
 	return pernas == 2 \
 		and velocity.length() <= LIMIAR_REPOUSO \
 		and absf(giro) <= LIMIAR_GIRO_REPOUSO \
-		and absf(inclinacao()) <= casco.pouso_angulo_maximo
+		and absf(inclinacao()) <= modelo.pouso_angulo_maximo

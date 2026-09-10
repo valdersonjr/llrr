@@ -2,7 +2,7 @@
 
 Sistemas e ferramentas sem nenhuma referência à lógica específica deste jogo — idealmente copiáveis pra outro projeto sem editar nada.
 
-Exemplos do tipo de coisa que mora aqui: máquina de estados genérica, escalonamento de resolução/UI, shaders de uso geral, sistema de tempo/relógio, ruído e pathfinding.
+Exemplos do tipo de coisa que mora aqui: máquina de estados genérica, escalonamento de resolução/UI, shaders de uso geral, interpolação e easing, ruído e pathfinding.
 
 **IMPORTANT:** regra de entrada — se o arquivo cita qualquer `class_name`, cena, autoload ou constante deste jogo, ele não pertence a `common/`. Nesse caso vai na pasta da funcionalidade correspondente (`entities/`, `stages/`, `utilities/`).
 

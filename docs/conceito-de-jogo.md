@@ -1,6 +1,6 @@
 # Lunar RPG — Conceito e direção de jogo
 
-**Versão 0.3** · atualizado em 9 de setembro de 2026
+**Versão 0.10** · atualizado em 9 de setembro de 2026
 
 Documento vivo: ele muda quando as ideias mudarem. O registro do que mudou fica na seção 20.
 
@@ -19,31 +19,42 @@ Os termos próprios do projeto estão explicados no glossário, na seção 19.
 
 ## 1. A ideia central
 
-Um RPG singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander. O mundo é o do cinema espacial dos anos 80 — naves usadas, indústria pesada, trabalho sujo. O acabamento é pixel art moderna: a referência é o assunto, não a aparência de jogo antigo.
+Um RPG singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander. O mundo é o da ficção científica industrial — naves usadas, indústria pesada, trabalho sujo. O acabamento é pixel art moderna: a referência é o assunto, não a aparência de jogo antigo.
 
-A nave é o personagem principal. Transporte, mineração, resgate, combate e política usam os mesmos recursos e produzem as mesmas consequências:
+A nave é o personagem principal, e o jogo tem duas vistas da mesma nave:
 
-- o motor que o jogador usa para pousar é o mesmo que leva dano no combate;
-- a carga resgatada ocupa o mesmo porão da carga comercial.
+- **Vista de espaço.** Câmera afastada, sem gravidade e sem chão. É onde o jogador navega entre planetas e outposts, e onde o espaço é grande o bastante para valer a pena olhar.
+- **Vista de superfície.** Câmera perto, gravidade do corpo celeste, terreno e plataformas. É onde o pouso acontece.
+
+A troca entre elas é entrar e sair de um planeta. Não é mudança de perspectiva nem de regras de voo: é a mesma nave, com a mesma inércia, vista de outra distância.
+
+O laço central do jogo:
+
+1. Pegar um contrato num outpost.
+2. Voar até o planeta que tem o recurso pedido.
+3. Entrar no planeta, e a vista trocar.
+4. Pousar no ponto de coleta e carregar o porão.
+5. Decolar, voltar ao espaço.
+6. Entregar no mesmo outpost que emitiu o contrato.
 
 O que o jogo se propõe a entregar:
 
 - Mundo e pilotagem 2D em pixel art moderna.
-- Nave controlada diretamente, com inércia, pouso, combustível, carga e melhorias.
-- Contratos de transporte, resgate e mineração; créditos e progressão.
-- Planetas com diferenças físicas, econômicas e políticas.
-- Combate conectado à pilotagem e aos danos da nave.
-- Escolhas entre trabalho legal, pirataria, contrabando e envolvimento político.
-- Viagens que conectam os sistemas sem exigir percorrer todo o vazio em tempo real.
+- Nave controlada diretamente, com inércia, pouso, carga e melhorias.
+- Um sistema aberto para explorar, com planetas e outposts que o jogador acha voando.
+- Contratos de coleta emitidos por outposts; créditos e progressão.
+- Planetas com diferenças físicas e de recurso.
+- Um pouso difícil em cada planeta, pelo que aquele planeta é.
 
 ## 2. Princípios de experiência
 
 1. **Pilotagem antes de quantidade de conteúdo.** Uma nave e três plataformas precisam ser divertidas antes de o jogo ganhar a quarta plataforma.
-2. **Consequências legíveis.** O jogador entende por que colidiu, por que perdeu carga e por que foi identificado.
-3. **Falhar gera uma situação nova.** Dano, resgate e perda parcial acontecem antes de a campanha se encerrar.
+2. **Consequências legíveis.** O jogador entende por que colidiu e por que perdeu carga.
+3. **Errar não trava o jogo.** Um pouso ruim devolve o jogador ao voo, não a uma tela de fim.
 4. **Profissões compartilham sistemas.** Cada profissão usa os sistemas que já existem, em vez de ganhar mecânica isolada só dela.
 5. **Complexidade progressiva.** Calor, tripulação e política entram depois que o jogador aprendeu os controles básicos.
-6. **Respeito ao tempo do jogador.** O jogo pausa, salva, avança rápido até as decisões relevantes e nunca exige ficar aberto para progredir.
+6. **Respeito ao tempo do jogador.** O jogo pausa, salva e nunca exige ficar aberto para progredir.
+7. **Explorar é uma recompensa em si.** O jogador acha um planeta voando até ele, não escolhendo um destino numa lista.
 
 ## 3. Escopo
 
@@ -51,51 +62,44 @@ Uma ideia boa pode esperar. A tabela separa o que entra na primeira versão do q
 
 | Área | Primeira versão | Expansão posterior |
 | --- | --- | --- |
-| Universo | Um sistema fictício, três corpos visitáveis e uma estação orbital | Novos sistemas e viagens exóticas |
-| Superfícies | Oito regiões autorais, distribuídas entre os três destinos (3 + 3 + 2) | Mais biomas e geração extensa |
-| Destinos | Lua industrial, planeta desértico e asteroide com atividade criminosa | Mundo oceânico, gigante gasoso e vulcanismo |
-| Naves | Três cascos, slots predefinidos, 18–24 módulos e equipamentos | Construção livre peça a peça, grandes frotas |
-| Mercado | Oito mercadorias, estoques por porto e logística agregada | Cadeias industriais extensas |
-| Missões | Cinco famílias: transporte, resgate, mineração, interceptação e extração | Mais variações e profissões |
-| Política | Três facções ativas e um conflito regional com desfechos | Guerras generalizadas e diplomacia entre sistemas |
-| Narrativa | Um arco autoral de 6–8 missões, com contratos repetíveis ao redor | Várias campanhas e histórias da tripulação |
-| Tripulação | Até três especialistas, com competências, ferimentos e eventos limitados | Relações sociais extensas e simulação individual |
-| Combate | Poucos inimigos, dano por módulo, fuga, rendição e extração | Batalhas de frotas e combate a pé |
-| Destruição | Depósitos mineráveis e estruturas destrutíveis selecionadas | Terreno arbitrário deformável, fluidos e desmoronamentos |
+| Universo | Um sistema grande e finito, com planetas e outposts feitos à mão | Mais sistemas, e geração para além do que foi desenhado à mão |
+| Vistas | Espaço e superfície, com a mesma nave e a mesma física | Vista de acoplagem e interiores de estação |
+| Superfícies | Uma região de pouso por planeta, com o ponto de coleta do recurso dele | Várias regiões por planeta, mais biomas |
+| Planetas | Gravidade, relevo e recurso próprios em cada um | Clima, perigo ambiental e economia local |
+| Outposts | Emitem contratos e recebem a entrega deles | Mercado próprio e outros serviços de porto |
+| Naves | Três modelos, slots predefinidos, 18–24 módulos e equipamentos | Construção livre peça a peça, grandes frotas |
+| Missões | Uma família: coletar um recurso num planeta e entregar no outpost que pediu | Transporte, resgate, interceptação e extração |
+| Eventos de coleta | Carregar no ponto de pouso, e extrair esperando no lugar | Mais tipos de evento, e estruturas destrutíveis selecionadas |
+| Facções e política | Fora da primeira versão | Facções ativas, reputação e conflito regional |
+| Narrativa e tripulação | Fora da primeira versão | Arco autoral e especialistas a bordo |
+| Economia | Pagamento por contrato | Mercados com estoque e preço variável |
 
-Os três corpos do sistema são ficcionais. Isso permite ajustar as condições deles à diversão, sem prometer fidelidade a planetas reais.
+Os corpos do sistema são ficcionais. Isso permite ajustar as condições deles à diversão, sem prometer fidelidade a planetas reais.
 
 ### 3.1 Fora da primeira versão
 
 - Multiplayer.
 - Física gravitacional de muitos corpos.
-- Campanha que avança enquanto o jogo está fechado.
 - Cidades caminháveis.
-- Combate terrestre controlado diretamente.
+- Combate, de qualquer tipo. Não há armas, inimigos nem naves hostis.
 - Frota administrável.
 - Terreno integralmente destrutível.
-
-Guerra e abordagem de nave continuam existindo, em versões mais baratas:
-
-- **Guerras** são mudanças de estado do mundo, acompanhadas por operações locais que o jogador executa.
-- **Abordagens** são decisões e etapas de extração feitas pela interface.
-
-Nenhuma das duas simula milhares de soldados ou comerciantes individualmente.
+- Geração procedural de planetas.
 
 ### 3.2 A primeira experiência completa
 
-Um trecho curto de 30–45 minutos que reúne as partes essenciais do jogo, em dois corpos celestes, três regiões e uma estação:
+Um trecho curto de 30–45 minutos que reúne as partes essenciais do jogo, com um outpost e dois planetas:
 
-1. Aceitar e realizar um frete; aprender a pousar com carga.
-2. Receber créditos e escolher entre reparar ou melhorar um equipamento.
-3. Aceitar a extração de um prisioneiro em trânsito.
-4. Planejar a viagem e chegar a um encontro com um transporte.
-5. Usar uma autorização obtida antes ou incapacitar a escolta.
-6. Transferir o prisioneiro, fugir e pousar com o dano persistente.
-7. Ver a reputação e a disponibilidade de contratos mudarem.
-8. Fechar e reabrir o jogo, retomando a campanha corretamente.
+1. Ler o quadro de contratos de um outpost e aceitar uma coleta.
+2. Decolar e sair para a vista de espaço.
+3. Achar, voando, o planeta que tem o recurso pedido.
+4. Entrar no planeta e ver a vista trocar para a superfície.
+5. Pousar no ponto de coleta e encher o porão.
+6. Decolar carregado, e sentir a massa mudar como a nave voa.
+7. Voltar ao mesmo outpost e entregar o contrato.
+8. Fechar e reabrir o jogo, retomando de onde parou.
 
-Essa sequência valida a identidade do RPG e do combate. Se ela não funcionar, o próximo passo é revisar controles e objetivos, não multiplicar planetas.
+Essa sequência valida o laço central. Se ela não funcionar, o próximo passo é revisar controles, pouso e a leitura do espaço, não multiplicar planetas.
 
 ## 4. Pilotagem
 
@@ -103,21 +107,25 @@ Essa sequência valida a identidade do RPG e do combate. Se ela não funcionar, 
 
 - A nave tem inércia.
 - A massa altera a aceleração sob o mesmo empuxo.
-- O consumo depende do comando efetivamente aplicado, inclusive o da estabilização automática.
-- Carga pesada é sentida no controle, não apenas anunciada num número.
+- Carga pesa e é sentida no controle, não apenas anunciada num número.
+
+**Voar não custa recurso**
+
+Não existe combustível, e não existe dano. O empuxo está sempre disponível, e bater a nave não tira nada dela.
+
+Hoje um pouso ruim não tem consequência nenhuma. Isso é a maior decisão em aberto do projeto, e está registrada na seção 18. Nada neste documento deve assumir tanque, autonomia, integridade de casco ou nave destruída.
 
 **Propulsão**
 
 - O propulsor principal empurra no eixo da nave.
 - Os propulsores de manobra produzem translação e giro.
-- Dano reduz a capacidade real: perder empuxo ou eficiência muda como se voa.
 
 **Estabilização angular**
 
 Existe desde o início, como acessibilidade.
 
-- Gasta combustível e respeita os limites da nave.
-- Upgrades ampliam eficiência ou capacidade.
+- Respeita os limites da nave e não custa nada ao jogador.
+- Upgrades ampliam a autoridade angular.
 - O jogo nunca cobra créditos para corrigir um controle frustrante.
 - O piloto automático barato funciona. Ele não recebe falhas aleatórias como substituto de dificuldade bem desenhada.
 
@@ -131,62 +139,59 @@ Entram na avaliação:
 - contato das pernas;
 - tempo estável.
 
-Por isso, um toque de raspão não é o mesmo que um impacto frontal, e uma colisão pode ser sobrevivível: quebrar uma perna e ainda entregar parte da carga é um desfecho legítimo. Pousar sobre plataforma móvel considera o movimento dela.
+Essas medidas são o que define um pouso bom, e o HUD acende em laranja o que está fora do limite. O que elas **não** fazem, hoje, é produzir consequência: a nave assenta de qualquer jeito, porque não existe dano. Pousar sobre plataforma móvel considera o movimento dela.
 
 **Sinais de que a pilotagem está certa**
 
 - Parada no chão, a nave não se move sozinha.
 - Desligar os motores no vácuo não freia.
 - Peso extra reduz a aceleração.
-- Combustível zero limita o empuxo.
+- A estabilização zera o giro sozinha.
 
 ## 5. Nave, equipamentos e progressão
 
-**Cascos e módulos**
+**Modelos e módulos**
 
-- Cada casco define slots, silhueta, limite de carga e resistência estrutural.
-- Cada módulo tem massa, consumo, integridade e capacidades.
-- A nave é a soma do que está instalado, menos o que está quebrado.
+- Cada modelo define slots, silhueta e limite de carga.
+- Cada módulo tem massa e capacidades.
+- A nave é a soma do que está instalado.
 
-Slots previstos: motor principal, controle de manobra, tanque, compartimento de carga, utilidade, arma e defesa/sensor. Nem todo casco tem a mesma combinação. Encaixe espacial livre, fiação e tubulação individuais ficam fora.
+Slots previstos: motor principal, controle de manobra, compartimento de carga, utilidade e sensor. Nem todo modelo tem a mesma combinação. Encaixe espacial livre, fiação e tubulação individuais ficam fora.
 
 **Progressão horizontal**
 
-Três papéis de casco: utilitário leve, cargueiro resistente e interceptador. Todo equipamento cobra o seu preço em massa, energia, espaço, combustível ou manutenção. Não existe upgrade que só melhore.
+Três papéis de modelo: utilitário leve, cargueiro resistente e interceptador. Todo equipamento cobra o seu preço em massa, energia ou espaço. Não existe upgrade que só melhore.
 
 **Ordem em que os recursos entram no jogo**
 
-1. Combustível, estrutura e carga.
-2. Dano por módulo e munição.
-3. Energia e calor, só quando o combate ou a mineração criarem uma decisão real.
+1. Carga.
+2. Energia e calor, só quando um evento de coleta criar uma decisão real.
 
 A primeira missão nunca mostra seis barras sem função perceptível.
 
-**Dano e recuperação**
+**Não existe dano**
 
-- Módulos passam por três estados: íntegro, degradado e desativado.
-- Integridade estrutural é separada de capacidade funcional: dá para perder motores sem explodir.
-- Reparo restaura o módulo. Substituição troca a peça.
+A nave não tem integridade, casco degradado nem estado destruído. Nenhum impacto tira nada dela, nenhum módulo quebra, e não há como perder a nave.
 
-**Saída da espiral de pobreza**
-
-Sempre existe um caminho verificável de volta ao trabalho: serviço emergencial, contrato básico viável ou recuperação com penalidade limitada. Nenhuma decisão garante lucro, mas dá para consertar a nave e voltar a trabalhar depois de um fracasso. Perda permanente da campanha é opção de dificuldade, não a regra.
+Isso vale para tudo que o jogo desenhar: nada de sprite de casco amassado, barra de estrutura, alerta de casco crítico ou efeito de destruição. Consequência de pouso ruim é a primeira pergunta em aberto da seção 18.
 
 ## 6. Controles, câmera e legibilidade
 
 **Controles**
 
-- Teclado e controle levam ao mesmo conjunto de ações: intensidade do propulsor, rotação, translação lateral, mira e comandos.
-- Os inimigos voam sob as mesmas regras do jogador. Nenhuma nave se move por teleporte.
+- Teclado e controle levam ao mesmo conjunto de ações: intensidade do propulsor, rotação, translação lateral e comandos.
+- Os comandos de voo são os mesmos nas duas vistas. Trocar de vista não pede aprender outro controle.
 
-**Mira**
+**As duas câmeras**
 
-O combate inicial usa uma torre com arco limitado, apontada por mouse ou analógico direito, e o movimento não fica preso à mira. No controle, seleção de alvo e assistência opcional entram em teste. Armas fixas e combinações mais exigentes vêm depois.
+| Vista | Distância | O que precisa caber na tela |
+| --- | --- | --- |
+| Superfície | Perto | A nave, o ponto de pouso e o terreno em volta dele |
+| Espaço | Longe | A nave, os planetas próximos e para onde ela está indo |
 
-**Câmera**
-
-- Antecipa o movimento com moderação, mantendo nave e área de pouso legíveis.
-- O zoom tem limites: distância astronômica é assunto do mapa.
+- Cada vista antecipa o movimento com moderação, dentro do que a distância dela permite.
+- A troca entre as vistas é um movimento contínuo de câmera, não um corte seco nem uma tela de carregamento anunciada.
+- A nave nunca some da tela. Na vista de espaço ela é pequena, mas continua legível.
 - Nenhuma ação essencial depende de passar o mouse por cima.
 
 **Pausa e dispositivos**
@@ -194,187 +199,163 @@ O combate inicial usa uma torre com arco limitado, apontada por mouse ou analóg
 - Menus de administração e pausa param o tempo. Inspecionar a situação com o jogo pausado não é punido.
 - Trocar de dispositivo, desconectar o controle ou voltar de uma suspensão nunca deixa o propulsor travado ligado.
 
-## 7. Mundo: planetas, regiões e permanência
+## 7. Mundo: sistema, planetas e permanência
+
+**O sistema**
+
+Um espaço contínuo e finito, grande o bastante para dar sensação de mundo aberto, com planetas e outposts colocados à mão. O jogador chega em qualquer um deles voando: não existe tela de seleção de destino.
+
+Finito é uma decisão de produção, não de ambição. Planetas feitos à mão são a única forma barata de garantir que dois planetas não sejam o mesmo planeta repintado. Geração procedural fica na coluna de expansão da seção 3, e só entra quando houver receita provada de variedade.
 
 **Composição de um planeta**
 
-Um planeta é um conjunto de condições físicas mais um estado econômico e político, com regiões visitáveis. Cada região tem terreno, plataformas, clima, pontos de interesse e marcadores de missão. As regiões são autorais, com variações por clima, facção e estado das construções.
+Um planeta é um conjunto de condições físicas mais o recurso que ele oferece:
+
+- gravidade própria, que muda o pouso;
+- relevo próprio, que muda a aproximação;
+- um recurso, que é o motivo de ir até lá;
+- uma região de pouso, com o ponto de coleta desse recurso.
+
+Um planeta tem um objetivo só: pousar no ponto de coleta. A variedade vem da gravidade, do relevo e do que o contrato pede, não de acumular tarefas na superfície.
+
+**Outposts**
+
+Um outpost fica no espaço e é um destino como qualquer outro: o jogador voa até ele, entra, e a vista troca do mesmo jeito que troca ao entrar num planeta. Lá dentro existe um lugar de pouso demarcado, e pousar nele é o que dá acesso ao outpost. Não existe manobra de acoplagem: acoplar seria um controle novo, e o pouso já resolve.
+
+O que um outpost faz:
+
+- emite contratos;
+- recebe a entrega dos contratos que ele próprio emitiu.
+
+Um contrato pertence ao outpost que o emitiu. Levar a carga para outro outpost não entrega nada. É isso que transforma cada contrato numa viagem de ida e volta e dá função ao mapa.
 
 **Perspectiva**
 
-Pilotagem e combate acontecem sempre com a mesma nave vista de perfil, em 2D. O mapa orbital é uma camada estratégica à parte, não uma mudança de perspectiva. As superfícies são regiões locais: o jogador não precisa dar a volta física num planeta.
+A pilotagem acontece sempre com a mesma nave vista de perfil, em 2D, nas duas vistas. As superfícies são regiões locais: o jogador não precisa dar a volta física num planeta.
 
-**Mineração e destruição seletiva**
+**O que se faz num planeta** está na seção 10: pousar no lugar demarcado, que é a parte difícil, e executar ali o evento que o contrato pede.
 
-- Depósitos são alvos com quantidade, dureza e qualidade, e o laser os consome em partes.
-- Minas e bases têm estruturas destrutíveis escolhidas na produção.
-- Isso entrega mineração e sabotagem sem prometer terreno deformável em qualquer ponto.
+## 8. O mundo que continua
+
+**Não existe relógio de campanha.** O jogo não conta dias nem horas, nada é medido em tempo de mundo, e nada avança sozinho. O único tempo que o jogo conhece é o da cena que está rodando, e ele para quando o jogo pausa.
+
+Nenhum sistema deve consultar, exibir ou cobrar tempo de campanha. Contrato e evento de coleta se descrevem pelo que fazem, não por quanto demoram no calendário.
 
 **O mundo lembra**
 
-Permanecem no mundo: depósito exaurido, estrutura destruída, nave abandonada, carga deixada para trás e controle de uma instalação. Destroços decorativos somem com o tempo; destroços de missão e carga recuperável ficam, mesmo com o cenário cheio.
+O que continua depois que o jogador sai de um lugar e volta:
 
-**Troca de governo**
+- ponto de coleta esgotado;
+- carga deixada para trás;
+- contrato aceito, entregue ou fracassado;
+- créditos.
 
-Mudar quem governa um lugar muda contratos, permissões, bandeiras e quem está presente, sem duplicar o mapa para cada desfecho.
+Destroços decorativos somem sozinhos. Carga recuperável e o que um contrato produziu ficam, mesmo com o cenário cheio.
 
-## 8. Tempo e o mundo que continua
+Isso é estado salvo, não simulação. O jogo guarda o que já aconteceu; ele não faz o mundo acontecer sozinho enquanto o jogador está em outro lugar, e muito menos com o jogo fechado.
 
-Existe um relógio de campanha, e ele só avança com o jogo aberto. Salários, produção, contratos e clima consultam esse relógio.
+## 9. O espaço
 
-| Situação | O que acontece com o tempo |
-| --- | --- |
-| Voo ou combate | Corre normalmente |
-| Menus, planejamento e pausa | Parado |
-| Reparo ou serviço de porto | Duração informada antes de confirmar |
-| Cruzeiro entre destinos | Avança até o próximo evento ou decisão |
-| Jogo fechado | Nada acontece |
+**Como se viaja**
 
-**Ritmo.** Produção e política evoluem em ritmo próprio, não a cada segundo.
+O espaço é voado, não planejado. A nave sai da superfície, a vista troca e o jogador segue pilotando com os mesmos comandos, agora sem gravidade e com a câmera afastada.
 
-**O avanço rápido para no problema.** Se a tripulação fica sem suprimento no terceiro dia de uma viagem de trinta, o jogo interrompe no terceiro dia. O mesmo vale para uma emboscada: o encontro começa com aviso e distância coerentes, dando oportunidade de reação. A ameaça pode ser difícil, mas a surpresa precisa ser justa.
+- Não existe tela de planejamento de rota, nem escolha entre rota econômica, rápida e clandestina.
+- Não existe cálculo de autonomia, reserva de chegada ou custo de partida.
+- Não existe viagem resolvida por interface: se o jogador foi de um lugar a outro, ele voou até lá.
 
-**O mundo distante** é representado por fluxos e rotas, com alguns transportes relevantes existindo individualmente. Uma nave capturada para de entregar a carga antiga no mesmo instante.
+**Escala**
 
-## 9. Viagens entre corpos
-
-**O mapa**
-
-Um mapa 2D com posições orbitais simplificadas e rotas calculadas. Sem solver de órbitas reais e sem trajetórias decorativas vendidas como precisão astronômica.
-
-**A escolha de rota**
-
-Quando disponíveis, o jogador escolhe entre rota econômica, rápida e clandestina. Cada uma informa duração, combustível esperado, reserva de chegada, infraestrutura, fiscalização e incertezas conhecidas.
-
-O mapa mostra exatamente a mesma conta que o jogo vai executar. O jogo não promete autonomia impossível.
+A distância entre corpos precisa ser grande o bastante para o espaço parecer espaço, e curta o bastante para a viagem não virar espera. Esse é um número de calibração, e ele se decide voando, não no papel.
 
 **Partida e chegada**
 
-- A decolagem começa manualmente na região. Ao atingir a condição de saída, uma etapa de ascensão representa o resto do trajeto.
-- A chegada tem desaceleração planejada e depois uma região de aproximação e pouso.
-- Cruzar o topo da tela não coloca a nave em órbita: é preciso condição de voo e recursos, e o custo é informado antes da partida.
+- A decolagem começa manualmente na região e continua sem corte até a vista de espaço.
+- A aproximação de um planeta traz a vista de volta para a superfície, na região de pouso dele.
+- Cruzar a borda da tela não é nada: sair de um planeta é ganhar altitude de verdade.
 
-**A reserva de chegada é informação, não combustível intocável.** Gastá-la num combate reabre a pergunta de como chegar: desvio, abastecimento ou resgate.
+## 10. O pouso é o desafio
 
-**Recálculo de rota**
+Todo planeta pede a mesma coisa: descer inteiro num lugar demarcado. O que muda de planeta para planeta é o que torna essa descida difícil.
 
-Mudança de massa, dano de motor, destino bloqueado ou carga extra invalidam a previsão e forçam recalcular o restante da rota. O trecho já percorrido não é cobrado de novo.
+**De onde vem a dificuldade**
 
-Uma falha significativa oferece escolha: abandonar carga, aceitar reboque, usar um porto caro, adiar o contrato ou negociar. Decisões logísticas interessantes não dependem de assistência gravitacional.
+- A gravidade do corpo, que muda quanto empuxo o pouso exige e quanto tempo o jogador tem para corrigir.
+- O relevo entre a entrada e o ponto de coleta: cristas, desfiladeiros e paredes.
+- Objetos soltos na descida, como asteroides e destroços.
+- O tamanho, a forma e a inclinação do lugar de pouso.
 
-**Encontros e fuga**
+A dificuldade vem daí. Ela nunca vem de acumular tarefas na superfície: cada planeta continua tendo um objetivo só.
 
-- Interceptações dependem de rotas, sensores, risco e de quem realmente existe naquele trecho.
-- Eventos raros têm causa, frequência máxima e consequência clara.
-- Fugir exige separação real. Tocar a borda da tela não conta.
-- Sair e voltar não cura o inimigo nem apaga a perseguição.
+**O evento no ponto de coleta**
 
-## 10. Combate
+Pousado, o jogador executa o evento que aquele contrato pede. Dois para começar:
 
-Confrontos curtos ou moderados, com poucas naves e objetivos funcionais. O mesmo motor, combustível e casco continuam ali depois da batalha.
+| Evento | O que o jogador faz | O que ele custa |
+| --- | --- | --- |
+| Carregar | A carga já está no lugar. Pousar e embarcar. | Nada além do pouso |
+| Extrair | A nave fica parada enquanto o recurso sai do solo. | A espera, informada antes de começar |
 
-**Cinco desfechos, todos válidos:** destruir, desarmar, imobilizar, intimidar e fugir.
+Outros eventos entram como variações desse par, e cada um novo precisa justificar por que não é um dos dois. O formato não muda: pousar é a parte difícil, e o evento é o que dá sentido a ter pousado ali.
 
-**Arsenal inicial pequeno**
+**O lugar de pouso é sempre demarcado, e nem sempre é uma plataforma**
 
-Uma arma cinética, uma ferramenta de mineração e uma forma de incapacitar com regras claras. Mísseis guiados, minas, enxames de drones e escudos complexos ficam para depois. A variedade vem de objetivo, terreno, massa, posicionamento e dano funcional: o primeiro duelo precisa funcionar antes de existirem vinte armas.
+O jogador precisa saber onde descer antes de começar a descer. Um pouso que só revela o alvo no último segundo não é difícil, é injusto.
 
-**Dano**
+A demarcação é conteúdo visual autoral, feito para cada situação, não um marcador de interface genérico colado por cima da cena. Uma plataforma iluminada serve num outpost; uma boca de mina, um anel de balizas, uma clareira queimada ou um pátio de carga servem em outros lugares. É trabalho de arte, e vale gastar nele: é a primeira coisa que o jogador procura na tela ao entrar num planeta.
 
-Atinge módulos em regiões do casco. Desligar um motor deixa a nave vulnerável, mas não apaga instantaneamente a velocidade que ela já tinha.
+Duas regras para qualquer demarcação:
 
-**Os pilotos inimigos sabem apenas o que percebem.** Sem detecção ou mensagem, a IA não sabe onde está uma nave que saiu do alcance.
+- **Legível de longe.** Ela tem que se separar do terreno pela silhueta e pela luz, na altura em que o jogador ainda pode corrigir a descida.
+- **Diz mais que "aqui".** Tamanho e orientação fazem parte da informação. Cor sozinha nunca basta.
 
-**O sistema criminal** registra incidentes, autoria conhecida, testemunha ou transmissão, e jurisdição. Um ataque sem testemunha não é automaticamente invisível: a vítima pode ter transmitido antes de ser calada. O jogador precisa ouvir esses sinais para entender o risco que está correndo.
+## 11. Contratos
 
-**Rendição é condição funcional e moral**, não uma porcentagem de vida. Pesam na decisão as armas restantes, a chance de fuga, a ameaça e o histórico do jogador.
+**A família inicial é uma só: coleta.**
 
-**Abordagem**
+Um contrato diz qual recurso, quanto, e de qual planeta. Ele é emitido por um outpost e só é pago por esse mesmo outpost.
 
-- Exige alvo incapacitado ou cooperativo, aproximação estável e equipamento de transferência.
-- A extração acontece em etapas pela interface, com tempo, risco e escolhas. Não há interior caminhável.
-- Passageiros, presos e sobreviventes são pessoas com condição e localização próprias. Um prisioneiro transferido sai do manifesto inimigo no mesmo instante.
-- Uma nave capturada pode ser rebocada, vendida ou reclamada num porto. Isso não abre um sistema de frotas.
-
-## 11. Contratos e narrativa
-
-**Famílias iniciais de missão:** transporte, resgate, mineração, interceptação e extração.
-
-Cada missão tem contratante, participantes concretos, prazo, progresso, escolhas e desfecho. Concluir um objetivo é diferente de receber o pagamento.
-
-**Objetivos são combinações de peças simples:** chegar a um lugar, entregar carga, coletar recurso, extrair pessoa, incapacitar alvo e retornar.
+Cada contrato tem contratante, recurso, quantidade, evento de coleta, progresso e desfecho. Concluir a coleta é diferente de receber o pagamento: o pagamento acontece na entrega.
 
 **Contratos gerados obedecem a restrições, não a sorteio livre:**
 
-- origem e destino existem e são alcançáveis;
-- o alvo está vivo e no lugar que a missão indica;
+- o planeta pedido existe e é alcançável;
+- o recurso pedido existe naquele planeta;
+- a quantidade cabe no porão do jogador, ou o contrato diz claramente que exige mais de uma viagem;
 - a oferta combina com o nível do jogador, ou está claramente marcada como difícil;
-- o prazo é plausível para a rota;
-- requisitos de carga, passageiro e equipamento são explícitos;
-- a recompensa cobre custo operacional e risco.
+- a recompensa cobre a distância e a dificuldade do pouso.
 
 Ofertas expiram. O quadro de contratos não reserva o mundo inteiro para propostas que ninguém aceitou.
 
-**Autoral primeiro, procedural depois.** Cada família ganha exemplos escritos à mão antes de virar variação gerada. O arco do prisioneiro tem ramos escolhidos, não uma simulação universal de conspirações.
+**Contratos não têm prazo por enquanto.** Nada expira na mão do jogador depois de aceito. Prazo é uma pressão de tempo, e a seção 18 ainda não decidiu se o jogo quer uma.
 
-**Missões reagem ao mundo.** O contratante pode perder o porto, o alvo pode morrer, a carga pode ser destruída e o prazo pode acabar. Cada caso tem política definida: falha, compensação, novo destino ou cancelamento. Nenhuma missão fica eternamente ativa com objetivo impossível e sem explicação.
+**Contratos reagem ao mundo.** O ponto de coleta pode se esgotar e a carga pode ser perdida. Cada caso tem política definida: falha, compensação, novo destino ou cancelamento. Nenhum contrato fica eternamente ativo com objetivo impossível e sem explicação.
 
-## 12. Economia e logística
+**Autoral primeiro, procedural depois.** A família de coleta ganha exemplos escritos à mão antes de virar variação gerada.
 
-**Os mercados vivem nos portos**
-
-- Cada mercadoria tem preço-base, unidade, massa e regras de legalidade.
-- Cada porto tem estoque, capacidade, produção, consumo e metas de reserva.
-- O preço reage à distância entre o estoque atual e o desejado, dentro de limites, e recebe modificadores de logística, imposto, bloqueio e reputação.
-
-**Compra e venda** têm preços diferentes, e o comércio interplanetário continua valendo a pena. Vender um lote grande derruba o preço durante a venda: mil unidades não saem todas pela cotação de escassez.
-
-**Economia simulada não exige simular todo agente.** Fluxos de importação e exportação mantêm o mundo funcionando, limitados pela capacidade das rotas, e alguns comboios representam uma parte identificável desses fluxos. Piratear um transporte reduz um lote de abastecimento: uma nave sozinha não derruba a economia de um planeta, mas interferências sucessivas e objetivos de campanha podem produzir efeitos grandes.
+## 12. Economia
 
 **De onde vem o dinheiro**
 
-Lucro por rota é o jogo funcionando. Crédito criado por inconsistência é bug. Toda entrada e saída de crédito é declarada: contratos, comércio, taxas, combustível, reparo e módulos.
+Contrato entregue é a fonte de renda do jogo. Lucro por viagem é o jogo funcionando; crédito criado por inconsistência é bug. Toda entrada e saída de crédito é declarada: contratos e módulos.
+
+**Recursos**
+
+Cada planeta oferece recursos próprios, com massa e valor. É a massa que conecta economia e pilotagem: aceitar um contrato grande é aceitar decolar pesado.
+
+**Mercado com estoque e preço variável fica para depois.** Enquanto ele não existir, o pagamento de um contrato é o valor acordado no momento em que ele foi aceito.
 
 Contratos de recuperação podem ter subsídio deliberado, para impedir que o jogador trave sem dinheiro. Esse subsídio é regra de design registrada, não torneira acidental.
 
-## 13. Facções, conflito e tripulação
+## 13. Facções e tripulação
 
-**Três grupos ativos:** autoridade corporativa, movimento colonial rebelde e rede pirata. Civis e comerciantes neutros existem sem virar mais uma diplomacia completa.
+**Fora da primeira versão.** Reputação, conflito regional, troca de governo e especialistas a bordo ficam na coluna de expansão da seção 3.
 
-**Três eixos de reputação bastam:**
+O que existe agora é a relação com o outpost: ele emite trabalho e recebe entrega. Nada mais depende de facção.
 
-1. confiança de cada facção;
-2. notoriedade e procura por jurisdição;
-3. controle territorial.
+Quando facções entrarem, elas entram pelos sistemas que já existem — quais contratos aparecem em qual outpost, e quem está presente onde. Nenhuma facção ganha economia paralela só dela.
 
-Com isso já é possível ser útil aos piratas e procurado num porto ao mesmo tempo. Governo de um planeta, dono de uma instalação e facção de um personagem são coisas distintas: um esconderijo pirata pode existir em território governado por outra facção.
-
-**O conflito regional é um arco com estados:**
-
-```mermaid
-stateDiagram-v2
-    [*] --> Tensao
-    Tensao --> Preparacao: apoio e suprimentos
-    Preparacao --> Levante: condições atingidas
-    Preparacao --> Repressao: rede descoberta
-    Levante --> NovoGoverno: objetivos cumpridos
-    Levante --> Repressao: perda de capacidade
-    NovoGoverno --> Estabilizacao
-    Repressao --> Estabilizacao
-```
-
-Cada estado muda contratos, fiscalização, disponibilidade e preços através dos sistemas que já existem. O arco autoral escolhe objetivos que influenciam esses estados, sem criar uma economia paralela.
-
-**Aviso antes do irreversível.** O mundo pode avançar sem o jogador, mas decisões irreversíveis de um arco aceito precisam de prazo e aviso claros. Uma viagem não pode apagar em silêncio a história principal.
-
-**Toda mudança observável precisa ser explicada:** notícia sobre um bloqueio, mensagem de um contato, bandeira trocada no porto, quadro de contratos diferente. Mexer só em números ocultos não produz sensação de mundo vivo.
-
-**Tripulação contida**
-
-- Especialistas em reparo, medicina, mineração e negociação acrescentam competências e pequenas opções.
-- Ferimentos e suprimentos são estado persistente.
-- Ficam fora: rotinas, movimentação dentro da nave, genealogia e relações entre todos.
-- O suporte de vida começa como autonomia agregada por ocupante. Separar água, alimento e oxigênio só se cada um criar uma decisão de verdade.
+**Toda mudança observável precisa ser explicada:** um contrato que sumiu, um depósito exaurido, uma bandeira trocada. Mexer só em números ocultos não produz sensação de mundo vivo.
 
 ## 14. Direção visual e sonora
 
@@ -387,17 +368,20 @@ Pixel art aqui é meio de expressão, não emulação de hardware antigo. Nada d
 - O que emite luz — motor, cabine, painéis, alertas — derrama luz no que está por perto.
 - Atmosfera é trabalho do motor, não do sprite: brilho nos emissivos, luzes 2D, camadas de profundidade e partículas. O desenho continua nítido; o clima vem da cena.
 - A interface fica em camada própria e escalável, para não sacrificar texto econômico em tela pequena.
-- O filtro de pixelização é separado do que o jogo considera colisão. Nenhuma escolha estética deixa o casco tremido ou a mira imprecisa.
+- O filtro de pixelização é separado do que o jogo considera colisão. Nenhuma escolha estética deixa o casco tremido ou o contato impreciso.
+
+**As duas vistas precisam do mesmo cuidado.** A vista de espaço não é a de superfície com zoom para fora: ela tem o seu próprio inventário de arte, e um planeta visto de longe precisa ser reconhecível pela silhueta e pela paleta.
 
 **Identificação**
 
-- Paletas por planeta, silhuetas por facção e indicadores de dano consistentes.
-- Cor sozinha nunca distingue inimigo, aliado e objetivo.
-- Arte final não é pré-requisito para provar que a pilotagem e o combate funcionam.
+- Paletas por planeta, e uma silhueta distinta por modelo.
+- Cada lugar de pouso é desenhado à mão para o lugar em que está, e se lê de longe pela silhueta e pela luz (seção 10).
+- Cor sozinha nunca distingue o lugar de pouso, o perigo e o cenário.
+- Arte final não é pré-requisito para provar que a pilotagem e o pouso funcionam.
 
 **Som**
 
-O que importa é o sinal útil: aproximação do limite de pouso, motor falhando, combustível crítico, travamento de alvo. A música nunca esconde um alerta.
+O que importa é o sinal útil: aproximação do limite de pouso, contato das pernas, motor ligado e desligado, assentamento do trem de pouso. A música nunca esconde um alerta. Nada de alerta de casco crítico: não existe dano (seção 5).
 
 **Idiomas**
 
@@ -406,19 +390,19 @@ Os textos são preparados para inglês e português brasileiro.
 ## 15. Promessas ao jogador
 
 - Pausar e salvar sem perder progresso, com o jogo informando com clareza onde é possível salvar em cada fase do desenvolvimento.
-- Nada acontece na campanha enquanto o jogo está fechado.
-- Fracassar não é o fim: existe um caminho de volta ao trabalho depois de perder a nave, o combustível e quase todos os créditos.
 - Todo desfecho ruim tem causa compreensível.
-- Nenhuma missão fica pendurada para sempre sem objetivo possível.
-- Uma ameaça pode ser difícil, mas sempre dá a chance de reagir.
+- Nenhum contrato fica pendurado para sempre sem objetivo possível.
+- Um pouso pode ser difícil, mas o jogador sempre enxerga onde descer a tempo de corrigir.
 - Assistência de controle é acessibilidade, não item de loja.
+- Voar até um lugar é sempre possível. O jogo não tranca um destino atrás de um recurso que o jogador não tem.
 
 ## 16. Quando parar e revisar o design
 
 - Se o pouso continuar imprevisível, suspender conteúdo e revisar a pilotagem e a assistência.
-- Se pilotar e mirar ao mesmo tempo sobrecarregarem o jogador, revisar controle, torre e pausa antes de adicionar armas.
-- Se a viagem não produzir decisões, simplificá-la antes de sofisticar as órbitas.
-- Se a economia criar contratos inviáveis ou pobreza sem saída, corrigir as regras antes de abrir novos mercados.
+- Se a vista de espaço virar espera, encurtar as distâncias antes de acrescentar planetas.
+- Se dois planetas jogarem igual, revisar gravidade, relevo e recurso antes de desenhar o terceiro.
+- Se voar sem custo nenhum deixar o voo sem decisão, resolver a seção 18 antes de acrescentar conteúdo.
+- Se o jogador não achar o lugar de pouso ao entrar num planeta, é a demarcação que está errada, não a habilidade dele.
 - Se atmosfera ou efeito visual prejudicarem a leitura, cortar o efeito antes de mexer no resto.
 
 ## 17. Riscos do produto
@@ -426,43 +410,57 @@ Os textos são preparados para inglês e português brasileiro.
 | Risco | Sinal antecipado | Resposta prevista |
 | --- | --- | --- |
 | Escopo maior que a capacidade | Ciclos terminam sem nada jogável | Cortar quantidade de conteúdo e adiar sistemas da coluna de expansão |
-| Sobrecarga de controles | O jogador luta com a interface durante o pouso | Assistência básica, pausa, torre limitada e redistribuição de ações |
-| Economia instável | Mercados mortos, dinheiro infinito ou miséria permanente | Limites de preço e estoque, e caminho de recuperação explícito |
-| Inimigos que não sabem voar | Colisões constantes ou perseguição infinita | Corredores autorais, objetivos limitados e as mesmas regras de voo do jogador |
-| Mundo que muda sem explicação | O jogador não entende por que um contrato sumiu | Notícia, mensagem ou marca visível para toda mudança relevante |
+| Voo sem decisão | O jogador segura o acelerador do começo ao fim sem pensar | Resolver a seção 18: dar um preço a voar |
+| Espaço vazio | A viagem entre planetas é tempo morto | Encurtar distâncias, ou dar ao trecho coisas para achar |
+| Planetas intercambiáveis | Trocar de planeta não muda como se pousa | Diferenciar por gravidade e relevo antes de diferenciar por arte |
+| Sobrecarga de controles | O jogador luta com a interface durante o pouso | Assistência básica, pausa e redistribuição de ações |
+| Lugar de pouso ilegível | O jogador desce, não acha onde pousar e sobe de novo | Tratar a demarcação como arte autoral por lugar, e testar de longe |
 | Arte final atrasada | Placeholder chega ao acabamento | Definir o inventário e o orçamento de arte depois da primeira experiência completa |
 
 ## 18. Perguntas em aberto
 
+- **O que acontece quando o jogador pousa mal.** Esta é a pergunta central do projeto agora. Combustível, combate, prazo, reparo e dano foram todos removidos, e não sobrou nenhuma consequência: a nave desce rápido demais, torta, e simplesmente assenta. Pilotar bem não é recompensado e pilotar mal não é punido. Nada de conteúdo novo compensa isso, e nenhum planeta a mais vai tornar o pouso interessante enquanto ele não custar nada.
+- Quantos planetas e outposts o sistema tem, e que distância há entre eles.
+- Se o jogo quer prazo em contrato. Hoje não tem, e prazo dependeria de reintroduzir alguma medida de tempo, que a seção 8 descarta.
+- Que outros eventos de coleta existem além de carregar e extrair.
+- Se um outpost pode existir também na superfície de um planeta. Hoje todos ficam no espaço.
+- Como o jogador acha um planeta que nunca visitou: instrumento a bordo, informação comprada no outpost, ou só olhar.
 - Nome e ambientação final.
 - Clima visual dominante dentro da pixel art moderna, e a paleta de cada corpo celeste.
 - Duração comercial pretendida.
 - Existência de um modo com perda permanente.
 - Qual sensação de voo o jogo quer exatamente. Essa decisão só faz sentido diante de um protótipo, não de uma descrição.
 
-**Em resumo:** preservar a ambição na interação entre os sistemas, controlar o escopo pela quantidade de mundos, armas e histórias, e tratar cada fracasso do jogador como o começo de uma situação nova.
+**Em resumo:** preservar a ambição na interação entre os sistemas, controlar o escopo pela quantidade de planetas e de eventos, e tratar cada fracasso do jogador como o começo de uma situação nova.
 
 ## 19. Glossário
 
 | Termo | Significado |
 | --- | --- |
-| **Casco** | O chassi da nave. Define slots, silhueta, limite de carga e resistência estrutural. |
-| **Slot** | Encaixe fixo do casco que aceita um tipo de módulo. |
-| **Módulo** | Peça instalável num slot, com massa, consumo, integridade e capacidades. |
-| **Região** | Área local visitável de um planeta, com terreno, plataformas, clima e pontos de interesse. O jogo não representa o planeta inteiro. |
-| **Depósito** | Alvo minerável com quantidade, dureza e qualidade, consumido em partes pelo laser. |
-| **Extração** | Transferência de pessoa ou carga entre naves ou instalações, resolvida em etapas pela interface, sem interior caminhável. |
-| **Progressão horizontal** | Evolução por troca de papel e de compromisso, não por números sempre maiores. Todo equipamento cobra preço em massa, energia, espaço, combustível ou manutenção. |
-| **Reserva de chegada** | Combustível que o plano de rota separa para as manobras de aproximação e pouso. É informação exibida, não um bloqueio. |
-| **Logística agregada** | Comércio distante representado por fluxos e capacidade de rota, em vez de comerciantes simulados um a um. |
-| **Autonomia agregada por ocupante** | Suporte de vida contado como dias de autonomia por pessoa a bordo, sem separar água, alimento e oxigênio. |
-| **Corredores autorais** | Caminhos de voo desenhados à mão numa região, usados pela IA inimiga para se mover de forma legível. |
+| **Vista de espaço** | Câmera afastada, sem gravidade e sem terreno. Onde se navega entre planetas e outposts. |
+| **Vista de superfície** | Câmera perto, com gravidade e terreno. Onde se pousa. |
+| **Outpost** | Lugar de trabalho que emite contratos e recebe a entrega dos contratos que emitiu. |
+| **Contrato** | Pedido de coleta emitido por um outpost. Só é pago pelo outpost que o emitiu. |
+| **Região** | Área local visitável de um planeta, com terreno, plataformas e o ponto de coleta. O jogo não representa o planeta inteiro. |
+| **Ponto de coleta** | O lugar demarcado da região onde a nave pousa para executar o evento do contrato. Nem sempre é uma plataforma. |
+| **Evento de coleta** | O que o jogador faz depois de pousar: carregar o que já está lá, ou esperar enquanto o recurso é extraído. |
+| **Modelo** | O chassi da nave. Define slots, silhueta e limite de carga. Os três são utilitário leve, cargueiro resistente e interceptador. |
+| **Slot** | Encaixe fixo do modelo que aceita um tipo de módulo. |
+| **Módulo** | Peça instalável num slot, com massa e capacidades. |
+| **Progressão horizontal** | Evolução por troca de papel e de compromisso, não por números sempre maiores. Todo equipamento cobra preço em massa, energia ou espaço. |
 | **Primeira experiência completa** | O trecho de 30–45 minutos da seção 3.2, que exercita todos os sistemas essenciais de ponta a ponta. |
 
 ## 20. Histórico de versões
 
 | Versão | Data | O que mudou |
 | --- | --- | --- |
-| 0.3 | 2026-09-09 | Direção de arte trocada de "estética retrô dos anos 80" para pixel art moderna, com luz, emissivos e atmosfera declarados. A referência aos anos 80 fica, mas como assunto da ficção, não como aparência de jogo antigo. CRT e scanline saíram. |
+| 0.10 | 2026-09-09 | **O painel de telemetria voltou ao HUD**, agora só como moldura atrás dos números — a versão 0.9 tinha tirado o painel inteiro junto com a barra de estrutura. A barra continua fora, e continua não existindo grandeza contínua para uma barra mostrar. |
+| 0.9 | 2026-09-09 | **Dano foi removido do jogo.** A nave não tem mais integridade, estado de casco, sinal de impacto nem estado destruído; o casco tem uma textura só, a barra de estrutura saiu do HUD junto com o painel inteiro, e os módulos deixaram de ter integridade. Com isso o jogo ficou sem nenhuma consequência para pousar mal: combustível, combate, prazo, reparo e dano saíram todos, e a seção 18 passou a ter uma pergunta central em vez de várias. |
+| 0.8 | 2026-09-09 | **Reparo foi removido do jogo.** Nenhum outpost conserta a nave, nenhum módulo é substituído, e a subseção "Saída da espiral de pobreza" saiu junto porque dependia dele. O dano passa a ser permanente na campanha, e a promessa da seção 15 de que fracassar não é o fim foi retirada até que a seção 18 decida entre devolver alguma forma de recuperação ou tratar a perda da nave como um desfecho com continuação própria. |
+| 0.7 | 2026-09-09 | **O relógio de campanha foi removido do jogo.** Não há mais dias, horas nem tempo de mundo, e nada avança sozinho. A antiga seção 8, "Tempo e o mundo que continua", virou "O mundo que continua" e passa a tratar só de permanência e estado salvo, herdando o bloco "O mundo lembra" da seção 7. Serviço de outpost e evento de extração deixaram de ser cobrados em tempo de campanha. Com isso o dano do pouso ficou sem preço nenhum, e essa passou a ser a primeira pergunta em aberto da seção 18. |
+| 0.6 | 2026-09-09 | **Combate saiu do jogo inteiro**, e com ele armas, inimigos, mira, rendição, abordagem e as menções em arte, som, riscos e glossário. A antiga seção 10 foi substituída por "O pouso é o desafio", que é o que ficou no lugar: cada planeta é difícil pela gravidade, pelo relevo e pelos obstáculos da descida, e o ponto de coleta é sempre um lugar de pouso demarcado, nem sempre uma plataforma. Coletar passou a depender do contrato, entre carregar e extrair esperando no lugar; o laser de mineração saiu. Outposts ficam no espaço e se entra neles pousando, sem manobra de acoplagem. Contrato não tem mais prazo. |
+| 0.5 | 2026-09-09 | Mundo aberto. O jogo passa a ter duas vistas da mesma nave, espaço e superfície, e o espaço é voado em vez de planejado numa tela de rota. Contratos passam a ser emitidos por outposts e pagos só pelo outpost que os emitiu, e a família inicial de missão é uma só: coleta de recurso. Cada planeta tem um objetivo único, pousar no ponto de coleta. **Combustível foi removido do jogo**, e nada ocupou o lugar dele ainda — a pergunta está registrada na seção 18. Saíram deste documento: planejamento de rota, reserva de chegada, mercados com estoque, facções, tripulação e o arco narrativo do prisioneiro, todos movidos para a coluna de expansão ou apagados. |
+| 0.4 | 2026-09-09 | Removida a referência a uma década específica. A ambientação passa a ser descrita pelo que ela é — ficção científica industrial, naves usadas, indústria pesada, trabalho sujo — sem ancorar o mundo num período do cinema. |
+| 0.3 | 2026-09-09 | Direção de arte trocada de estética retrô para pixel art moderna, com luz, emissivos e atmosfera declarados. CRT e scanline saíram. |
 | 0.2 | 2026-09-06 | Reescrita para linguagem direta: parágrafos longos viraram listas, voz padronizada em "o jogador", glossário e histórico adicionados. Nenhuma decisão de design mudou. |
 | 0.1 | 2026-09-06 | Primeira versão do conceito. |

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bafep7cp46q1n"
-path="res://.godot/imported/chama_2.png-c6161e704b73b3d813cea0f7badd7ab6.ctex"
+uid="uid://bi2xsbogapg74"
+path="res://.godot/imported/chama_1.png-093ba88b35cc1d0a92e9a908b3df6020.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/utilitario_leve/art/chama_2.png"
-dest_files=["res://.godot/imported/chama_2.png-c6161e704b73b3d813cea0f7badd7ab6.ctex"]
+source_file="res://entities/player/art/chama_1.png"
+dest_files=["res://.godot/imported/chama_1.png-093ba88b35cc1d0a92e9a908b3df6020.ctex"]
 
 [params]
 

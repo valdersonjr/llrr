@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://entities/player/nave.gd" id="1_nave"]
 [ext_resource type="Script" path="res://entities/player/apresentacao_da_nave.gd" id="8_apresentacao"]
-[ext_resource type="Texture2D" path="res://entities/player/luz_do_motor.tres" id="9_luz"]
-[ext_resource type="Resource" path="res://entities/player/cargueiro_resistente/data/cargueiro_resistente.tres" id="2_casco"]
+[ext_resource type="Texture2D" path="res://entities/player/data/luz_do_motor.tres" id="9_luz"]
+[ext_resource type="Resource" path="res://entities/player/cargueiro_resistente/data/cargueiro_resistente.tres" id="2_modelo"]
 [ext_resource type="Texture2D" path="res://entities/player/cargueiro_resistente/art/cargueiro_resistente.png" id="3_corpo"]
-[ext_resource type="Texture2D" path="res://entities/player/utilitario_leve/art/chama_1.png" id="4_chama1"]
-[ext_resource type="Texture2D" path="res://entities/player/utilitario_leve/art/chama_2.png" id="5_chama2"]
+[ext_resource type="Texture2D" path="res://entities/player/art/chama_1.png" id="4_chama1"]
+[ext_resource type="Texture2D" path="res://entities/player/art/chama_2.png" id="5_chama2"]
 
 
 [sub_resource type="RectangleShape2D" id="R_corpo"]
@@ -26,12 +26,11 @@ collision_layer = 2
 collision_mask = 1
 motion_mode = 1
 script = ExtResource("1_nave")
-casco = ExtResource("2_casco")
+modelo = ExtResource("2_modelo")
 altura_dos_pes = 16.0
 
 [node name="Apresentacao" type="Node2D" parent="."]
 script = ExtResource("8_apresentacao")
-texturas_de_dano = Array[Texture2D]([ExtResource("3_corpo")])
 quadros_chama = Array[Texture2D]([ExtResource("4_chama1"), ExtResource("5_chama2")])
 altura_chama = 13
 [node name="LuzDoMotor" type="PointLight2D" parent="Apresentacao"]

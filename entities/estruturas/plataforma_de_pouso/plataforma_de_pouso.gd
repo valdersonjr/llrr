@@ -19,10 +19,6 @@ const ESPESSURA_DO_DECK := 4
 @export var nome: String = ""
 ## Toneladas paradas no deck esperando quem leve.
 @export var carga_disponivel: float = 0.0
-## Se esta plataforma repara e reabastece. Nem toda plataforma é porto — a
-## seção 7 prevê plataformas soltas no meio do nada.
-@export var oferece_servico: bool = false
-
 @export_range(1, 8) var segmentos: int = 2:
 	set(valor):
 		segmentos = valor
@@ -43,30 +39,6 @@ func largura() -> float:
 
 func como_se_chama() -> String:
 	return nome if not nome.is_empty() else String(name)
-
-
-## Repara o casco e enche o tanque, cobrando tempo de campanha. É a "saída da
-## espiral de pobreza" da seção 5: sempre existe um caminho verificável de
-## volta ao trabalho, e ele não pode depender de o jogador ter crédito.
-##
-## O custo em créditos fica pendente — a seção 12 ainda não existe em código, e
-## inventar economia aqui seria decidir no lugar de quem escreve o conceito. A
-## duração vem do relógio, que é quem sabe o que "demorado" significa.
-##
-## Devolve o que foi restaurado, ou um dicionário vazio se não havia o que fazer.
-func servir(nave: Nave) -> Dictionary:
-	if not oferece_servico:
-		return {}
-	var casco_faltando := nave.casco.integridade_maxima - nave.integridade
-	var tanque_faltando := nave.casco.combustivel_maximo - nave.combustivel
-	if casco_faltando <= 0.01 and tanque_faltando <= 0.01:
-		return {}
-	var fracao := casco_faltando / nave.casco.integridade_maxima
-	var horas := Relogio.duracao_de_servico(fracao, tanque_faltando)
-	Relogio.avancar(horas)
-	nave.reparar()
-	nave.abastecer()
-	return {"casco": casco_faltando, "combustivel": tanque_faltando, "duracao": horas}
 
 
 ## Uma operação só, sem menu: com o porão cheio a nave descarrega tudo aqui,

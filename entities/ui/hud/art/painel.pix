@@ -1,0 +1,35 @@
+# Moldura dos paineis do HUD, usada como NinePatchRect com margem 4.
+#
+# Um retangulo chapado le como caixa de depuracao. O que muda a leitura e
+# ter aresta: bisel claro em cima e a esquerda, aresta escura embaixo e a
+# direita, e canto marcado. O miolo e translucido para o jogo continuar
+# visivel atras.
+name: painel
+size: 16x16
+light: top-left
+
+palette:
+  . transparent
+  K #080a14ee  contorno
+  L #3f4a6e     bisel, aresta que a luz pega
+  S #161b2e     aresta em sombra
+  C #6b7185     canto
+  F #0d101ac2   miolo, translucido
+
+pixels:
+KKKKKKKKKKKKKKKK
+KCCLLLLLLLLLLCCL
+KCFFFFFFFFFFFFCK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KLFFFFFFFFFFFFSK
+KCFFFFFFFFFFFFCK
+KCCSSSSSSSSSSCCK
+KLKKKKKKKKKKKKKK

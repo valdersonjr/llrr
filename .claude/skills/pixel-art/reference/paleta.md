@@ -8,12 +8,12 @@ Pixel art moderna: a rampa não é a base escurecida. **A sombra recebe a cor do
 
 O fundo do jogo é escuro quase sempre, e o céu tem gradiente: perto do horizonte ele clareia. O contorno precisa ser mais escuro que a parte mais clara do céu, senão a silhueta some no meio da subida.
 
-| Uso | Cor | Quando |
-|---|---|---|
-| Contorno | `#141a2e` | a aresta voltada para a luz, e a que não recebe borda |
-| Luz de borda | `#7d93cc` | 1px na aresta voltada para baixo-direita **que esteja em sombra funda**. Sobre sombra rasa ela contorna a peça inteira e a nave sai com filete branco em volta. |
-| Derrame quente fraco | `#6b4a3c` | casco em volta de motor e cabine |
-| Derrame quente forte | `#a06a45` | o mesmo, colado na fonte |
+| Char | Uso | Cor | Quando |
+|---|---|---|---|
+| `K` | Contorno | `#141a2e` | a aresta voltada para a luz, e a que não recebe borda |
+| `R` | Luz de borda | `#7d93cc` | 1px na aresta voltada para baixo-direita **que esteja em sombra funda**. Sobre sombra rasa ela contorna a peça inteira e a nave sai com filete branco em volta. |
+| `q` | Derrame quente fraco | `#6b4a3c` | casco em volta de motor e cabine |
+| `Q` | Derrame quente forte | `#a06a45` | o mesmo, colado na fonte |
 
 ## Casco do jogador — azul frio
 
@@ -65,20 +65,11 @@ Calor de verdade tem gradiente: a garganta é a parte mais quente e puxa para o 
 | Char | Cor | Papel |
 |---|---|---|
 | `b` | `#bfe2ff` | garganta, mais quente |
-| `w` | `#fffdf2` | núcleo |
-| `W` | `#ffe6a4` | interna |
+| `W` | `#fffdf2` | núcleo |
+| `w` | `#ffe6a4` | interna |
 | `F` | `#ffb347` | média |
 | `f` | `#ef7a3a` | externa |
 | `p` | `#b8452f` | ponta fria |
-
-## Dano
-
-Três estados, o mesmo vocabulário em todo asset: **íntegro, degradado, crítico**. Dano muda **forma** — peça arrancada, estrutura amassada, furo que aparece na silhueta —, e a fuligem só acompanha. Distinguir estado só por cor é proibido pela seção 14.
-
-| Char | Cor | Papel |
-|---|---|---|
-| `x` | `#3a3340` | chapa chamuscada |
-| `X` | `#191c28` | queimado, borda de furo |
 
 ## Estado e alerta
 
@@ -86,9 +77,11 @@ Nunca use só cor para comunicar estado — a seção 14 do conceito proíbe. Co
 
 | Char | Cor | Papel |
 |---|---|---|
-| `r` | `#b13e53` | dano, hostil |
-| `v` | `#5ab552` | ok, aliado |
+| `r` | `#b13e53` | alerta, fora do limite |
+| `v` | `#5ab552` | ok, dentro do limite |
 
 ## Convenção de caracteres
 
-Maiúscula = versão mais clara da mesma família; minúscula = mais escura. `.` é sempre transparente, `K` é sempre contorno, `R` é sempre luz de borda. Manter isso entre sprites deixa os `.pix` legíveis sem consultar a paleta toda hora.
+Maiúscula = versão mais clara da mesma família; minúscula = mais escura. `.` é sempre transparente, `K` é sempre contorno, `R` é sempre luz de borda, `W` é sempre o tom mais claro da família, `q` e `Q` são o derrame quente.
+
+A mesma letra pode servir a famílias diferentes — `A`, `C` e `E` valem para casco, metal e rocha — porque cada `.pix` declara a própria paleta e nenhum sprite mistura duas famílias na mesma letra. O que se mantém entre sprites é o **papel** da letra, não a cor: `C` é sempre a base do material, `E` sempre o tom mais alto dele. É isso que deixa os `.pix` legíveis sem consultar a paleta toda hora.

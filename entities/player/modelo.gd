@@ -1,22 +1,20 @@
-class_name Casco
+class_name Modelo
 extends Resource
-## Dados de um casco: o que ele pesa, o que ele empurra e o que o trem de
-## pouso aguenta. Os três cascos do jogo (utilitário leve, cargueiro
+## Dados de um modelo de nave: o que ele pesa, o que ele empurra e o que o trem de
+## pouso aguenta. Os três modelos do jogo (utilitário leve, cargueiro
 ## resistente, interceptador) diferem por estes números, não por código.
 ##
 ## Unidades: massa em toneladas, distância em pixels, ângulo em graus.
-## Empuxo é força — a aceleração é `empuxo / massa`, e é por isso que carga
-## e combustível a bordo mudam como a nave voa (seção 4 do conceito).
+## Empuxo é força — a aceleração é `empuxo / massa`, e é por isso que a carga
+## a bordo muda como a nave voa (seção 4 do conceito).
 
 @export var nome: String = ""
 
 @export_group("Massa")
-## Casco vazio, sem combustível nem carga.
+## Nave vazia, sem carga.
 @export_range(1.0, 60.0, 0.5, "or_greater", "suffix:t") var massa_seca: float = 8.0
 ## Quanto o porão leva. Carga pesa: entra direto na massa.
 @export_range(0.0, 80.0, 0.5, "or_greater", "suffix:t") var capacidade_carga: float = 6.0
-## O tanque também pesa, e vai ficando leve conforme queima.
-@export_range(0.5, 40.0, 0.5, "or_greater", "suffix:t") var combustivel_maximo: float = 5.0
 
 @export_group("Propulsão")
 ## Empuxo do motor principal, no eixo da nave.
@@ -27,17 +25,8 @@ extends Resource
 ## Teto de velocidade angular, em graus/s.
 @export_range(20.0, 360.0, 5.0, "suffix:°/s") var giro_maximo: float = 120.0
 
-@export_group("Consumo")
-## Toneladas por segundo com o acelerador no máximo.
-@export_range(0.01, 3.0, 0.01, "or_greater", "suffix:t/s") var consumo_principal: float = 0.22
-## Toneladas por segundo por eixo de manobra ativo — inclui a estabilização.
-@export_range(0.005, 1.0, 0.005, "or_greater", "suffix:t/s") var consumo_manobra: float = 0.05
-
-@export_group("Estrutura")
-@export_range(10.0, 500.0, 5.0, "or_greater") var integridade_maxima: float = 100.0
-
 @export_group("Trem de pouso")
-## Velocidade de contato que as pernas absorvem sem dano, alinhada.
+## Velocidade de contato que conta como pouso limpo, alinhada.
 @export_range(5.0, 120.0, 1.0, "suffix:px/s") var pouso_velocidade_maxima: float = 30.0
 ## Desalinhamento tolerado entre a nave e a normal da superfície.
 @export_range(1.0, 45.0, 1.0, "suffix:°") var pouso_angulo_maximo: float = 12.0
@@ -47,13 +36,13 @@ extends Resource
 @export_range(0.0, 3.0, 0.05, "suffix:s") var pouso_tempo_estavel: float = 0.6
 
 
-## Aceleração com o tanque cheio e o porão vazio, em px/s². É o primeiro
-## número que o jogador sente, e o que decide se o casco sobe da plataforma.
+## Aceleração com o porão vazio, em px/s². É o primeiro número que o jogador
+## sente, e o que decide se a nave sobe da plataforma.
 func aceleracao_leve() -> float:
-	return empuxo_principal / (massa_seca + combustivel_maximo)
+	return empuxo_principal / massa_seca
 
 
 ## A mesma coisa com o porão cheio. Se cair abaixo da gravidade da região, o
-## casco simplesmente não decola carregado — é aqui que se vê o preço.
+## modelo simplesmente não decola carregado — é aqui que se vê o preço.
 func aceleracao_carregada() -> float:
-	return empuxo_principal / (massa_seca + combustivel_maximo + capacidade_carga)
+	return empuxo_principal / (massa_seca + capacidade_carga)

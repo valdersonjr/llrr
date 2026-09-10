@@ -1,20 +1,16 @@
-[gd_resource type="Resource" script_class="Casco" load_steps=2 format=3 uid="uid://ccascocarga001"]
+[gd_resource type="Resource" script_class="Modelo" load_steps=2 format=3 uid="uid://ccascocarga001"]
 
-[ext_resource type="Script" path="res://entities/player/casco.gd" id="1_casco"]
+[ext_resource type="Script" path="res://entities/player/modelo.gd" id="1_modelo"]
 
 [resource]
-script = ExtResource("1_casco")
+script = ExtResource("1_modelo")
 nome = "Cargueiro resistente"
 massa_seca = 16.0
 capacidade_carga = 18.0
-combustivel_maximo = 9.0
 empuxo_principal = 2200.0
 empuxo_manobra = 420.0
 torque_manobra = 2600.0
 giro_maximo = 80.0
-consumo_principal = 0.42
-consumo_manobra = 0.09
-integridade_maxima = 160.0
 pouso_velocidade_maxima = 34.0
 pouso_angulo_maximo = 9.0
 pouso_giro_maximo = 14.0

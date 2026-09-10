@@ -1,20 +1,16 @@
-[gd_resource type="Resource" script_class="Casco" load_steps=2 format=3 uid="uid://ccascoutil0001"]
+[gd_resource type="Resource" script_class="Modelo" load_steps=2 format=3 uid="uid://ccascoutil0001"]
 
-[ext_resource type="Script" path="res://entities/player/casco.gd" id="1_casco"]
+[ext_resource type="Script" path="res://entities/player/modelo.gd" id="1_modelo"]
 
 [resource]
-script = ExtResource("1_casco")
+script = ExtResource("1_modelo")
 nome = "Utilitário leve"
 massa_seca = 8.0
 capacidade_carga = 6.0
-combustivel_maximo = 5.0
 empuxo_principal = 1320.0
 empuxo_manobra = 340.0
 torque_manobra = 1900.0
 giro_maximo = 120.0
-consumo_principal = 0.22
-consumo_manobra = 0.05
-integridade_maxima = 100.0
 pouso_velocidade_maxima = 30.0
 pouso_angulo_maximo = 12.0
 pouso_giro_maximo = 20.0

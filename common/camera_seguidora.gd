@@ -29,7 +29,7 @@ extends Camera2D
 @export var antecipacao_maxima: float = 40.0
 ## Suavização da estimativa de velocidade. Sem ela a antecipação treme.
 @export_range(0.01, 1.0) var suavizacao_da_velocidade: float = 0.12
-## Teto do tremor de impacto, em pixels.
+## Teto do tremor, em pixels.
 @export var tremor_maximo: float = 6.0
 @export var decaimento_do_tremor: float = 9.0
 
