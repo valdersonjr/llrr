@@ -15,7 +15,14 @@ from pathlib import Path
 try:
     from PIL import Image
 except ImportError:
-    sys.exit("erro: Pillow não instalado. Rode: python3 -m pip install Pillow")
+    sys.exit(
+        "erro: Pillow não encontrado neste interpretador.\n"
+        "A ferramenta roda no ambiente virtual do projeto, não no python do\n"
+        "sistema — o do sistema recusa instalar pacote. Crie uma vez:\n"
+        "  python3 -m venv .venv\n"
+        "  .venv/bin/pip install -r .claude/skills/pixel-art/requirements.txt\n"
+        "e chame por .venv/bin/python, não por python3."
+    )
 
 TRANSPARENT = (0, 0, 0, 0)
 
@@ -133,6 +140,12 @@ def validate(meta, palette, grid):
     return width, height
 
 
+## Acima disto a junção do tile destoa tanto do grão que ela lê como linha.
+## Calibrado na mão: grão bom fica perto de 1.0, e um tile sem cuidado
+## nenhum com a emenda passa fácil de 3.
+LIMITE_DA_COSTURA = 2.0
+
+
 def build_png(palette, grid, width, height, out: Path):
     img = Image.new("RGBA", (width, height), TRANSPARENT)
     px = img.load()
@@ -237,6 +250,70 @@ def build_inspect(img: Image.Image, out: Path, zoom: int):
     ampliado.save(out, "PNG")
 
 
+def _diferenca(img: Image.Image, a, b) -> float:
+    """Diferença média por canal entre duas listas de pixels do mesmo tamanho."""
+    total = 0.0
+    for pa, pb in zip(a, b):
+        total += sum(abs(int(ca) - int(cb)) for ca, cb in zip(pa, pb)) / len(pa)
+    return total / max(len(a), 1)
+
+
+def medir_costura(img: Image.Image) -> tuple[float, float]:
+    """Quanto a emenda destoa do interior, na horizontal e na vertical.
+
+    Um tile emenda quando a última coluna encosta na primeira sem degrau. A
+    conta compara a diferença nessa junção com a diferença média entre duas
+    colunas vizinhas quaisquer: 1.0 é uma emenda tão suave quanto o resto do
+    grão, e quanto maior o número, mais a costura aparece quando o tile
+    repete. Mesma coisa para as linhas.
+    """
+    px = img.convert("RGBA").load()
+    w, h = img.size
+
+    def coluna(x):
+        return [px[x, y] for y in range(h)]
+
+    def linha(y):
+        return [px[x, y] for x in range(w)]
+
+    junta_h = _diferenca(img, coluna(w - 1), coluna(0))
+    interior_h = sum(
+        _diferenca(img, coluna(x), coluna(x + 1)) for x in range(w - 1)
+    ) / max(w - 1, 1)
+    junta_v = _diferenca(img, linha(h - 1), linha(0))
+    interior_v = sum(
+        _diferenca(img, linha(y), linha(y + 1)) for y in range(h - 1)
+    ) / max(h - 1, 1)
+
+    return (
+        junta_h / interior_h if interior_h > 0 else 0.0,
+        junta_v / interior_v if interior_v > 0 else 0.0,
+    )
+
+
+def build_tile(img: Image.Image, out: Path, repeticoes: int, zoom: int):
+    """O tile repetido em grade, para a emenda aparecer.
+
+    Um grão de terreno repete dezenas de vezes na fase, e emenda visível vira
+    grade — o defeito não se enxerga olhando o sprite sozinho, só olhando ele
+    lado a lado consigo mesmo. Sem separador nenhum entre as cópias, de
+    propósito: qualquer linha desenhada aqui esconderia justamente o que se
+    quer ver.
+    """
+    w, h = img.size
+    grade = Image.new("RGBA", (w * repeticoes, h * repeticoes), TRANSPARENT)
+    for ly in range(repeticoes):
+        for lx in range(repeticoes):
+            grade.paste(img, (lx * w, ly * h))
+    fundo = Image.new("RGBA", grade.size, (20, 22, 31, 255))
+    achatado = Image.alpha_composite(fundo, grade)
+    ampliado = achatado.resize(
+        (achatado.width * zoom, achatado.height * zoom), Image.NEAREST
+    )
+    out.parent.mkdir(parents=True, exist_ok=True)
+    ampliado.save(out, "PNG")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Compila um .pix para PNG e preview HTML.")
     ap.add_argument("pix", type=Path, help="arquivo .pix de entrada")
@@ -245,6 +322,9 @@ def main() -> int:
     ap.add_argument("--inspect", type=Path, help="PNG ampliado para inspeção visual do agente")
     ap.add_argument("--zoom", type=int, default=10, help="ampliação do --inspect (padrão: 10)")
     ap.add_argument("--scale", type=int, default=16, help="zoom do painel de inspeção (padrão: 16)")
+    ap.add_argument("--tile", type=Path, help="PNG do sprite repetido em grade, para conferir a emenda")
+    ap.add_argument("--repeticoes", type=int, default=4, help="lado da grade do --tile (padrão: 4)")
+    ap.add_argument("--tile-zoom", type=int, default=3, help="ampliação do --tile (padrão: 3)")
     args = ap.parse_args()
 
     if not args.pix.is_file():
@@ -267,6 +347,18 @@ def main() -> int:
     if args.inspect:
         build_inspect(img, args.inspect, args.zoom)
         print(f"ok  {args.inspect}  inspeção {args.zoom}x (fundo escuro | fundo claro)")
+
+    if args.tile:
+        build_tile(img, args.tile, args.repeticoes, args.tile_zoom)
+        h_ratio, v_ratio = medir_costura(img)
+        print(f"ok  {args.tile}  {args.repeticoes}x{args.repeticoes} em {args.tile_zoom}x")
+        print(f"    costura: horizontal {h_ratio:.1f}x, vertical {v_ratio:.1f}x o interior")
+        if max(h_ratio, v_ratio) >= LIMITE_DA_COSTURA:
+            print(
+                f"aviso: a emenda destoa do interior — vai ler como grade quando o tile repetir."
+                f" Olhe {args.tile}.",
+                file=sys.stderr,
+            )
 
     if args.html:
         build_html(meta, palette, names, grid, width, height, args.html, args.scale)

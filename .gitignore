@@ -14,3 +14,9 @@ export.cfg
 
 # macOS
 .DS_Store
+
+# Ambiente virtual da ferramenta de sprite. Recriado pelo requirements.txt.
+.venv/
+
+# Cache do Python, gerado pelas ferramentas da skill de pixel art
+__pycache__/

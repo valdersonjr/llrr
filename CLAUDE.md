@@ -19,12 +19,14 @@ Godot 4.7 via Homebrew, binário `godot` no PATH. Todos os comandos rodam da rai
 | Importar assets novos sem abrir a GUI | `godot --headless --path . --import` |
 | Fotografar uma cena rodando | `godot --path . --scene res://tools/screenshot.tscn -- --scene res://<cena>.tscn --out shot.png` |
 | Conferir os critérios de voo | `godot --headless --path . --scene res://tools/voo_check.tscn` |
-| Compilar um sprite `.pix` para PNG | `python3 .claude/skills/pixel-art/scripts/build_sprite.py <arquivo>.pix` |
+| Compilar um sprite `.pix` para PNG | `.venv/bin/python .claude/skills/pixel-art/scripts/build_sprite.py <arquivo>.pix` |
+| Preparar o ambiente da ferramenta de sprite (uma vez) | `python3 -m venv .venv && .venv/bin/pip install -r .claude/skills/pixel-art/requirements.txt` |
 | Checar erro de sintaxe e de tipo num script | `godot --headless --path . --check-only --script res://<caminho>.gd` |
 
 - **IMPORTANT:** `--check-only` sai com código **0 mesmo quando o script tem erro de parse**. Não encadeie com `&&` achando que falha — leia a saída e procure por `SCRIPT ERROR`.
 - **IMPORTANT:** `--check-only` também **não carrega os autoloads**. Script que usa um deles acusa `Identifier not found` ali e funciona no jogo. Para esses, a verificação real é subir o jogo (`--quit-after`) ou rodar `voo_check`.
-- `run/main_scene` aponta para `stages/teste_pouso/teste_pouso.tscn`, a fase de protótipo de voo. Para subir outra fase sem mexer nisso, use `--scene`.
+- **Não existe cena principal.** A fase de protótipo de voo foi apagada e o mapa de verdade ainda não foi montado, então `run/main_scene` está vazio e toda fase sobe por `--scene`. Assim que a primeira região existir, aponte `run/main_scene` para ela.
+- **IMPORTANT:** a ferramenta de sprite roda no **ambiente virtual do projeto** (`.venv/bin/python`), nunca em `python3`. O python do sistema, no macOS, recusa instalar pacote, então `python3 build_sprite.py` falha com erro de Pillow ausente por mais que o Pillow esteja instalado em algum outro lugar. As dependências estão em `.claude/skills/pixel-art/requirements.txt`, com versão fixa; a `.venv/` em si não é versionada e se refaz com o comando da tabela em poucos segundos.
 - Não há framework de teste instalado (GUT, GdUnit4). Se instalar um, documente o comando aqui.
 
 ## Princípios de arquitetura
@@ -44,19 +46,20 @@ res://
 ├── config/              # ver config/CLAUDE.md — opções expostas ao jogador
 ├── docs/                # notas e referências avulsas; tem .gdignore, o Godot não enxerga
 ├── entities/            # ver entities/CLAUDE.md
+│   ├── estruturas/          # o que é construído e fica parado no mundo
 │   ├── items/               # ver entities/items/CLAUDE.md
 │   ├── player/              # ver entities/player/CLAUDE.md
 │   └── ui/                  # ver entities/ui/CLAUDE.md
 ├── localization/        # ver localization/CLAUDE.md — textos localizados
 ├── stages/              # ver stages/CLAUDE.md
-│   └── tilesets/            # ver stages/tilesets/CLAUDE.md
+│   └── art/                 # ver stages/art/CLAUDE.md — arte compartilhada entre fases
 ├── tools/               # ver tools/CLAUDE.md — ferramenta de dev, não entra no build
 └── utilities/           # ver utilities/CLAUDE.md
 ```
 
 ## Estrutura da pasta-folha
 
-O princípio 1 tem duas metades. A segunda vive aqui: agrupar por tipo de asset é permitido **só no último nível**, dentro da pasta da própria entidade ou fase.
+O princípio 1 tem duas metades. A segunda vive aqui: agrupar por tipo de asset é permitido **só no fim da árvore**, dentro da pasta da própria entidade ou fase — ou da categoria, quando o asset serve a categoria inteira.
 
 ```
 entities/<categoria>/<entidade>/
@@ -67,22 +70,25 @@ entities/<categoria>/<entidade>/
 └── <entidade>.gd
 ```
 
-- `art/`, `data/` e `sound/` existem **só** nesse nível — nunca como pasta de topo nem em nível intermediário.
+- `art/`, `data/` e `sound/` existem só na pasta da entidade ou na da categoria dela — nunca como pasta de topo.
+- Asset que serve à **categoria inteira**, e não a uma entidade, ganha `art/`, `data/` ou `sound/` na pasta da própria categoria (ex.: `entities/player/data/modelos.tres`, a lista de modelos, e `entities/player/art/chama_1.png`, a chama que os três usam). A entidade nunca alcança dentro da pasta de outra entidade: se um segundo dono aparece, o asset sobe um nível.
 - Omita a que estiver vazia; crie quando aparecer o primeiro arquivo.
+- O script de mesmo nome é o caso comum, não uma obrigação: variação que só muda número e arte compartilha o script da categoria, como fazem os três modelos da nave (ver `entities/player/CLAUDE.md`).
 - O ganho é esse: tudo que descreve uma entidade está numa pasta só, então tanto criar quanto depurar essa entidade tem um único lugar pra olhar.
 
 ## Onde colocar coisa nova (tabela de decisão rápida)
 
 | Você quer adicionar... | Vai em... |
 |---|---|
-| Novo personagem/NPC/inimigo | `entities/<categoria>/` |
+| Novo personagem ou NPC | `entities/<categoria>/` |
 | Novo item/upgrade/habilidade | `entities/items/<subtipo>/` (crie o subtipo se não existir) |
-| Plataforma, mina ou construção fixa do mundo | `entities/estruturas/` |
-| Casco novo da nave do jogador | `entities/player/<casco>/` — ver `entities/player/CLAUDE.md` |
+| Plataforma, outpost, mina ou construção fixa do mundo | `entities/estruturas/` |
+| Lugar de pouso demarcado de um ponto de coleta | `entities/estruturas/` — ver seção 10 do conceito |
+| Modelo novo da nave do jogador | `entities/player/<modelo>/` — ver `entities/player/CLAUDE.md` |
 | Nova tela ou elemento de UI | `entities/ui/` |
 | Arte, som ou dado de uma entidade específica | `art/` / `sound/` / `data/` dentro da pasta da própria entidade |
-| Nova fase/área/mapa | `stages/<nome>/` |
-| Tileset ou asset reaproveitado entre fases | `stages/tilesets/` |
+| Nova fase/área/mapa | `stages/<nome>/` — a receita de terreno está em `stages/CLAUDE.md` |
+| Arte usada por mais de uma fase (grão, estrela, pedra) | `stages/art/` |
 | Trilha sonora, fonte ou asset global do jogo | `assets/` |
 | Texto exibido ao jogador | `localization/` (no script, use a chave de tradução) |
 | Opção do menu de configurações | `config/` (a tela em si é `entities/ui/`) |
@@ -97,7 +103,7 @@ Se nada da tabela encaixar, pare e pense em qual pasta de topo faz mais sentido 
 - `snake_case` para arquivos e pastas; `PascalCase` para `class_name`.
 - Sufixo consistente indicando a classe base estendida (ex.: `_item.gd` para tudo que `extends Item`).
 - Sufixo `_manager.gd` exclusivamente para autoloads.
-- Cena e script do mesmo objeto sempre no mesmo diretório, mesmo nome base (`goblin.tscn` + `goblin.gd`).
+- Cena e script do mesmo objeto sempre no mesmo diretório, mesmo nome base (`plataforma_de_pouso.tscn` + `plataforma_de_pouso.gd`).
 
 ## Padrão de commit
 
@@ -110,7 +116,7 @@ Formato: `tipo(escopo): assunto`
 | Tipo | Quando |
 |---|---|
 | `feat` | mecânica ou sistema novo |
-| `content` | conteúdo novo usando sistema que já existe (entidade, fase, item, tileset) |
+| `content` | conteúdo novo usando sistema que já existe (entidade, fase, item, arte) |
 | `fix` | correção de bug |
 | `refactor` | reorganiza sem mudar comportamento — inclui mover ou renomear pasta |
 | `perf` | performance |
@@ -124,7 +130,7 @@ Exemplos:
 ```
 content(entities): adiciona picareta de ferro
 feat(utilities): adiciona save_manager com autosave a cada 5 min
-refactor(stages): move tileset de água para stages/tilesets
+refactor(stages): move grão de rocha para stages/art
 docs: documenta convenção de pasta-folha
 ```
 

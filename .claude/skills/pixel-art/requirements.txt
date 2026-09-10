@@ -1,0 +1,3 @@
+# Dependências da ferramenta de sprite. Instale num ambiente virtual, nunca no
+# python do sistema — ver "Ambiente da ferramenta de sprite" no CLAUDE.md da raiz.
+Pillow==12.3.0
