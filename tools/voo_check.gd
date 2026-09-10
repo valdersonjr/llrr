@@ -17,7 +17,11 @@ extends Node
 ##
 ## Sai com o número de falhas como código de saída.
 
-const CENA := "res://stages/teste_pouso/teste_pouso.tscn"
+## PARADO: a fase de teste foi apagada para o mapa de verdade ser montado
+## do zero. Aponte esta constante — e as duas coordenadas abaixo — para a
+## primeira região nova, e a verificação volta a rodar sem mais nenhuma
+## mudança.
+const CENA := ""
 const ACOES := ["empuxo", "girar_esquerda", "girar_direita",
 	"lateral_esquerda", "lateral_direita"]
 
@@ -25,9 +29,9 @@ const ACOES := ["empuxo", "girar_esquerda", "girar_direita",
 const PLATAFORMA_LARGA := Vector2(112.0, 356.0)
 ## Trecho de terreno plano sem plataforma nenhuma.
 const CHAO_NU := Vector2(24.0, 352.0)
-## Vem do catálogo, não de uma lista aqui: casco novo entra na verificação
+## Vem do catálogo, não de uma lista aqui: modelo novo entra na verificação
 ## sozinho, sem ninguém lembrar de acrescentá-lo em dois lugares.
-const CATALOGO := preload("res://entities/player/cascos.tres")
+const CATALOGO := preload("res://entities/player/data/modelos.tres")
 ## Distância do topo do deck até a origem da nave com os pés encostados.
 const ALTURA_DOS_PES := 15.0
 
@@ -73,24 +77,17 @@ func _rodar() -> void:
 	print("voo_check — critérios da seção 4 do conceito\n")
 	await _vacuo_nao_freia()
 	await _peso_reduz_aceleracao()
-	await _sem_combustivel_sem_empuxo()
 	await _estabilizacao_zera_o_giro()
 	print("")
 	await _parada_no_chao_nao_anda()
 	await _pouso_limpo_na_plataforma()
-	await _pouso_duro_custa_casco()
-	await _impacto_de_casco_destroi()
 	await _pouso_fora_da_plataforma()
 	print("")
 	await _porao_respeita_a_capacidade()
 	await _carga_vai_e_volta_pelo_deck()
 	await _camera_olha_a_frente()
-	await _dano_muda_o_casco()
 	print("")
-	await _os_tres_cascos_pousam()
-	print("")
-	await _o_relogio_para_na_pausa()
-	await _o_servico_devolve_a_nave_ao_trabalho()
+	await _os_tres_modelos_pousam()
 	print("\nvoo_check: %d falha(s)" % _falhas)
 	get_tree().quit(_falhas)
 
@@ -109,33 +106,18 @@ func _vacuo_nao_freia() -> void:
 
 func _peso_reduz_aceleracao() -> void:
 	var vazia := await _medir_aceleracao(0.0)
-	var carregada := await _medir_aceleracao(_nave.casco.capacidade_carga)
+	var carregada := await _medir_aceleracao(_nave.modelo.capacidade_carga)
 	_conferir("peso extra reduz a aceleração", carregada < vazia * 0.95,
 		"vazia %.0f p/s², com %.0f t de carga %.0f p/s²" % [
-			vazia, _nave.casco.capacidade_carga, carregada])
-
-
-func _sem_combustivel_sem_empuxo() -> void:
-	await _preparar(Vector2(250, 120))
-	_nave.combustivel = 0.0
-	var antes := _nave.velocity
-	Input.action_press("empuxo", 1.0)
-	await _passos(60)
-	Input.action_release("empuxo")
-	var deriva := antes.distance_to(_nave.velocity)
-	_conferir("combustível zero limita o empuxo", deriva < 0.01,
-		"acelerador no máximo por 1 s, Δv = %.4f" % deriva)
+			vazia, _nave.modelo.capacidade_carga, carregada])
 
 
 func _estabilizacao_zera_o_giro() -> void:
 	await _preparar(Vector2(250, 120))
 	_nave.giro = 60.0
-	var combustivel := _nave.combustivel
 	await _passos(90)
-	var gasto := combustivel - _nave.combustivel
 	_conferir("a estabilização zera o giro sozinha", absf(_nave.giro) < 0.5,
 		"60 °/s -> %.2f °/s" % _nave.giro)
-	_conferir("e cobra combustível por isso", gasto > 0.0, "gastou %.3f t" % gasto)
 
 
 # --- pouso como estado ------------------------------------------------------
@@ -151,28 +133,10 @@ func _parada_no_chao_nao_anda() -> void:
 
 func _pouso_limpo_na_plataforma() -> void:
 	await _pousar_de(PLATAFORMA_LARGA, 8.0, 150)
-	var inteira := _nave.intacta()
-	_conferir("pouso limpo não custa casco", inteira,
-		"casco em %.0f%%" % (_nave.integridade_fracao() * 100.0))
 	_conferir("contato estável vira POUSADA", _nave.estado == Nave.Estado.POUSADA,
 		"estado = %s" % _texto_estado())
 	_conferir("reconhece a plataforma sob as duas pernas",
 		_nave.plataforma_sob_a_nave() != null, "plataforma = %s" % _nave.plataforma_sob_a_nave())
-
-
-func _pouso_duro_custa_casco() -> void:
-	await _pousar_de(PLATAFORMA_LARGA, 60.0, 150)
-	var perdeu := (1.0 - _nave.integridade_fracao()) * 100.0
-	_conferir("pouso duro custa casco mas é sobrevivível",
-		perdeu > 0.0 and _nave.integridade > 0.0,
-		"caiu de 60 px, perdeu %.0f%% do casco" % perdeu)
-
-
-func _impacto_de_casco_destroi() -> void:
-	await _pousar_de(PLATAFORMA_LARGA, 60.0, 150, PI)
-	_conferir("de cabeça para baixo, a mesma queda destrói",
-		_nave.estado == Nave.Estado.DESTRUIDA,
-		"estado = %s, casco em %.0f%%" % [_texto_estado(), _nave.integridade])
 
 
 func _pouso_fora_da_plataforma() -> void:
@@ -186,7 +150,7 @@ func _pouso_fora_da_plataforma() -> void:
 
 func _porao_respeita_a_capacidade() -> void:
 	await _preparar(Vector2(250, 120))
-	var capacidade := _nave.casco.capacidade_carga
+	var capacidade := _nave.modelo.capacidade_carga
 	var coube := _nave.carregar(capacidade + 10.0)
 	_conferir("o porão não aceita mais do que cabe",
 		is_equal_approx(coube, capacidade) and is_equal_approx(_nave.carga, capacidade),
@@ -221,29 +185,9 @@ func _camera_olha_a_frente() -> void:
 		"%.1f px à frente, teto de %.0f px" % [adiante, _camera.antecipacao_maxima])
 
 
-## O casco tem que MOSTRAR o dano: a seção 2 do conceito pede consequência
-## legível, e integridade só na barra não é consequência legível.
-func _dano_muda_o_casco() -> void:
-	await _preparar(Vector2(250, 120))
-	var corpo: Sprite2D = _nave.get_node("Corpo")
-	var maximo := _nave.casco.integridade_maxima
-	var vistos: Array[Texture2D] = []
-	var estados: Array[int] = []
-	for fracao in [1.0, 0.4, 0.1]:
-		_nave.integridade = maximo * fracao
-		estados.append(_nave.estado_de_dano())
-		vistos.append(corpo.texture)
-	_conferir("integridade percorre os três estados de casco", estados == [0, 1, 2],
-		"100%% -> %d, 40%% -> %d, 10%% -> %d" % estados)
-	_conferir("e cada estado troca a textura de fato",
-		vistos[0] != vistos[1] and vistos[1] != vistos[2],
-		"três texturas distintas" if vistos[0] != vistos[2] else "textura não mudou")
-	_nave.integridade = maximo
-
-
-## Cada casco tem sua própria colisão, seus próprios pés e sua própria
+## Cada modelo tem sua própria colisão, seus próprios pés e sua própria
 ## tolerância. Um pousar não diz nada sobre os outros dois.
-func _os_tres_cascos_pousam() -> void:
+func _os_tres_modelos_pousam() -> void:
 	for i in CATALOGO.quantidade():
 		var nave := CATALOGO.criar(i)
 		_fase.add_child(nave)
@@ -255,53 +199,11 @@ func _os_tres_cascos_pousam() -> void:
 		nave.giro = 0.0
 		nave.estado = Nave.Estado.VOANDO
 		await _passos(150)
-		var inteiro := nave.intacta()
-		_conferir("%s pousa limpo e reconhece a plataforma" % nave.casco.nome,
-			nave.estado == Nave.Estado.POUSADA
-				and nave.plataforma_sob_a_nave() != null and inteiro,
-			"casco em %.0f%%, aceleração %.0f p/s²" % [
-				nave.integridade_fracao() * 100.0, nave.aceleracao_disponivel()])
+		_conferir("%s pousa limpo e reconhece a plataforma" % nave.modelo.nome,
+			nave.estado == Nave.Estado.POUSADA and nave.plataforma_sob_a_nave() != null,
+			"aceleração %.0f p/s²" % nave.aceleracao_disponivel())
 		nave.queue_free()
 		await _passos(3)
-
-
-# --- relógio e serviço de porto -----------------------------------------------
-
-## Seção 8: o relógio de campanha só avança com o jogo aberto, e a seção 6
-## promete que inspecionar a situação pausado não é punido.
-func _o_relogio_para_na_pausa() -> void:
-	await _preparar(Vector2(250, 120))
-	var antes := Relogio.segundos
-	await _passos(30)
-	var correndo := Relogio.segundos - antes
-	get_tree().paused = true
-	var pausado_em := Relogio.segundos
-	await _passos(30)
-	var na_pausa := Relogio.segundos - pausado_em
-	get_tree().paused = false
-	_conferir("o relógio corre em voo", correndo > 0.0, "%.0f s de campanha" % correndo)
-	_conferir("e para na pausa", is_zero_approx(na_pausa), "%.4f s de campanha" % na_pausa)
-
-
-## Seção 5: sempre existe um caminho verificável de volta ao trabalho. Sem
-## isso, dano vira beco sem saída e o jogador só tem reiniciar.
-func _o_servico_devolve_a_nave_ao_trabalho() -> void:
-	await _pousar_de(PLATAFORMA_LARGA, 2.0, 90)
-	_nave.integridade = _nave.casco.integridade_maxima * 0.3
-	_nave.combustivel = _nave.casco.combustivel_maximo * 0.2
-	var relogio_antes := Relogio.segundos
-	var feito: Dictionary = _plataforma.servir(_nave)
-	_conferir("o serviço repara e abastece",
-		not feito.is_empty() and _nave.intacta()
-			and is_equal_approx(_nave.combustivel, _nave.casco.combustivel_maximo),
-		"casco em %.0f%%, tanque em %.1f t" % [
-			_nave.integridade_fracao() * 100.0, _nave.combustivel])
-	_conferir("e cobra tempo de campanha por isso",
-		Relogio.segundos - relogio_antes > 0.0,
-		"%.1f h" % ((Relogio.segundos - relogio_antes) / 3600.0))
-	_conferir("plataforma sem oficina não presta serviço",
-		(_fase.get_node("PlataformaEstreita") as PlataformaDePouso).servir(_nave).is_empty(),
-		"o Pilar Sul recusa")
 
 
 # --- utilidades -------------------------------------------------------------
@@ -332,8 +234,6 @@ func _preparar(posicao: Vector2, gravidade := 0.0, rotacao := 0.0) -> void:
 	_nave.giro = 0.0
 	_nave.gravidade = gravidade
 	_nave.carga = 0.0
-	_nave.combustivel = _nave.casco.combustivel_maximo
-	_nave.integridade = _nave.casco.integridade_maxima
 	_nave.estado = Nave.Estado.VOANDO
 	await _passos(2)
 
@@ -344,7 +244,7 @@ func _passos(quantidade: int) -> void:
 
 
 func _texto_estado() -> String:
-	return ["VOANDO", "TOCANDO", "POUSADA", "DESTRUIDA"][_nave.estado]
+	return ["VOANDO", "TOCANDO", "POUSADA"][_nave.estado]
 
 
 func _conferir(criterio: String, passou: bool, detalhe: String) -> void:

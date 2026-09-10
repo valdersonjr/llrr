@@ -25,6 +25,9 @@ var _erro: bool = false
 
 
 func _ready() -> void:
+	# Sem isto, `--acao pausa` trava: a cena pausa a árvore, este nó para de
+	# processar junto e o contador de quadros nunca chega ao fim.
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	var args: PackedStringArray = OS.get_cmdline_user_args()
 	var i: int = 0
 	while i < args.size():
