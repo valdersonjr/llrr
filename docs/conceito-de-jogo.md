@@ -1,6 +1,6 @@
-# Lunar RPG — Conceito e direção de jogo
+# Conceito e direção de jogo
 
-**Versão 0.10** · atualizado em 9 de setembro de 2026
+**Versão 0.12** · atualizado em 11 de setembro de 2026
 
 Documento vivo: ele muda quando as ideias mudarem. O registro do que mudou fica na seção 20.
 
@@ -19,7 +19,11 @@ Os termos próprios do projeto estão explicados no glossário, na seção 19.
 
 ## 1. A ideia central
 
-Um RPG singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander. O mundo é o da ficção científica industrial — naves usadas, indústria pesada, trabalho sujo. O acabamento é pixel art moderna: a referência é o assunto, não a aparência de jogo antigo.
+Um jogo singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander. A herança do Lunar Lander é o voo: empuxo, inércia e descida controlada. Ela não diz nada sobre o que tem no chão.
+
+**A ambientação industrial é da nave e do trabalho, não dos planetas.** Naves usadas, indústria pesada, trabalho sujo: isso descreve quem o jogador é e como ele ganha a vida. Não descreve os lugares onde ele pousa. Cada planeta é livre para ser o que quiser, e um planeta inteiro de doce é tão legítimo quanto um deserto de gelo. O contraste é a graça: um cargueiro encardido descendo num lugar que não tem nada a ver com ele.
+
+O acabamento é pixel art moderna: a referência é o assunto, não a aparência de jogo antigo.
 
 A nave é o personagem principal, e o jogo tem duas vistas da mesma nave:
 
@@ -43,7 +47,7 @@ O que o jogo se propõe a entregar:
 - Nave controlada diretamente, com inércia, pouso, carga e melhorias.
 - Um sistema aberto para explorar, com planetas e outposts que o jogador acha voando.
 - Contratos de coleta emitidos por outposts; créditos e progressão.
-- Planetas com diferenças físicas e de recurso.
+- Planetas diferentes uns dos outros na física, no recurso e no que eles são.
 - Um pouso difícil em cada planeta, pelo que aquele planeta é.
 
 ## 2. Princípios de experiência
@@ -64,7 +68,7 @@ Uma ideia boa pode esperar. A tabela separa o que entra na primeira versão do q
 | --- | --- | --- |
 | Universo | Um sistema grande e finito, com planetas e outposts feitos à mão | Mais sistemas, e geração para além do que foi desenhado à mão |
 | Vistas | Espaço e superfície, com a mesma nave e a mesma física | Vista de acoplagem e interiores de estação |
-| Superfícies | Uma região de pouso por planeta, com o ponto de coleta do recurso dele | Várias regiões por planeta, mais biomas |
+| Superfícies | Uma região de pouso por planeta, com o ponto de coleta do recurso dele, e cada planeta com identidade própria | Várias regiões por planeta |
 | Planetas | Gravidade, relevo e recurso próprios em cada um | Clima, perigo ambiental e economia local |
 | Outposts | Emitem contratos e recebem a entrega deles | Mercado próprio e outros serviços de porto |
 | Naves | Três modelos, slots predefinidos, 18–24 módulos e equipamentos | Construção livre peça a peça, grandes frotas |
@@ -209,14 +213,19 @@ Finito é uma decisão de produção, não de ambição. Planetas feitos à mão
 
 **Composição de um planeta**
 
-Um planeta é um conjunto de condições físicas mais o recurso que ele oferece:
+Um planeta é um conjunto de condições físicas, mais o recurso que ele oferece, mais uma identidade que não se repete:
 
 - gravidade própria, que muda o pouso;
 - relevo próprio, que muda a aproximação;
 - um recurso, que é o motivo de ir até lá;
-- uma região de pouso, com o ponto de coleta desse recurso.
+- uma região de pouso, com o ponto de coleta desse recurso;
+- um assunto próprio, que é o que o jogador vai lembrar do lugar.
 
-Um planeta tem um objetivo só: pousar no ponto de coleta. A variedade vem da gravidade, do relevo e do que o contrato pede, não de acumular tarefas na superfície.
+**Nenhum planeta se parece com o anterior.** A mecânica é sempre a mesma, descer inteiro num lugar demarcado, e é exatamente por ela ser constante que o lugar pode ser qualquer coisa. Um deserto de gelo, uma refinaria abandonada, uma floresta de cogumelo gigante, um planeta inteiro de doce. Não existe lista de biomas permitidos e este documento não vai criar uma. Surreal é permitido. O que o planeta precisa provar é que pousar nele não é igual a pousar nos outros.
+
+Um planeta tem um objetivo só: pousar no ponto de coleta. A variedade nunca vem de acumular tarefas na superfície. Ela vem da gravidade, do relevo, do que o contrato pede e do que o lugar é.
+
+**Um planeta pode ter vida, e ela é cenário.** Bicho, planta e clima não são objetivo nem inimigo, e não entram no save. Eles existem para o planeta ser um lugar, e saem na frente de qualquer coisa que atrapalhe achar o ponto de coleta.
 
 **Outposts**
 
@@ -276,7 +285,7 @@ A distância entre corpos precisa ser grande o bastante para o espaço parecer e
 
 ## 10. O pouso é o desafio
 
-Todo planeta pede a mesma coisa: descer inteiro num lugar demarcado. O que muda de planeta para planeta é o que torna essa descida difícil.
+Todo planeta pede a mesma coisa: descer inteiro num lugar demarcado. O que muda de planeta para planeta é o lugar em si, e o que nele torna essa descida difícil.
 
 **De onde vem a dificuldade**
 
@@ -374,7 +383,7 @@ Pixel art aqui é meio de expressão, não emulação de hardware antigo. Nada d
 
 **Identificação**
 
-- Paletas por planeta, e uma silhueta distinta por modelo.
+- Assunto e paleta próprios por planeta, e uma silhueta distinta por modelo de nave. Dois corpos nunca se leem igual de longe.
 - Cada lugar de pouso é desenhado à mão para o lugar em que está, e se lê de longe pela silhueta e pela luz (seção 10).
 - Cor sozinha nunca distingue o lugar de pouso, o perigo e o cenário.
 - Arte final não é pré-requisito para provar que a pilotagem e o pouso funcionam.
@@ -412,7 +421,7 @@ Os textos são preparados para inglês e português brasileiro.
 | Escopo maior que a capacidade | Ciclos terminam sem nada jogável | Cortar quantidade de conteúdo e adiar sistemas da coluna de expansão |
 | Voo sem decisão | O jogador segura o acelerador do começo ao fim sem pensar | Resolver a seção 18: dar um preço a voar |
 | Espaço vazio | A viagem entre planetas é tempo morto | Encurtar distâncias, ou dar ao trecho coisas para achar |
-| Planetas intercambiáveis | Trocar de planeta não muda como se pousa | Diferenciar por gravidade e relevo antes de diferenciar por arte |
+| Planetas intercambiáveis | Trocar de planeta não muda como se pousa | Diferenciar por gravidade e relevo, e não só por arte: dois planetas com a mesma física são o mesmo planeta repintado |
 | Sobrecarga de controles | O jogador luta com a interface durante o pouso | Assistência básica, pausa e redistribuição de ações |
 | Lugar de pouso ilegível | O jogador desce, não acha onde pousar e sobe de novo | Tratar a demarcação como arte autoral por lugar, e testar de longe |
 | Arte final atrasada | Placeholder chega ao acabamento | Definir o inventário e o orçamento de arte depois da primeira experiência completa |
@@ -426,7 +435,7 @@ Os textos são preparados para inglês e português brasileiro.
 - Se um outpost pode existir também na superfície de um planeta. Hoje todos ficam no espaço.
 - Como o jogador acha um planeta que nunca visitou: instrumento a bordo, informação comprada no outpost, ou só olhar.
 - Nome e ambientação final.
-- Clima visual dominante dentro da pixel art moderna, e a paleta de cada corpo celeste.
+- O que costura planetas radicalmente diferentes num jogo só: o acabamento, a luz, a nave, ou alguma regra de paleta que todos respeitem.
 - Duração comercial pretendida.
 - Existência de um modo com perda permanente.
 - Qual sensação de voo o jogo quer exatamente. Essa decisão só faz sentido diante de um protótipo, não de uma descrição.
@@ -454,6 +463,8 @@ Os textos são preparados para inglês e português brasileiro.
 
 | Versão | Data | O que mudou |
 | --- | --- | --- |
+| 0.12 | 2026-09-11 | **Cada planeta passou a ser um assunto próprio, e surreal é permitido.** A ambientação industrial foi devolvida a quem ela descreve, a nave e o trabalho, e deixou de valer para os lugares onde se pousa: um planeta de doce é tão legítimo quanto um deserto de gelo. Identidade entrou na composição de um planeta na seção 7, junto com a permissão explícita de ter vida, que é cenário e não objetivo. A seção 17 parou de tratar arte como diferenciação de segunda, e a seção 18 trocou a pergunta sobre clima visual dominante pela pergunta de o que costura planetas muito diferentes num jogo só. |
+| 0.11 | 2026-09-11 | **"Lunar" saiu do título.** A herança do Lunar Lander passou a ser declarada como o voo, e não como o cenário: nenhum corpo celeste precisa ser cinza e sem vida, e relevo, paleta e vegetação continuam abertos por planeta. Nenhuma decisão de design mudou. O documento só parou de sugerir uma ambientação que a seção 18 diz não estar escolhida. |
 | 0.10 | 2026-09-09 | **O painel de telemetria voltou ao HUD**, agora só como moldura atrás dos números — a versão 0.9 tinha tirado o painel inteiro junto com a barra de estrutura. A barra continua fora, e continua não existindo grandeza contínua para uma barra mostrar. |
 | 0.9 | 2026-09-09 | **Dano foi removido do jogo.** A nave não tem mais integridade, estado de casco, sinal de impacto nem estado destruído; o casco tem uma textura só, a barra de estrutura saiu do HUD junto com o painel inteiro, e os módulos deixaram de ter integridade. Com isso o jogo ficou sem nenhuma consequência para pousar mal: combustível, combate, prazo, reparo e dano saíram todos, e a seção 18 passou a ter uma pergunta central em vez de várias. |
 | 0.8 | 2026-09-09 | **Reparo foi removido do jogo.** Nenhum outpost conserta a nave, nenhum módulo é substituído, e a subseção "Saída da espiral de pobreza" saiu junto porque dependia dele. O dano passa a ser permanente na campanha, e a promessa da seção 15 de que fracassar não é o fim foi retirada até que a seção 18 decida entre devolver alguma forma de recuperação ou tratar a perda da nave como um desfecho com continuação própria. |
