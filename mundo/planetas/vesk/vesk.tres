@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Planeta" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://mundo/planetas/planeta.gd" id="1_esquema"]
+[ext_resource type="Resource" path="res://entities/carga/data/niquel_bruto.tres" id="2_recurso"]
+[ext_resource type="Resource" path="res://mundo/planetas/vesk/regioes/cratera/cratera.tres" id="3_cratera"]
+
+[resource]
+script = ExtResource("1_esquema")
+nome = "Vesk"
+assunto = "Rocha fria, sem ar nenhum e com um sexto da gravidade de Arvo. O que cai aqui cai devagar, e o que é empurrado não volta sozinho: a pedra solta no céu não é enfeite, é o lugar sendo o que é."
+gravidade = 1.62
+arrasto_do_ar = 0.0
+cor_ambiente = Color(0.72, 0.74, 0.85, 1)
+cor_do_ceu = Color(0.04, 0.035, 0.06, 1)
+recurso = ExtResource("2_recurso")
+regioes = Array[Resource]([ExtResource("3_cratera")])
+cor_de_identidade = Color(0.56, 0.44, 0.4, 1)

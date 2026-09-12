@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://pag5nuw6c1cp"]
+
+[ext_resource type="Script" uid="uid://k8axom38tlef" path="res://mundo/sistema/sistema.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://entities/nave/nave.tscn" id="2_nave"]
+[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://mundo/planetas/arvo/arvo_corpo.tscn" id="4_arvo"]
+[ext_resource type="Script" uid="uid://c5pvr6m44i5it" path="res://mundo/sistema/camera_do_sistema.gd" id="5_camera"]
+[ext_resource type="Script" uid="uid://d2ws8fsfuftcw" path="res://mundo/art/campo_de_estrelas.gd" id="6_estrelas"]
+[ext_resource type="Texture2D" uid="uid://dq0yd5drydgye" path="res://mundo/art/estrelas_longe.png" id="7_longe"]
+[ext_resource type="Texture2D" uid="uid://dwnqt8hychexf" path="res://mundo/art/estrelas_perto.png" id="8_perto"]
+[ext_resource type="PackedScene" path="res://ui/orbita/orbita.tscn" id="9_orbita"]
+[ext_resource type="PackedScene" path="res://ui/mapa/mapa.tscn" id="10_mapa"]
+[ext_resource type="PackedScene" path="res://mundo/planetas/vesk/vesk_corpo.tscn" id="11_vesk"]
+
+[node name="Sistema" type="Node2D" unique_id=615822451]
+script = ExtResource("1_script")
+
+[node name="Estrelas" type="Node2D" parent="." unique_id=334342309]
+z_index = -100
+
+[node name="Longe" type="Node2D" parent="Estrelas" unique_id=844262952]
+texture_filter = 1
+script = ExtResource("6_estrelas")
+fator = 0.125
+textura = ExtResource("7_longe")
+
+[node name="Perto" type="Node2D" parent="Estrelas" unique_id=293067502]
+texture_filter = 1
+script = ExtResource("6_estrelas")
+fator = 0.25
+textura = ExtResource("8_perto")
+
+[node name="Corpos" type="Node2D" parent="." unique_id=669173014]
+
+[node name="ArvoCorpo" parent="Corpos" unique_id=466846345 instance=ExtResource("4_arvo")]
+position = Vector2(320, 180)
+
+[node name="VeskCorpo" parent="Corpos" unique_id=498494886 instance=ExtResource("11_vesk")]
+position = Vector2(-900, 780)
+
+[node name="LugarAtual" type="Node2D" parent="." unique_id=1627582600]
+
+[node name="Nave" parent="." unique_id=773678874 instance=ExtResource("2_nave")]
+position = Vector2(110, 56)
+
+[node name="Camera" type="Camera2D" parent="." unique_id=608536526]
+position = Vector2(320, 180)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+script = ExtResource("5_camera")
+
+[node name="Interface" type="CanvasLayer" parent="." unique_id=2028255105]
+
+[node name="Hud" parent="Interface" unique_id=1493560818 instance=ExtResource("3_hud")]
+layout_mode = 3
+
+[node name="Mapa" parent="Interface" unique_id=1170351866 instance=ExtResource("10_mapa")]
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Orbita" parent="Interface" unique_id=1256459295 instance=ExtResource("9_orbita")]
+grow_horizontal = 2
+grow_vertical = 2

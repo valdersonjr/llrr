@@ -1,25 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://cplatpouso0001"]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://entities/estruturas/plataforma_de_pouso/plataforma_de_pouso.gd" id="1_plat"]
-[ext_resource type="Texture2D" path="res://entities/estruturas/plataforma_de_pouso/art/plataforma_de_pouso.png" id="2_deck"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/plataforma_de_pouso/art/plataforma_de_pouso.png" id="1_arte"]
+[ext_resource type="Texture2D" path="res://assets/luz_redonda.png" id="2_luz"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_deck"]
-resource_local_to_scene = true
-size = Vector2(64, 4)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_deque"]
+size = Vector2(68, 8)
 
-[node name="PlataformaDePouso" type="StaticBody2D"]
-collision_layer = 1
+[node name="PlataformaDePouso" type="StaticBody2D" groups=["pontos_de_coleta"]]
+collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_plat")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_repeat = 2
-texture = ExtResource("2_deck")
+[node name="Arte" type="Sprite2D" parent="."]
+texture_filter = 1
 centered = false
-offset = Vector2(-32, -2)
-region_enabled = true
-region_rect = Rect2(0, 0, 64, 16)
+offset = Vector2(-36, -38)
+texture = ExtResource("1_arte")
 
-[node name="Colisao" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_deck")
+[node name="Forma" type="CollisionShape2D" parent="."]
+position = Vector2(0, -29)
+shape = SubResource("RectangleShape2D_deque")
+
+[node name="BalizaEsquerda" type="PointLight2D" parent="."]
+position = Vector2(-31, -35)
+color = Color(1, 0.83, 0.52, 1)
+energy = 1.4
+texture = ExtResource("2_luz")
+texture_scale = 0.42
+
+[node name="BalizaDireita" type="PointLight2D" parent="."]
+position = Vector2(31, -35)
+color = Color(1, 0.83, 0.52, 1)
+energy = 1.4
+texture = ExtResource("2_luz")
+texture_scale = 0.42

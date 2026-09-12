@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://mundo/regiao.gd" id="1_regiao"]
+[ext_resource type="Script" path="res://mundo/camada_de_tiles.gd" id="2_camada"]
+[ext_resource type="TileSet" path="res://mundo/planetas/vesk/regioes/cratera/cratera_tileset.tres" id="3_tileset"]
+[ext_resource type="Texture2D" path="res://mundo/planetas/vesk/regioes/cratera/art/ceu_estrelado.png" id="4_estrelado"]
+[ext_resource type="Texture2D" path="res://mundo/planetas/vesk/regioes/cratera/art/serra.png" id="5_serra"]
+[ext_resource type="PackedScene" path="res://entities/estruturas/plataforma_de_pouso/plataforma_de_pouso.tscn" id="6_plataforma"]
+[ext_resource type="PackedScene" path="res://entities/obstaculos/asteroide/asteroide.tscn" id="7_asteroide"]
+[ext_resource type="Texture2D" path="res://entities/obstaculos/asteroide/art/asteroide_grande.png" id="8_grande"]
+[ext_resource type="Texture2D" path="res://entities/obstaculos/asteroide/art/asteroide_pequeno.png" id="9_pequeno"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_campo"]
+size = Vector2(760, 560)
+
+[node name="CrateraRegiao" type="Node2D"]
+script = ExtResource("1_regiao")
+
+[node name="Ambiente" type="CanvasModulate" parent="."]
+color = Color(0.72, 0.74, 0.85, 1)
+
+[node name="Fundo" type="Node2D" parent="."]
+z_index = -10
+
+[node name="Ceu" type="Polygon2D" parent="Fundo"]
+z_index = -20
+color = Color(0.04, 0.035, 0.06, 1)
+polygon = PackedVector2Array(-60, -560, 700, -560, 700, 368, -60, 368)
+
+[node name="Estrelado" type="Sprite2D" parent="Fundo" groups=["solto"]]
+texture_filter = 1
+z_index = -18
+centered = false
+texture = ExtResource("4_estrelado")
+
+[node name="Serra" type="Sprite2D" parent="Fundo" groups=["solto"]]
+texture_filter = 1
+z_index = -16
+position = Vector2(0, 212)
+centered = false
+texture = ExtResource("5_serra")
+
+[node name="Relevo" type="TileMapLayer" parent="."]
+z_index = -3
+texture_filter = 1
+tile_set = ExtResource("3_tileset")
+script = ExtResource("2_camada")
+mapa = "res://mundo/planetas/vesk/regioes/cratera/cratera_relevo.txt"
+legenda = {"#": Vector2i(1, 1), "<": Vector2i(0, 1), ">": Vector2i(2, 1), "[": Vector2i(0, 0), "]": Vector2i(2, 0), "^": Vector2i(1, 0)}
+
+[node name="PlataformaDePouso" parent="." instance=ExtResource("6_plataforma")]
+z_index = 1
+position = Vector2(288, 192)
+
+[node name="Asteroides" type="Node2D" parent="."]
+
+[node name="AsteroideA" parent="Asteroides" instance=ExtResource("7_asteroide")]
+position = Vector2(120, 74)
+arte = ExtResource("8_grande")
+velocidade = Vector2(46, 0)
+giro = 11.0
+
+[node name="AsteroideB" parent="Asteroides" instance=ExtResource("7_asteroide")]
+position = Vector2(430, 108)
+velocidade = Vector2(-38, 0)
+giro = -17.0
+
+[node name="AsteroideC" parent="Asteroides" instance=ExtResource("7_asteroide")]
+position = Vector2(250, 140)
+arte = ExtResource("9_pequeno")
+velocidade = Vector2(64, 0)
+giro = 26.0
+
+[node name="AsteroideD" parent="Asteroides" instance=ExtResource("7_asteroide")]
+position = Vector2(560, 52)
+arte = ExtResource("8_grande")
+velocidade = Vector2(-27, 9)
+giro = 8.0
+
+[node name="AsteroideE" parent="Asteroides" instance=ExtResource("7_asteroide")]
+position = Vector2(40, 168)
+arte = ExtResource("9_pequeno")
+velocidade = Vector2(52, -7)
+giro = -22.0
+
+[node name="CampoGravitacional" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+gravity_space_override = 3
+gravity_direction = Vector2(0, 1)
+gravity = 8.1
+linear_damp_space_override = 3
+linear_damp = 0.0
+
+[node name="Forma" type="CollisionShape2D" parent="CampoGravitacional"]
+position = Vector2(320, 180)
+shape = SubResource("RectangleShape2D_campo")

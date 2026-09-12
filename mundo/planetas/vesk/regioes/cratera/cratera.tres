@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FichaDeRegiao" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://mundo/ficha_de_regiao.gd" id="1_esquema"]
+[ext_resource type="PackedScene" path="res://mundo/planetas/vesk/regioes/cratera/cratera_regiao.tscn" id="2_cena"]
+
+[resource]
+script = ExtResource("1_esquema")
+nome = "Cratera"
+assunto = "Uma mesa de rocha no meio de um campo de pedra solta. Sem ar para frear e com gravidade de Lua, quem erra a descida não para: só troca de direção."
+cena = ExtResource("2_cena")
+onde_a_nave_aparece = Vector2(288, 56)
+de_onde_a_nave_vem = Vector2(288, -110)
+ponto_no_corpo = Vector2(0.12, 0.28)

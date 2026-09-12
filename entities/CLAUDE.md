@@ -1,17 +1,27 @@
-# entities/ — CLAUDE.md local
+# entities/
 
-Tudo aqui é "irmão" do player na scene tree: qualquer coisa que existe DENTRO de uma fase, com que o jogador pode interagir ou que aparece no mundo.
+O que é instanciado **dentro** de um lugar. Se a coisa é o lugar, ela mora em `mundo/`.
 
-- `player/` — a nave do jogador. Ver `player/CLAUDE.md` para o padrão dos modelos.
-- `estruturas/` — o que é construído e fica parado no mundo: plataforma de pouso, mina, base.
-- `<categoria_de_npc>/` — agrupe por tipo/categoria, não numa pasta genérica.
-- `items/` — ver `items/CLAUDE.md` nesta mesma pasta para o padrão de herança.
-- `ui/` — HUD e telas que vivem como nó na scene tree. Fica aqui dentro, não como pasta de topo separada, porque é conteúdo com que o player interage. Ver `ui/CLAUDE.md`.
+## As quatro categorias
 
-Cada entidade concreta é uma pasta-folha com `art/`, `data/`, `sound/` + cena e script de mesmo nome — o formato exato está em "Estrutura da pasta-folha" no `CLAUDE.md` da raiz. A exceção é a variação que só muda número e arte: as três pastas de modelo não têm script próprio, todas apontam para `nave.gd`, e o porquê está em `player/CLAUDE.md`.
+| Pasta | O teste para entrar | Hoje tem |
+|---|---|---|
+| `nave/` | é o jogador | a nave, com três modelos previstos |
+| `estruturas/` | foi construído e fica parado | plataforma de pouso |
+| `carga/` | a nave embarca, larga ou recupera | o esquema `RecursoMineral`, o âmbar bruto e o níquel bruto |
+| `obstaculos/` | tem tamanho para o jogador ler como sólido | pedra, asteroide |
+| `cenario/` | parece vivo e não faz nada | caracol |
 
-Regra prática pra decidir entities vs. stages: se a dúvida for "isso é algo que existe dentro de um lugar, ou é o próprio lugar?" — a primeira opção vai aqui, a segunda vai em `stages/`.
+`cenario/` é a categoria que mais convida gambiarra, então a regra é dura e vem da seção 10 do conceito. Cenário **nunca** vira tarefa, **nunca** disputa leitura com o lugar de pouso e **nunca** entra no save, porque vive na cena da região e morre com ela. No instante em que uma das três cair, aquilo deixou de ser cenário.
 
-**Conceito:** seções 4 (pilotagem), 5 (nave e módulos) e 10 (o pouso e o ponto de coleta) de `docs/conceito-de-jogo.md`. Leia antes de definir regra de comportamento — os critérios de aceitação do voo estão no fim da seção 4.
+Foi exatamente o que aconteceu com as pedras grandes de Arvo. Elas nasceram como enfeite, mas têm tamanho para o jogador ler como sólidas, e o que parece sólido e não é vira armadilha. Viraram `obstaculos/pedra`, com colisão tirada do alfa da própria arte para forma e desenho nunca discordarem. A pedra baixa continua em `cenario/`, porque é detalhe de chão e ninguém espera bater nela.
 
-**Não existe combate nem dano neste jogo.** Nada de armas, inimigos, naves hostis, mira, projétil, integridade, casco quebrado ou destruição. Se uma entidade precisa criar dificuldade, ela cria pelo caminho até o pouso: relevo, obstáculo na descida, gravidade.
+`obstaculos/` já tem duas entidades e ganhou o `CLAUDE.md` dela. `estruturas/` e `cenario/` ainda não pedem: têm uma entidade cada e o que há para dizer cabe nesta tabela. Quando a segunda entrar, a pasta ganha o dela.
+
+## Esquema e instância
+
+O script de um `Resource` fica no nível da categoria; os `.tres` que o instanciam ficam num `data/` abaixo. `entities/carga/recurso_mineral.gd` é o esquema, `entities/carga/data/ambar_bruto.tres` é um mineral concreto.
+
+## Quem marca o ponto de coleta
+
+A plataforma não tem script. Ela é um `StaticBody2D` no grupo `pontos_de_coleta`, na camada de colisão 3, com duas balizas acesas de luz própria, e é esse grupo que a nave consulta para saber se encostou no lugar demarcado ou só no chão. Encostar no terreno não é pousar.

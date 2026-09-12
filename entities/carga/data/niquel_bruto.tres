@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RecursoMineral" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://entities/carga/recurso_mineral.gd" id="1_esquema"]
+
+[resource]
+script = ExtResource("1_esquema")
+nome = "Níquel bruto"
+descricao = "Metal arrancado da rocha fria de Vesk. Vale pouco por quilo e pesa muito, então o lucro está em encher o porão e ainda conseguir subir com ele."
+massa_por_unidade = 8.0
+valor_por_unidade = 3
+cor = Color(0.62, 0.64, 0.7, 1)

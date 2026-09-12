@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://mundo/corpo_no_espaco.gd" id="1_corpo"]
+[ext_resource type="Texture2D" path="res://mundo/planetas/arvo/art/arvo_corpo.png" id="2_arte"]
+[ext_resource type="Resource" path="res://mundo/planetas/arvo/arvo.tres" id="3_ficha"]
+
+[node name="ArvoCorpo" type="Node2D" groups=["planetas"]]
+script = ExtResource("1_corpo")
+planeta = ExtResource("3_ficha")
+
+[node name="Arte" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = -50
+texture = ExtResource("2_arte")

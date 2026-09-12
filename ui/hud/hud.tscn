@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://ui/art/moldura.png" id="2_moldura"]
+
+[node name="Hud" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Moldura" type="NinePatchRect" parent="."]
+texture_filter = 1
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 118.0
+offset_bottom = 54.0
+texture = ExtResource("2_moldura")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="Linhas" type="VBoxContainer" parent="Moldura"]
+offset_left = 9.0
+offset_top = 7.0
+offset_right = 104.0
+offset_bottom = 42.0
+theme_override_constants/separation = -1
+
+[node name="Velocidade" type="Label" parent="Moldura/Linhas"]
+theme_override_font_sizes/font_size = 10
+text = "VEL"
+
+[node name="Inclinacao" type="Label" parent="Moldura/Linhas"]
+theme_override_font_sizes/font_size = 10
+text = "INC"
+
+[node name="Giro" type="Label" parent="Moldura/Linhas"]
+theme_override_font_sizes/font_size = 10
+text = "GIR"
+
+[node name="Situacao" type="Label" parent="."]
+offset_left = 7.0
+offset_top = 58.0
+offset_right = 120.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 10

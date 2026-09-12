@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Planeta" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://mundo/planetas/planeta.gd" id="1_esquema"]
+[ext_resource type="Resource" path="res://entities/carga/data/ambar_bruto.tres" id="2_recurso"]
+[ext_resource type="Resource" path="res://mundo/planetas/arvo/regioes/bosque/bosque.tres" id="3_bosque"]
+
+[resource]
+script = ExtResource("1_esquema")
+nome = "Arvo"
+assunto = "Gravidade de Terra e ar denso. Mata alta sobre platôs partidos, e a mata engole o relevo: em Arvo, chão plano é sempre coisa de quem trabalhou ali."
+gravidade = 9.80665
+arrasto_do_ar = 0.25
+cor_ambiente = Color(0.66, 0.73, 0.76, 1)
+cor_do_ceu = Color(0.62, 0.9, 0.9, 1)
+recurso = ExtResource("2_recurso")
+regioes = Array[Resource]([ExtResource("3_bosque")])
+cor_de_identidade = Color(0.32, 0.51, 0.4, 1)

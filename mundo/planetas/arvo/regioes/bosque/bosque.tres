@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FichaDeRegiao" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://mundo/ficha_de_regiao.gd" id="1_esquema"]
+[ext_resource type="PackedScene" path="res://mundo/planetas/arvo/regioes/bosque/bosque_regiao.tscn" id="2_cena"]
+
+[resource]
+script = ExtResource("1_esquema")
+nome = "Bosque"
+assunto = "Platô partido no meio da mata alta. O único chão plano é o que alguém cortou à mão para poder trabalhar."
+cena = ExtResource("2_cena")
+onde_a_nave_aparece = Vector2(110, 56)
+de_onde_a_nave_vem = Vector2(110, -110)
+ponto_no_corpo = Vector2(-0.3, -0.22)

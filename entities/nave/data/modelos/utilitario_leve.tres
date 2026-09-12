@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ModeloDeNave" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://entities/nave/modelo_de_nave.gd" id="1_esquema"]
+[ext_resource type="Texture2D" path="res://entities/nave/art/utilitario_leve.png" id="2_arte"]
+
+[resource]
+script = ExtResource("1_esquema")
+nome = "Utilitário leve"
+papel = "O casco de entrada. Porão pequeno, pouco empuxo e muita autoridade de manobra: perdoa erro de aproximação e castiga quem aceita carga grande."
+massa = 1800.0
+empuxo_em_g = 2.4
+empuxo_lateral_em_g = 0.55
+aceleracao_angular = 240.0
+autoridade_de_estabilizacao = 110.0
+giro_maximo = 150.0
+capacidade_de_carga = 2400.0
+velocidade_maxima_de_toque = 3.2
+inclinacao_em_graus = 12.0
+giro_por_segundo = 16.0
+arte = ExtResource("2_arte")
+tolerancia_da_colisao = 3.0

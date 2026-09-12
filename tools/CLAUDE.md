@@ -1,14 +1,47 @@
-# tools/ — CLAUDE.md local
+# tools/
 
-Ferramenta de desenvolvimento, não código de jogo. Nada daqui roda numa partida nem entra no build.
+Ferramenta de dev. Não entra no build e não é jogo.
 
-- `screenshot.gd` — sobe uma cena, espera N quadros e salva um PNG. `--acao <nome>` dispara uma ação de input no meio do caminho, para fotografar o que só existe depois de uma tecla (menu de pausa, tela aberta). Existe para o agente conferir visualmente o que programou, do mesmo jeito que confere um sprite antes de commitar.
-- `voo_check.gd` — sobe uma fase, dirige a nave por código e confere os critérios de aceitação do fim da seção 4 do conceito. Sai com o número de falhas como código de saída. Rode antes e depois de mexer na física da nave. **Está parado:** a fase de teste que ele usava foi apagada, e ele só volta a rodar quando a constante `CENA` e as duas coordenadas ao lado dela apontarem para a primeira região do mapa de verdade.
+| Ferramenta | Para quê |
+|---|---|
+| `foto.tscn` | sobe uma cena, espera assentar e grava um PNG |
+| `voo_check.tscn` | mede a gravidade em queda livre, solta a nave sobre o deque e pilota uma descida freada, sem abrir janela |
+| `cenario_check.tscn` | desce um raio sob cada peça de cenário e acusa quem está flutuando ou enterrado |
+| `orbita_check.tscn` | entra e sai de um planeta pelo caminho inteiro: chegada, volta ao mundo, tela de regiões e espaço |
+| `menu_check.tscn` | confere a primeira tela: foco, opções ligadas e o destino de "jogar" |
 
-**IMPORTANT:** se um arquivo daqui passar a ser chamado durante o jogo, ele não é mais ferramenta — mova para `utilities/` e siga a regra de autoload de lá.
+```
+godot --path . --scene res://tools/foto.tscn -- \
+    --cena res://mundo/sistema/sistema.tscn --saida foto.png --quadros 140
 
-**IMPORTANT:** as ferramentas daqui rodam como **cena** (`--scene res://tools/<nome>.tscn`), não como `--script`. Um script passado em `--script` vira o próprio `SceneTree` e é compilado **antes de os autoloads existirem** — e aí todo script de jogo que use um deles falha a compilação, inclusive os que a ferramenta só queria carregar. O sintoma é ruim de ler: a cena carrega com os nós no tipo base errado, e a ferramenta trava sem mensagem clara.
+godot --headless --path . --scene res://tools/voo_check.tscn
+```
 
-Por isso `voo_check.gd` tem cão de guarda: passou do teto de quadros, ele acusa e sai com erro. Sem isso, qualquer falha que mate a corrotina deixa o processo rodando para sempre, porque `quit()` só é chamado no fim da sequência.
+`foto` aceita `--olhar x,y` para plantar uma câmera própria, útil para fotografar uma região sem nave, e `--soltar x,y` para recolocar a nave e fotografar um pouso sem pilotar até ele. `--zoom` acompanha o `--olhar`. `--soltar` serve também para fotografar a vista de espaço: solta a nave alto e a troca de vista acontece sozinha.
 
-`screenshot.gd` precisa de janela real: não funciona com `--headless`, porque o driver dummy não renderiza nada para capturar. `voo_check.gd` só usa física, então roda headless.
+**IMPORTANT:** a janela da foto roda em segundo plano, então o desenho é estrangulado e a física não. Esperar um quadro desenhado custa dezenas de quadros de voo, e por isso `foto` não serve para fotografar um instante exato de uma queda. Para isso, solte a nave parada na altura que interessa: sem gravidade ela fica lá.
+
+`cenario_check` nasceu de um bug real: uma pedra plantada dentro de um platô, com a base no nível do vale, que a olho nu parecia só encostada na parede. Sprite que é solto de propósito — fundo, copa cortada pelo quadro, primeiro plano — entra no grupo `solto` e é pulado.
+
+```
+godot --headless --path . --scene res://tools/cenario_check.tscn -- \
+    --regiao res://mundo/planetas/arvo/regioes/bosque/bosque_regiao.tscn
+```
+
+`orbita_check` guarda a promessa central da entrada: **onde a nave aparece é escolha de quem desenhou o lugar**. Se a chegada parar em outro ponto, ou parar andando, o pouso começa diferente do que o projetista desenhou e nenhum lugar fica calibrável. Ele também confere a volta ao mundo da região, que é a única saída pelos lados, e o convite de entrada no espaço.
+
+```
+godot --headless --path . --scene res://tools/orbita_check.tscn
+```
+
+`menu_check` cobra o defeito mais caro e mais silencioso de um menu: botão que não leva a lugar nenhum, ou destino que deixou de existir depois de alguém mover uma cena. Nada disso aparece em compilação, só em quem abriu o jogo e clicou.
+
+```
+godot --headless --path . --scene res://tools/menu_check.tscn
+```
+
+`voo_check` pilota de verdade: ele usa `Input.action_press` na ação `empuxo`, o mesmo caminho do jogador, para provar que o empuxo da ficha dá conta da gravidade do planeta. Se esse critério falha, o pouso é impossível e não difícil.
+
+Ele existe porque `--check-only` não carrega autoload nem roda física. A única verificação real de pilotagem é subir o jogo, e ela sai com código diferente de zero quando um critério falha, então serve em script.
+
+Ao acrescentar uma ferramenta, dê a ela uma linha na tabela acima e outra na tabela de comandos do `CLAUDE.md` da raiz.

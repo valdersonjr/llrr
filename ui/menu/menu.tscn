@@ -1,0 +1,161 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://ui/menu/menu.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://ui/menu/art/background_menu.jpg" id="2_fundo"]
+
+[sub_resource type="Gradient" id="Gradient_veu"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.023, 0.043, 0.094, 0.94, 0.027, 0.05, 0.109, 0.7, 0.035, 0.062, 0.129, 0.22)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_veu"]
+gradient = SubResource("Gradient_veu")
+fill_from = Vector2(0, 0)
+fill_to = Vector2(1, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_opcao"]
+content_margin_left = 12.0
+content_margin_top = 3.0
+content_margin_right = 12.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_foco"]
+content_margin_left = 12.0
+content_margin_top = 3.0
+content_margin_right = 12.0
+content_margin_bottom = 3.0
+bg_color = Color(0.62, 0.9, 0.9, 0.09)
+border_width_left = 3
+border_color = Color(0.62, 0.9, 0.9, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_script")
+
+[node name="Fundo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+modulate = Color(0.68, 0.82, 1.05, 1)
+texture = ExtResource("2_fundo")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Veu" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_veu")
+expand_mode = 1
+
+[node name="Titulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 56.0
+offset_top = -104.0
+offset_right = 420.0
+offset_bottom = -62.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.91, 0.95, 0.94, 1)
+theme_override_font_sizes/font_size = 34
+text = "LLRR"
+vertical_alignment = 1
+
+[node name="Subtitulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 58.0
+offset_top = -56.0
+offset_right = 420.0
+offset_bottom = -40.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.6, 0.79, 0.81, 1)
+theme_override_font_sizes/font_size = 10
+text = "PILOTAGEM E TRABALHO ESPACIAL"
+vertical_alignment = 1
+
+[node name="Opcoes" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 44.0
+offset_top = -14.0
+offset_right = 214.0
+offset_bottom = 52.0
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="Jogar" type="Button" parent="Opcoes"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.84, 0.88, 0.87, 1)
+theme_override_colors/font_focus_color = Color(0.72, 0.95, 0.95, 1)
+theme_override_colors/font_hover_color = Color(0.72, 0.95, 0.95, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_opcao")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_opcao")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_opcao")
+theme_override_styles/focus = SubResource("StyleBoxFlat_foco")
+text = "JOGAR"
+alignment = 0
+
+[node name="Sair" type="Button" parent="Opcoes"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.84, 0.88, 0.87, 1)
+theme_override_colors/font_focus_color = Color(0.72, 0.95, 0.95, 1)
+theme_override_colors/font_hover_color = Color(0.72, 0.95, 0.95, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxEmpty_opcao")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_opcao")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_opcao")
+theme_override_styles/focus = SubResource("StyleBoxFlat_foco")
+text = "SAIR"
+alignment = 0
+
+[node name="Rodape" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = -28.0
+offset_right = 440.0
+offset_bottom = -14.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.48, 0.58, 0.6, 1)
+theme_override_font_sizes/font_size = 9
+text = "SETAS OU MOUSE  ESCOLHER      ENTER  CONFIRMAR"
+vertical_alignment = 1
+
+[node name="Versao" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -28.0
+offset_right = -16.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.4, 0.48, 0.5, 1)
+theme_override_font_sizes/font_size = 9
+text = "protótipo"
+horizontal_alignment = 2
+vertical_alignment = 1
