@@ -10,7 +10,7 @@
 | Tile | 16×16, a grade do pacote de arte |
 | Escala do mundo | 5 px por metro; grandeza física sempre em metro, segundo, quilo e grau |
 | Versionamento | git / GitHub — `valdersonjr/llrr` |
-| Arte | baixada ou feita fora do repositório; o projeto só consome PNG |
+| Arte | pacotes baixados, ou pixel art própria feita com a skill `pixel-art-sprite`: fonte `.pix` em `art/fonte/` (fora do import), PNG gerado em `art/` |
 | Testes | nenhum framework |
 
 A arquitetura de pastas e as convenções de código estão no `CLAUDE.md` da raiz.

@@ -28,18 +28,20 @@ Um lugar tem duas formas: `<nome>_corpo.tscn`, como ele se vê de longe, e a cen
 
 **Dentro de uma região, os lados dão a volta.** Sair pela esquerda é entrar pela direita, sem tocar em velocidade, ângulo nem giro: a região é uma tela, não há mapa ao lado para onde ir, e sumir pela borda seria pior. Para baixo está o chão, e para cima está a tela de regiões.
 
-## Os dois lugares de hoje, e por que eles não se parecem
+## O lugar de hoje
 
-A seção 17 do conceito avisa do risco de planetas intercambiáveis, e a regra contra isso é diferenciar por **gravidade e relevo**, não por cor. É o que separa os dois:
+Só Arvo existe, com uma região, o Outpost. Vesk, Elde, Oren e o Bosque foram apagados em 2026-09-14, e lugar novo nasce com a receita de cenário da skill `pixel-art-sprite` (`reference/receita-de-cenario.md`).
 
-| | Arvo / Bosque | Vesk / Cratera |
-|---|---|---|
-| gravidade | 9,81 m/s², de Terra | 1,62 m/s², de Lua |
-| ar | denso, arrasto 0,25 | vácuo, arrasto 0 |
-| relevo | platôs largos sob mata alta | mesa estreita entre paredões |
-| o que atrapalha | ler o chão no meio da vegetação | pedra solta cruzando a descida |
+| | Arvo |
+|---|---|
+| gravidade | 9,81 m/s² |
+| ar | denso, 0,25 |
+| regiões | Outpost |
+| o que atrapalha | o deque estreito entre os postes |
 
-Em Arvo o ar freia por você e o erro se corrige. Em Vesk nada freia: o que foi empurrado continua, e um encontrão com asteroide perto do chão não mata, tira a nave do prumo na hora em que ela menos pode corrigir. A arte de Vesk é gerada e declarada como protótipo; o que ele prova é a variedade da pilotagem, não a da paisagem.
+Em Arvo o ar freia por você e o erro se corrige.
+
+A seção 17 do conceito avisa do risco de planetas intercambiáveis, e a regra contra isso continua valendo para o próximo: diferenciar por **gravidade e relevo**, não só por cor. **A grade de tile pode mudar de lugar para lugar**; o que precisa ser igual é a densidade de pixel.
 
 ## Um lugar é uma pasta
 
@@ -48,17 +50,19 @@ mundo/planetas/arvo/
 ├── art/                        # arte do corpo, e o que mais de uma região usar
 ├── arvo.tres                   # a ficha: gravidade, recurso, e a lista de regiões
 ├── arvo_corpo.tscn             # como ele se vê na vista de espaço
-└── regioes/bosque/             # uma pasta por superfície
-    ├── art/                    # arte só desta região
-    ├── bosque.tres             # nome, cena e onde a nave aparece
-    └── bosque_regiao.tscn      # o terreno, onde se pousa
+└── regioes/outpost/            # uma pasta por superfície
+    ├── art/                    # arte só desta região, com a fonte .pix em art/fonte/
+    ├── sound/                  # som só desta região
+    ├── outpost.tres            # nome, cena e onde a nave aparece
+    ├── outpost_tileset.tres    # os tiles do chão, com colisão
+    └── outpost_regiao.tscn     # o terreno, onde se pousa
 ```
 
 O nome do lugar prefixa as cenas. `regiao.tscn` repetido em oito pastas é inútil na busca rápida do editor.
 
 ## O contrato da região
 
-`regiao.gd` é a classe base de toda superfície, de planeta e de outpost. Uma região **não conhece a nave e não conhece a ficha do planeta**. Quem entra num lugar é que aplica as condições dele, chamando `aplicar(planeta)`. Isso mantém duas coisas:
+`regiao.gd` é a classe base de toda superfície, inclusive a do outpost, que é uma região como as outras. Uma região **não conhece a nave e não conhece a ficha do planeta**. Quem entra num lugar é que aplica as condições dele, chamando `aplicar(planeta)`. Isso mantém duas coisas:
 
 - a região abre sozinha por `--scene`, que é como se testa um pouso sem voar até lá;
 - a ficha e a cena não apontam uma para a outra, o que evitaria carregamento circular.
@@ -73,34 +77,29 @@ Na superfície a câmera segue a nave dentro de `limites_da_camera()`, que numa 
 
 No espaço a câmera segue a nave livre e afastada. A troca entre os dois enquadramentos acontece atrás da tela de regiões, então ela é instantânea: ninguém vê o instante, e não há transição para suavizar.
 
-## O relevo é um mapa em texto
+## O relevo é pintado na cena
 
-O terreno é um `TileMapLayer` com o tileset do planeta, e quem o preenche é `mundo/camada_de_tiles.gd` lendo um `.txt` ao lado da região. O mesmo script serve à vegetação, que usa outro mapa e não colide: o que separa as duas camadas é o tileset e o z, nunca o código. Um caractere por tile, 40 por 23, linha com `;` é comentário. A legenda de caractere para coordenada de atlas fica na cena, no nó `Relevo`, porque o tileset muda de planeta para planeta.
-
-O `.txt` é a fonte da verdade. Editar terreno é editar arte ASCII, que lê bem no diff do git e não exige abrir o editor. O script é `@tool`, então o relevo também aparece ao abrir a cena.
-
-Colisão vem do tileset, não do mapa. Tile de topo de grama colide só na metade de baixo, para a nave assentar na linha da grama e não no ar acima dela.
+O terreno é um `TileMapLayer` pintado direto na cena da região, com o tileset dela. Colisão vem do tileset, declarada tile a tile, e a linha de colisão é a borda de cima do tile de topo: a nave assenta onde o chão é desenhado.
 
 ## A luz é do planeta, não da cena
 
-A ficha traz `cor_ambiente` e `cor_do_ceu`, e `aplicar()` empurra as duas para a região: a primeira num `CanvasModulate`, a segunda no polígono de céu. O céu é desenhado dentro da cena de propósito, e não é a cor de fundo da janela. Céu que não escurece junto com o resto denuncia na hora que a luz é falsa.
+A ficha traz `cor_ambiente` e `cor_do_ceu`, e `aplicar()` empurra as duas para a região: a primeira num `CanvasModulate`, a segunda no polígono de céu. A exceção é a região com `luz_propria`, que usa as cores declaradas nela: hoje só o Outpost, que é trabalho humano e pode destoar do planeta. O céu é desenhado dentro da cena de propósito, e não é a cor de fundo da janela. Céu que não escurece junto com o resto denuncia na hora que a luz é falsa.
 
-Em cima desse ambiente vêm os emissivos, que é o que a seção 14 do conceito pede. Hoje são três: as duas balizas do deque, a boca de mina acesa e a chama do motor. Todos usam a mesma máscara em `assets/luz_redonda.png`, e quem dá caráter é cor e energia no nó.
+Em cima desse ambiente vêm os emissivos, que é o que a seção 14 do conceito pede. Hoje são dois: os sinais do deque do Outpost e a chama do motor. Todos usam a mesma máscara em `assets/luz_redonda.png`, e quem dá caráter é cor e energia no nó.
 
-A baliza mora dentro de `plataforma_de_pouso.tscn`, não na região. A seção 10 exige que o lugar demarcado se separe do terreno pela silhueta **e** pela luz, então plataforma sem luz própria seria plataforma quebrada.
+A luz do lugar de pouso mora no `sinal_de_pouso`, que escuta o `ponto_de_coleta`. A seção 10 exige que o lugar demarcado se separe do terreno pela silhueta **e** pela luz, então demarcação sem luz própria seria demarcação quebrada.
 
-## Profundidade: quatro planos, não dois
+## Profundidade: vários planos, não dois
 
-Arvo desenha em quatro distâncias, e é isso que tira a cena da aparência de parede plana:
+O Outpost desenha em várias distâncias, e é isso que tira a cena da aparência de parede plana. O detalhe de cada plano está na receita de cenário da skill.
 
 | Plano | z | O que tem |
 |---|---|---|
-| Fundo | −10 | céu, serra e duas faixas de mata, imagens únicas de 640 |
-| Mata média | −6 | pinheiros de pé no chão do vale, atrás do relevo |
-| Jogo | −3 a 1 | relevo, pedras, boca de mina, deque, nave |
-| Primeiro plano | 5 | um pinheiro escuro na borda da tela, cortado pelo quadro |
+| Fundo | −10 | céu em faixas, nuvens, montanhas longe e meio, a mesa de rocha próxima |
+| Cenário | −6 | saloon e cactos |
+| Jogo | −3 a 1 | relevo, deque, personagens, ponto de coleta, nave |
 
-O primeiro plano fica só na borda esquerda, longe da rota de pouso. A seção 16 do conceito manda cortar efeito visual que atrapalhe a leitura, então nada de folhagem sobre o bolsão onde se pousa: aquele canto é o único da tela que fica limpo de propósito.
+Nada fica na frente da rota de pouso. A seção 16 do conceito manda cortar efeito visual que atrapalhe a leitura.
 
 ## O desenho de um corpo
 
@@ -108,13 +107,9 @@ O primeiro plano fica só na borda esquerda, longe da rota de pouso. A seção 1
 
 Um corpo novo é um PNG quadrado com fundo transparente. Se ele for maior, o planeta fica maior e a fronteira acompanha sozinha, porque ela é medida em região, não em corpo.
 
-## O pacote de arte tem mais planeta dentro
+## Arte de lugar novo
 
-`Trees/` traz a mesma biblioteca de pinheiros em cinco cores: verde, escura, dourada, vermelha e amarela. Cada folha tem cinco tamanhos, e cada tamanho vem em versão iluminada, silhueta escura e tronco pelado.
-
-Isso é um planeta novo quase de graça. Uma floresta dourada ou vermelha, com outra `cor_ambiente` e outra `cor_do_ceu` na ficha, já não se parece com Arvo. Continua valendo a regra da seção 17: diferenciar por gravidade e relevo, e não só por cor.
-
-Ainda sem uso no pacote: a colmeia, o interior de construção, o javali e a abelha. Os três últimos são candidatos naturais a `entities/cenario/`.
+Arte nova sai da skill `pixel-art-sprite`, na paleta do projeto.
 
 ## Para acrescentar uma região a um planeta
 
@@ -123,6 +118,21 @@ Ainda sem uso no pacote: a colmeia, o interior de construção, o javali e a abe
 3. `ponto_no_corpo` põe o marcador dela sobre o disco do planeta, de -1 a 1 nos dois eixos. É só leitura, não existe geografia por trás.
 4. A cena precisa de `CampoGravitacional`, do relevo com colisão e de um corpo no grupo `pontos_de_coleta`.
 5. Uma linha na lista `regioes` da ficha do planeta, e pronto: a tela de regiões monta o marcador sozinha.
+
+## Outpost é uma região
+
+Um outpost não é um lugar no espaço: é uma região de um planeta, com ficha e cena de região como qualquer outra, e entra na lista `regioes` da ficha do planeta. O que o separa das regiões de coleta é quem está lá e o que se faz ali: é onde se pega e entrega contrato.
+
+O primeiro é o de Arvo, em `regioes/outpost/`: um posto de fronteira de faroeste, com areia, mesas de rocha, cactos, céu de meio-dia e um deque de pouso sobre palafitas com sinal que pisca vermelho e amarelo e fica verde no pouso. A ficha é `outpost.tres` e a cena é `outpost_regiao.tscn`.
+
+- **O chão é pintado direto no `TileMapLayer`**, com `outpost_tileset.tres`.
+- **A luz é própria** (`luz_propria` na raiz da região): ambiente branco e céu azul da Resurrect 64. A luz azulada de Arvo tingiria o deserto inteiro.
+- **O som é da região**, no nó `Som`: `Entrada` toca `sound/entrada.mp3` uma vez ao chegar, e o `finished` dela, ligado na própria cena, dá `play` em `Musica`, que toca `sound/musica.mp3` em laço. O laço está no importador do mp3, não em código. Sair da região descarta a cena (`_esvaziar_lugar` no sistema), então a música para junto, sem ninguém precisar desligar.
+
+- A arte do lugar mora em `regioes/outpost/art/`, e a fonte dela em `art/fonte/`.
+- O saloon é construção parada: `entities/estruturas/saloon/`.
+- Xerife, dono do saloon, cowboy e o arbusto seco rolando são cenário: `entities/cenario/<nome>/`.
+- O deque é a demarcação do lugar: a instância de `ponto_de_coleta` fica sobre ele, e os dois `sinal_de_pouso` escutam o estado dela.
 
 ## Para acrescentar um planeta
 

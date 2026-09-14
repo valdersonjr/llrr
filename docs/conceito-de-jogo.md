@@ -1,6 +1,6 @@
 # Conceito e direção de jogo
 
-**Versão 0.12** · atualizado em 11 de setembro de 2026
+**Versão 0.13** · atualizado em 14 de setembro de 2026
 
 Documento vivo: ele muda quando as ideias mudarem. O registro do que mudou fica na seção 20.
 
@@ -27,7 +27,7 @@ O acabamento é pixel art moderna: a referência é o assunto, não a aparência
 
 A nave é o personagem principal, e o jogo tem duas vistas da mesma nave:
 
-- **Vista de espaço.** Câmera afastada, sem gravidade e sem chão. É onde o jogador navega entre planetas e outposts, e onde o espaço é grande o bastante para valer a pena olhar.
+- **Vista de espaço.** Câmera afastada, sem gravidade e sem chão. É onde o jogador navega entre planetas, e onde o espaço é grande o bastante para valer a pena olhar.
 - **Vista de superfície.** Câmera perto, gravidade do corpo celeste, terreno e plataformas. É onde o pouso acontece.
 
 A troca entre elas é entrar e sair de um planeta. Não é mudança de perspectiva nem de regras de voo: é a mesma nave, com a mesma inércia, vista de outra distância.
@@ -45,7 +45,7 @@ O que o jogo se propõe a entregar:
 
 - Mundo e pilotagem 2D em pixel art moderna.
 - Nave controlada diretamente, com inércia, pouso, carga e melhorias.
-- Um sistema aberto para explorar, com planetas e outposts que o jogador acha voando.
+- Um sistema aberto para explorar, com planetas que o jogador acha voando e outposts nas superfícies deles.
 - Contratos de coleta emitidos por outposts; créditos e progressão.
 - Planetas diferentes uns dos outros na física, no recurso e no que eles são.
 - Um pouso difícil em cada planeta, pelo que aquele planeta é.
@@ -66,7 +66,7 @@ Uma ideia boa pode esperar. A tabela separa o que entra na primeira versão do q
 
 | Área | Primeira versão | Expansão posterior |
 | --- | --- | --- |
-| Universo | Um sistema grande e finito, com planetas e outposts feitos à mão | Mais sistemas, e geração para além do que foi desenhado à mão |
+| Universo | Um sistema grande e finito, com planetas feitos à mão e outposts dentro deles | Mais sistemas, e geração para além do que foi desenhado à mão |
 | Vistas | Espaço e superfície, com a mesma nave e a mesma física | Vista de acoplagem e interiores de estação |
 | Superfícies | Uma região de pouso por planeta, com o ponto de coleta do recurso dele, e cada planeta com identidade própria | Várias regiões por planeta |
 | Planetas | Gravidade, relevo e recurso próprios em cada um | Clima, perigo ambiental e economia local |
@@ -207,7 +207,7 @@ Isso vale para tudo que o jogo desenhar: nada de sprite de casco amassado, barra
 
 **O sistema**
 
-Um espaço contínuo e finito, grande o bastante para dar sensação de mundo aberto, com planetas e outposts colocados à mão. O jogador chega em qualquer um deles voando: não existe tela de seleção de destino.
+Um espaço contínuo e finito, grande o bastante para dar sensação de mundo aberto, com planetas colocados à mão. O jogador chega em qualquer um deles voando: não existe tela de seleção de destino.
 
 Finito é uma decisão de produção, não de ambição. Planetas feitos à mão são a única forma barata de garantir que dois planetas não sejam o mesmo planeta repintado. Geração procedural fica na coluna de expansão da seção 3, e só entra quando houver receita provada de variedade.
 
@@ -229,7 +229,9 @@ Um planeta tem um objetivo só: pousar no ponto de coleta. A variedade nunca vem
 
 **Outposts**
 
-Um outpost fica no espaço e é um destino como qualquer outro: o jogador voa até ele, entra, e a vista troca do mesmo jeito que troca ao entrar num planeta. Lá dentro existe um lugar de pouso demarcado, e pousar nele é o que dá acesso ao outpost. Não existe manobra de acoplagem: acoplar seria um controle novo, e o pouso já resolve.
+Um outpost é uma região de um planeta, não um lugar solto no espaço. O jogador voa até o planeta, entra, escolhe o outpost na tela de regiões e desce como em qualquer outra região. Lá existe um lugar de pouso demarcado, e pousar nele é o que dá acesso ao outpost. Não existe manobra de acoplagem: acoplar seria um controle novo, e o pouso já resolve.
+
+Um planeta pode ter outpost ou não, e o outpost convive com as regiões de coleta do mesmo planeta. Ele pode destoar do resto do planeta: um outpost de fronteira em pleno deserto de um planeta de mata é tão legítimo quanto qualquer outro lugar, porque o outpost é trabalho humano, e a ambientação do trabalho é livre para contrastar com o lugar.
 
 O que um outpost faz:
 
@@ -429,10 +431,9 @@ Os textos são preparados para inglês e português brasileiro.
 ## 18. Perguntas em aberto
 
 - **O que acontece quando o jogador pousa mal.** Esta é a pergunta central do projeto agora. Combustível, combate, prazo, reparo e dano foram todos removidos, e não sobrou nenhuma consequência: a nave desce rápido demais, torta, e simplesmente assenta. Pilotar bem não é recompensado e pilotar mal não é punido. Nada de conteúdo novo compensa isso, e nenhum planeta a mais vai tornar o pouso interessante enquanto ele não custar nada.
-- Quantos planetas e outposts o sistema tem, e que distância há entre eles.
+- Quantos planetas o sistema tem, em quais deles há outpost, e que distância há entre eles.
 - Se o jogo quer prazo em contrato. Hoje não tem, e prazo dependeria de reintroduzir alguma medida de tempo, que a seção 8 descarta.
 - Que outros eventos de coleta existem além de carregar e extrair.
-- Se um outpost pode existir também na superfície de um planeta. Hoje todos ficam no espaço.
 - Como o jogador acha um planeta que nunca visitou: instrumento a bordo, informação comprada no outpost, ou só olhar.
 - Nome e ambientação final.
 - O que costura planetas radicalmente diferentes num jogo só: o acabamento, a luz, a nave, ou alguma regra de paleta que todos respeitem.
@@ -446,9 +447,9 @@ Os textos são preparados para inglês e português brasileiro.
 
 | Termo | Significado |
 | --- | --- |
-| **Vista de espaço** | Câmera afastada, sem gravidade e sem terreno. Onde se navega entre planetas e outposts. |
+| **Vista de espaço** | Câmera afastada, sem gravidade e sem terreno. Onde se navega entre planetas. |
 | **Vista de superfície** | Câmera perto, com gravidade e terreno. Onde se pousa. |
-| **Outpost** | Lugar de trabalho que emite contratos e recebe a entrega dos contratos que emitiu. |
+| **Outpost** | Região de um planeta com um lugar de trabalho que emite contratos e recebe a entrega dos contratos que emitiu. Entra-se nele pela tela de regiões, como em qualquer região. |
 | **Contrato** | Pedido de coleta emitido por um outpost. Só é pago pelo outpost que o emitiu. |
 | **Região** | Área local visitável de um planeta, com terreno, plataformas e o ponto de coleta. O jogo não representa o planeta inteiro. |
 | **Ponto de coleta** | O lugar demarcado da região onde a nave pousa para executar o evento do contrato. Nem sempre é uma plataforma. |
@@ -463,6 +464,7 @@ Os textos são preparados para inglês e português brasileiro.
 
 | Versão | Data | O que mudou |
 | --- | --- | --- |
+| 0.13 | 2026-09-14 | **Outpost passou a ser uma região de planeta.** Deixou de ser um lugar solto no espaço: o jogador entra no planeta e escolhe o outpost na tela de regiões, como qualquer outra região, e um planeta pode ter outpost ou não. A vista de espaço agora navega só entre planetas, a pergunta da seção 18 sobre outpost na superfície saiu porque foi respondida, e o glossário acompanhou. O primeiro é o Outpost de Arvo, um posto de fronteira de faroeste. |
 | 0.12 | 2026-09-11 | **Cada planeta passou a ser um assunto próprio, e surreal é permitido.** A ambientação industrial foi devolvida a quem ela descreve, a nave e o trabalho, e deixou de valer para os lugares onde se pousa: um planeta de doce é tão legítimo quanto um deserto de gelo. Identidade entrou na composição de um planeta na seção 7, junto com a permissão explícita de ter vida, que é cenário e não objetivo. A seção 17 parou de tratar arte como diferenciação de segunda, e a seção 18 trocou a pergunta sobre clima visual dominante pela pergunta de o que costura planetas muito diferentes num jogo só. |
 | 0.11 | 2026-09-11 | **"Lunar" saiu do título.** A herança do Lunar Lander passou a ser declarada como o voo, e não como o cenário: nenhum corpo celeste precisa ser cinza e sem vida, e relevo, paleta e vegetação continuam abertos por planeta. Nenhuma decisão de design mudou. O documento só parou de sugerir uma ambientação que a seção 18 diz não estar escolhida. |
 | 0.10 | 2026-09-09 | **O painel de telemetria voltou ao HUD**, agora só como moldura atrás dos números — a versão 0.9 tinha tirado o painel inteiro junto com a barra de estrutura. A barra continua fora, e continua não existindo grandeza contínua para uma barra mostrar. |

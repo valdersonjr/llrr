@@ -2,14 +2,13 @@
 
 > Raiz do projeto Godot (`res://CLAUDE.md`). Mantido enxuto de propósito: cada pasta relevante ganha o seu próprio `CLAUDE.md`, criado junto com o primeiro arquivo de verdade dela. Aqui ficam só os princípios gerais e o que evita erro em qualquer parte do projeto — o resto vira ruído.
 
-**Estado atual: o laço de entrar e sair de um planeta está fechado, com dois lugares para comparar.** Existe o espaço, finito e dando a volta nos quatro lados, com estrelas e dois corpos; chegar perto de um acende o convite, e a tecla abre a tela de regiões dele. Escolher uma região leva a nave, por piloto automático, ao ponto de aparecimento que a ficha define. Dentro dela, os lados dão a volta e subir devolve a tela de regiões. O `M` abre o mapa do sistema sem parar o voo.
+**Estado atual: o laço de entrar e sair de um planeta está fechado, com um planeta e uma região.** Existe o espaço, finito e dando a volta nos quatro lados, com estrelas e um corpo, Arvo; chegar perto de um acende o convite, e a tecla abre a tela de regiões dele. Escolher uma região leva a nave, por piloto automático, ao ponto de aparecimento que a ficha define. Dentro dela, os lados dão a volta e subir devolve a tela de regiões. O `M` abre o mapa do sistema sem parar o voo.
 
 | Lugar | Região | O que muda |
 |---|---|---|
-| Arvo | Bosque | gravidade de Terra, ar denso, mata alta |
-| Vesk | Cratera | gravidade de Lua, vácuo, campo de asteroides |
+| Arvo | Outpost | posto de fronteira de faroeste: saloon, xerife e deque sobre palafitas com sinal |
 
-O jogo abre num menu, e a nave nasce no espaço: o primeiro lugar é escolha do jogador. Vesk é protótipo declarado: a arte dele é gerada, não desenhada. Ainda não existem contratos, economia nem save. Do mapa abaixo, `common/` e `localization/` seguem sendo alvo, não retrato.
+O jogo abre num menu, e a nave nasce no espaço. Vesk, Elde, Oren e o Bosque foram apagados em 2026-09-14: o jogo recomeça a partir de Arvo, e planeta novo nasce com a receita de cenário da skill `pixel-art-sprite`. Ainda não existem contratos, economia nem save. Do mapa abaixo, `common/`, `localization/` e `entities/obstaculos/` seguem sendo alvo, não retrato.
 
 ## Stack
 
@@ -27,12 +26,14 @@ Binário `godot` no PATH, via Homebrew. Todos os comandos rodam da raiz do proje
 |---|---|
 | Abrir o editor | `godot -e --path .` |
 | Rodar o jogo | `godot --path .` |
-| Rodar uma cena isolada | `godot --path . --scene res://mundo/planetas/arvo/regioes/bosque/bosque_regiao.tscn` |
+| Rodar uma cena isolada | `godot --path . --scene res://mundo/planetas/arvo/regioes/outpost/outpost_regiao.tscn` |
 | Fotografar uma cena rodando | `godot --path . --scene res://tools/foto.tscn -- --cena res://<cena>.tscn --saida foto.png` |
 | Conferir os critérios de voo | `godot --headless --path . --scene res://tools/voo_check.tscn` |
 | Conferir se o cenário está apoiado | `godot --headless --path . --scene res://tools/cenario_check.tscn -- --regiao res://<região>.tscn` |
 | Conferir a entrada e a saída de um planeta | `godot --headless --path . --scene res://tools/orbita_check.tscn` |
 | Conferir a primeira tela | `godot --headless --path . --scene res://tools/menu_check.tscn` |
+| Conferir a paleta da arte | `godot --headless --path . --scene res://tools/paleta_check.tscn` |
+| Gerar os PNG da pixel art a partir das fontes `.pix` | `python3 .claude/skills/pixel-art-sprite/scripts/montar_arte.py` |
 | Importar assets novos sem abrir a GUI | `godot --headless --path . --import` |
 | Checar erro de sintaxe e de tipo num script | `godot --headless --path . --check-only --script res://<caminho>.gd` |
 
@@ -41,6 +42,10 @@ Binário `godot` no PATH, via Homebrew. Todos os comandos rodam da raiz do proje
 - **A cena principal é `ui/menu/menu.tscn`**, e ela abre `mundo/sistema/sistema.tscn`, que é a raiz do jogo: nave, câmera, interface e o nó onde a região entra. Trocar a cena inteira só é permitido nessa passagem, porque ali ainda não existe nave para preservar. Uma região também abre sozinha por `--scene`, sem nave, que é como se trabalha terreno.
 - Não há framework de teste instalado. Se instalar um, documente o comando aqui.
 - A ação `reiniciar` no mapa de entrada é ferramenta de dev, para iterar pouso sem fechar o jogo. O conceito não tem estado de fim, então ela nunca vira mecânica nem aparece para o jogador.
+
+## Cor
+
+**IMPORTANT: toda cor do jogo sai da paleta em `docs/paleta.md`, e nada fora dela.** É a Resurrect 64, 64 cores, e vale para arte desenhada, arte gerada por script, interface, luz e cor de fundo. Preto é `#2e222f`, branco é `#ffffff`, e `#000000` não existe no jogo. Sombrear é andar na rampa da cor, nunca misturar preto.
 
 ## Princípios de arquitetura
 
@@ -68,8 +73,7 @@ res://
 ├── localization/        # CSV de tradução; o .translation é gerado e ignorado no git
 ├── mundo/               # os lugares
 │   ├── sistema/             # a vista de espaço: a cena que roda o jogo e a câmera
-│   ├── planetas/<nome>/     # dados + corpo no espaço + região de superfície
-│   ├── outposts/<nome>/     # o mesmo formato, para quem emite contrato
+│   ├── planetas/<nome>/     # dados + corpo no espaço + regiões de superfície, inclusive o outpost
 │   └── art/                 # arte que mais de um lugar usa: grão, estrela, partícula
 ├── tools/               # ferramenta de dev, não entra no build
 ├── ui/                  # HUD, tela de regiões, mapa, pausa, configurações
@@ -94,7 +98,7 @@ Sistema                      Sistema
 ├── Corpos/Ferrum            ├── Corpos/Ferrum
 ├── Camera                   ├── Camera
 └── LugarAtual               └── LugarAtual
-                                 └── CrateraRegiao   ← o terreno entra aqui
+                                 └── OutpostRegiao   ← o terreno entra aqui
 ```
 
 **IMPORTANT: nunca use `change_scene_to_file()` para entrar ou sair de um planeta.** Essa função destrói a árvore de cena inteira e monta outra no lugar. A nave morre e outra nasce parada, sem rotação e sem carga. Para o jogo não parecer quebrado você teria que copiar velocidade, ângulo, velocidade angular e porão antes da troca e reinjetar tudo depois. É onde mora o bug clássico desse tipo de jogo: a nave chega no planeta com velocidade zero ou com a inclinação resetada.
@@ -105,7 +109,7 @@ Sem recriação não existe transferência de estado: carga, massa e desgaste co
 
 O preço são três coisas, todas conhecidas. A cena do sistema fica residente na memória o tempo todo, o que é barato num jogo deste tamanho. O carregamento da região não pode travar o quadro, então região grande pede carregamento em segundo plano. E as coordenadas do espaço e as do terreno passam a conviver, que é a questão de escala ainda em aberto.
 
-**Um lugar é uma pasta.** Planeta e outpost têm a mesma forma:
+**Um lugar é uma pasta.** O planeta guarda as regiões dele, e um outpost é uma dessas regiões:
 
 ```
 mundo/planetas/<nome>/
@@ -121,10 +125,10 @@ mundo/planetas/<nome>/
 - O nome do lugar prefixa as cenas. `corpo.tscn` repetido em oito pastas é inútil na busca rápida do editor.
 - A região abre sozinha por `--scene`, sem o sistema. É assim que se testa um pouso sem voar até lá.
 - O esquema do `Resource` é `mundo/planetas/planeta.gd`, no nível da categoria. Cada `<nome>.tres` é uma instância dele.
-- A classe base de toda superfície é `mundo/regiao.gd`, um nível acima, porque planeta e outpost usam a mesma forma de cena.
+- A classe base de toda superfície é `mundo/regiao.gd`, um nível acima, porque toda região, de coleta ou de outpost, usa a mesma forma de cena.
 - Uma região não conhece a nave nem a ficha do planeta. Quem entra no lugar chama `aplicar(planeta)`. Isso evita que a ficha e a cena apontem uma para a outra e mantém a região abrindo sozinha.
 - **O padrão do projeto é o espaço:** gravidade zero e amortecimento zero. Um planeta repõe a gravidade localmente, com a `Area2D` da região dele, e sair dela é voltar ao vácuo sem escrever uma linha.
-- Outpost usa `_regiao.tscn` também. O conceito reserva a palavra "região" para planeta, mas a cena tem a mesma forma e não vale inventar um segundo nome.
+- **Outpost é uma região de um planeta**, não um lugar no espaço: `mundo/planetas/<planeta>/regioes/<nome>/`, com a ficha e o `_regiao.tscn` como qualquer região. O primeiro é o de Arvo, `regioes/outpost/`, um posto de fronteira de faroeste.
 
 **A pasta por lugar existe justamente porque os lugares não se parecem.** Quase toda a arte de um planeta é só dele e vive no `art/` dele. `mundo/art/` fica pequeno de propósito: ali entra só o que é genérico de verdade, como grão de tela, campo de estrelas e partícula. A regra de subir o asset quando aparece um segundo dono continua valendo para o que é genérico. Ela não vale para arte de assunto: se dois planetas querem a mesma pedra de doce, o problema não é a pasta, são os dois planetas. Ver o risco de planetas intercambiáveis na seção 17 do conceito.
 
@@ -135,6 +139,7 @@ O princípio 1 tem duas metades. A segunda vive aqui: agrupar por tipo de asset 
 ```
 entities/<categoria>/<entidade>/
 ├── art/                 # sprites, animações, texturas só dessa entidade
+│   └── fonte/           # fontes .pix da skill pixel-art-sprite, com .gdignore
 ├── data/                # os .tres dessa entidade
 ├── sound/               # sons só dessa entidade
 ├── <entidade>.tscn
@@ -152,7 +157,8 @@ entities/<categoria>/<entidade>/
 | Você quer adicionar... | Vai em... |
 |---|---|
 | Planeta novo | `mundo/planetas/<nome>/` |
-| Outpost novo | `mundo/outposts/<nome>/` |
+| Outpost novo | `mundo/planetas/<planeta>/regioes/<nome>/`, e uma linha na lista da ficha do planeta |
+| Pixel art nova | fonte `.pix` em `art/fonte/` da pasta dona da arte, gerada com a skill `pixel-art-sprite` |
 | Região nova num planeta | `mundo/planetas/<nome>/regioes/<região>/`, e uma linha na lista da ficha do planeta |
 | Terreno ou ponto de coleta | dentro da pasta da região dele |
 | Arte que mais de um lugar usa | `mundo/art/` |
@@ -166,6 +172,7 @@ entities/<categoria>/<entidade>/
 | Arte, som ou dado de uma entidade específica | `art/`, `sound/` ou `data/` dentro da pasta dela |
 | Tela, HUD ou elemento de interface | `ui/` |
 | Texto exibido ao jogador | `localization/`, e no script use a chave de tradução |
+| Arte de terceiros | na pasta do lugar que a usa, e uma linha em `docs/creditos.md` |
 | Opção do menu de configurações | `Resource` em `utilities/data/`; a tela é `ui/configuracoes/` |
 | Sistema persistente que roda o tempo todo | `utilities/`, como autoload `_manager.gd` |
 | Helper deste jogo, chamado sob demanda, sem estado global | `utilities/`, sem o sufixo `_manager` |
@@ -185,13 +192,13 @@ O conceito é orientado a dado, e é aí que está o maior ganho do Godot neste 
 |---|---|---|
 | `Planeta` | `mundo/planetas/planeta.gd` | gravidade em m/s², arrasto do ar, recurso, as regiões e a luz do lugar |
 | `FichaDeRegiao` | `mundo/ficha_de_regiao.gd` | nome, cena do terreno e onde a nave aparece ao chegar |
-| `Outpost` | `mundo/outposts/outpost.gd` | que contratos ele emite |
-| `Contrato` | `mundo/outposts/contrato.gd` | recurso, quantidade, planeta, evento, pagamento |
+| `FichaDeOutpost` | `mundo/ficha_de_outpost.gd` | uma `FichaDeRegiao` que também diz que contratos emite |
+| `Contrato` | `mundo/contrato.gd` | recurso, quantidade, planeta, evento, pagamento |
 | `ModeloDeNave` | `entities/nave/modelo_de_nave.gd` | massa em kg, empuxo em g, limites de pouso em m/s e graus |
 | `Modulo` | `entities/nave/modulo.gd` | massa e capacidades da peça |
 | `RecursoMineral` | `entities/carga/recurso_mineral.gd` | massa e valor do que se coleta |
 
-`Contrato` fica com o outpost de propósito: o conceito diz que um contrato pertence a quem o emitiu, e a pasta repete isso. O mineral é `RecursoMineral`, e não `Recurso`, porque num código em português `Recurso` se confunde com o `Resource` do próprio Godot.
+`Contrato` fica ao lado da ficha de outpost de propósito: o conceito diz que um contrato pertence a quem o emitiu, e a pasta repete isso. O mineral é `RecursoMineral`, e não `Recurso`, porque num código em português `Recurso` se confunde com o `Resource` do próprio Godot.
 
 - **IMPORTANT:** um `Resource` é compartilhado por padrão, e um `.tres` **descreve**, ele não guarda estado de partida. O que o jogador acumula — créditos, contratos aceitos, o que está no porão, ponto de coleta esgotado — vive no autoload de campanha e vai para o save. Escrever no `.tres` durante o jogo corrompe o dado de design e o commit seguinte mostra isso.
 - Quando uma cena precisa da própria cópia de um `Resource`, use `duplicate()` ou marque `resource_local_to_scene`.
@@ -204,7 +211,7 @@ Grupo serve para achar quem está na cena **agora**. Nunca use grupo como banco 
 | Grupo | Quem entra |
 |---|---|
 | `planetas` | cada corpo na vista de espaço |
-| `outposts` | idem, para quem emite contrato |
+| `outposts` | a região de outpost carregada, para quem emite contrato |
 | `pontos_de_coleta` | o lugar demarcado onde a nave pousa |
 | `carga_solta` | o que ficou para trás e persiste |
 | `solto` | peça de cenário que flutua de propósito, para `cenario_check` não acusar |

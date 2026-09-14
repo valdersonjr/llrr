@@ -1,17 +1,16 @@
 # llrr
 
-Jogo singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander. A nave é o personagem principal, e o jogo tem duas vistas dela: o espaço, onde se navega entre planetas e outposts, e a superfície, onde se pousa.
+Jogo singleplayer de pilotagem e trabalho espacial em 2D, inspirado em Lunar Lander. A nave é o personagem principal, e o jogo tem duas vistas dela: o espaço, onde se navega entre planetas, e a superfície, onde se pousa. Outposts são regiões dos planetas.
 
 ## Estado
 
-O laço de entrar e sair de um planeta está fechado, com dois lugares para comparar. A nave nasce no espaço, que é finito e dá a volta nos quatro lados. Chegar perto de um corpo acende o convite de entrada; a tecla abre a tela de regiões dele; escolher uma região leva a nave, por piloto automático, ao ponto de aparecimento que o projetista definiu.
+O laço de entrar e sair de um planeta está fechado, com um planeta, Arvo, e uma região, o Outpost. A nave nasce no espaço, que é finito e dá a volta nos quatro lados. Chegar perto de um corpo acende o convite de entrada; a tecla abre a tela de regiões dele; escolher uma região leva a nave, por piloto automático, ao ponto de aparecimento que o projetista definiu.
 
 | Lugar | Região | O que muda na pilotagem |
 |---|---|---|
-| Arvo | Bosque | gravidade de Terra, ar denso, mata alta |
-| Vesk | Cratera | gravidade de Lua, vácuo, campo de asteroides |
+| Arvo | Outpost | posto de fronteira de faroeste, com saloon e deque sobre palafitas |
 
-Vesk é protótipo declarado: a arte dele é gerada, não desenhada. Ainda não existem contratos, economia nem save.
+Ainda não existem contratos, economia nem save.
 
 ## Documentação
 
@@ -21,6 +20,7 @@ Vesk é protótipo declarado: a arte dele é gerada, não desenhada. Ainda não 
 | [CLAUDE.md](CLAUDE.md) | a arquitetura de pastas e as convenções de código |
 | [docs/stack.md](docs/stack.md) | engine, linguagem e ferramentas |
 | [docs/brainstorm.md](docs/brainstorm.md) | ideias soltas |
+| [docs/creditos.md](docs/creditos.md) | a arte de terceiros e o que a licença de cada pacote permite |
 
 ## Rodando
 
@@ -43,7 +43,7 @@ godot --headless --path . --scene res://tools/menu_check.tscn
 godot --headless --path . --scene res://tools/voo_check.tscn
 godot --headless --path . --scene res://tools/orbita_check.tscn
 godot --headless --path . --scene res://tools/cenario_check.tscn -- \
-    --regiao res://mundo/planetas/arvo/regioes/bosque/bosque_regiao.tscn
+    --regiao res://mundo/planetas/arvo/regioes/outpost/outpost_regiao.tscn
 ```
 
 A tabela completa de comandos está no `CLAUDE.md`.
