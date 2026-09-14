@@ -3,7 +3,7 @@ extends Node
 ## Ferramenta de dev: confere se cada peça de cenário está de fato apoiada no chão.
 ##
 ##   godot --headless --path . --scene res://tools/cenario_check.tscn -- \
-##       --regiao res://mundo/planetas/arvo/regioes/bosque/bosque_regiao.tscn
+##       --regiao res://mundo/planetas/arvo/regioes/outpost/outpost_regiao.tscn
 ##
 ## Ela desce um raio a partir da base de cada sprite e diz quem está flutuando e
 ## quem está enterrado. Nasceu de um bug de verdade: uma pedra plantada dentro de
@@ -35,26 +35,15 @@ func _ready() -> void:
 
 	print("--- conferência de cenário: %s ---" % caminho.get_file())
 	var espaco: PhysicsDirectSpaceState2D = regiao.get_world_2d().direct_space_state
-	# As pedras são terreno, mas conferir uma peça *contra outra peça* só produz
-	# ruído: o que importa é a distância dela até o chão do relevo.
+	# O que importa é a distância de cada peça até o chão do relevo. Se um dia
+	# entrar obstáculo sólido, os corpos dele vão nesta lista, para uma peça não
+	# ser conferida contra outra.
 	var ignorar: Array[RID] = []
-	for no: Node in _todos(regiao):
-		if no is Pedra:
-			ignorar.append((no as Pedra).get_rid())
 
-	var solidos: int = 0
 	for no: Node in _sprites(regiao):
 		if no.is_in_group("solto"):
 			continue
 		_conferir(no as Sprite2D, espaco, ignorar)
-	for no: Node in _todos(regiao):
-		if no is Pedra:
-			var formas: int = 0
-			for filho: Node in no.get_children():
-				if filho is CollisionPolygon2D:
-					formas += 1
-			solidos += 1
-			_dizer(formas > 0, "%s virou sólido, com %d forma(s) tirada(s) do alfa" % [no.name, formas])
 
 	print("--- %s ---" % ("tudo no lugar" if _falhas == 0 else "%d peça(s) fora do lugar" % _falhas))
 	get_tree().quit(_falhas)
@@ -94,18 +83,9 @@ func _conferir(sp: Sprite2D, espaco: PhysicsDirectSpaceState2D, ignorar: Array[R
 func _sprites(raiz: Node) -> Array[Node]:
 	var saida: Array[Node] = []
 	for no: Node in _todos(raiz):
-		if no is Sprite2D and (no as Sprite2D).texture != null and not _dentro_de_pedra(no):
+		if no is Sprite2D and (no as Sprite2D).texture != null:
 			saida.append(no)
 	return saida
-
-
-func _dentro_de_pedra(no: Node) -> bool:
-	var pai: Node = no.get_parent()
-	while pai != null:
-		if pai is Pedra:
-			return true
-		pai = pai.get_parent()
-	return false
 
 
 func _todos(raiz: Node) -> Array[Node]:

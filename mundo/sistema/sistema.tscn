@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://dwnqt8hychexf" path="res://mundo/art/estrelas_perto.png" id="8_perto"]
 [ext_resource type="PackedScene" path="res://ui/orbita/orbita.tscn" id="9_orbita"]
 [ext_resource type="PackedScene" path="res://ui/mapa/mapa.tscn" id="10_mapa"]
-[ext_resource type="PackedScene" path="res://mundo/planetas/vesk/vesk_corpo.tscn" id="11_vesk"]
 
 [node name="Sistema" type="Node2D" unique_id=615822451]
 script = ExtResource("1_script")
@@ -34,9 +33,6 @@ textura = ExtResource("8_perto")
 
 [node name="ArvoCorpo" parent="Corpos" unique_id=466846345 instance=ExtResource("4_arvo")]
 position = Vector2(320, 180)
-
-[node name="VeskCorpo" parent="Corpos" unique_id=498494886 instance=ExtResource("11_vesk")]
-position = Vector2(-900, 780)
 
 [node name="LugarAtual" type="Node2D" parent="." unique_id=1627582600]
 

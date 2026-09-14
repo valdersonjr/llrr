@@ -227,43 +227,25 @@ func _ready() -> void:
 		])
 		_exigir(inteiro, "as regiões de %s têm nome, cena e ponto de chegada dentro do mapa" % corpo.planeta.nome)
 
-	# --- o segundo lugar, em voo ---------------------------------------------
-	var outro: CorpoNoEspaco = null
+	# --- cada região de cada lugar, em voo ------------------------------------
+	# Percorre todas, e não só a primeira de cada corpo: presumir quantas existem
+	# é como esta conferência quebrou quando entrou o terceiro planeta, e de novo
+	# quando um planeta ganhou a segunda região.
 	for corpo: CorpoNoEspaco in sistema.corpos():
-		if corpo != lugar:
-			outro = corpo
-	if outro != null:
-		var ficha_de_la: FichaDeRegiao = outro.planeta.regioes[0]
-		sistema.chegar_em(outro, ficha_de_la)
-		await _esperar_superficie(sistema)
-		var la: Vector2 = outro.canto_da_regiao() + ficha_de_la.onde_a_nave_aparece
-		print("  em %s / %s:      chegou a (%.0f, %.0f), pedido (%.0f, %.0f)" % [
-			outro.planeta.nome, ficha_de_la.nome,
-			nave.global_position.x, nave.global_position.y, la.x, la.y
-		])
-		_exigir(nave.global_position.distance_to(la) < 2.0,
-			"a chegada no segundo lugar também termina no ponto da ficha")
-		_exigir(not orbita.aberta(),
-			"chegar numa região tira a tela de regiões da frente")
-
-		var asteroides: Array[Node] = []
-		for no: Node in sistema.get_node("LugarAtual").find_children("*", "Asteroide", true, false):
-			asteroides.append(no)
-		var antes_deles: Array[Vector2] = []
-		for no: Node in asteroides:
-			antes_deles.append((no as Node2D).position)
-		for _i: int in 120:
-			await get_tree().physics_frame
-		var andaram: bool = not asteroides.is_empty()
-		var dentro_do_mapa: bool = true
-		var limite: Rect2 = Rect2(Vector2.ZERO, Regiao.TAMANHO).grow(Asteroide.MARGEM + 2.0)
-		for i: int in asteroides.size():
-			var agora: Vector2 = (asteroides[i] as Node2D).position
-			andaram = andaram and agora.distance_to(antes_deles[i]) > 4.0
-			dentro_do_mapa = dentro_do_mapa and limite.has_point(agora)
-		print("  asteroides:          %d no céu da %s" % [asteroides.size(), ficha_de_la.nome])
-		_exigir(andaram, "os asteroides atravessam a região em vez de ficarem parados")
-		_exigir(dentro_do_mapa, "os asteroides dão a volta em vez de sumirem para sempre")
+		for ficha_de_la: FichaDeRegiao in corpo.planeta.regioes:
+			if corpo == lugar and ficha_de_la == ficha:
+				continue
+			sistema.chegar_em(corpo, ficha_de_la)
+			await _esperar_superficie(sistema)
+			var la: Vector2 = corpo.canto_da_regiao() + ficha_de_la.onde_a_nave_aparece
+			print("  %s / %s: chegou a (%.0f, %.0f), pedido (%.0f, %.0f)" % [
+				corpo.planeta.nome, ficha_de_la.nome,
+				nave.global_position.x, nave.global_position.y, la.x, la.y
+			])
+			_exigir(nave.global_position.distance_to(la) < 2.0,
+				"a chegada em %s termina no ponto da ficha" % ficha_de_la.nome)
+			_exigir(not orbita.aberta(),
+				"chegar em %s tira a tela de regiões da frente" % ficha_de_la.nome)
 
 	print("--- %s ---" % ("tudo certo" if _falhas == 0 else "%d critério(s) falhou(aram)" % _falhas))
 	get_tree().quit(_falhas)
