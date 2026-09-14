@@ -76,6 +76,7 @@ var _nasceu: bool = false
 func _ready() -> void:
 	_hud.acompanhar(_nave)
 	_camera.seguir(_nave)
+	_nave.pouso_mudou.connect(_ao_mudar_o_pouso)
 	_orbita.regiao_escolhida.connect(_ao_escolher_regiao)
 	_orbita.fechada.connect(_ao_fechar_orbita)
 	for corpo: Node in get_tree().get_nodes_in_group("planetas"):
@@ -361,6 +362,15 @@ func _ao_terminar_a_chegada(_corpo: CorpoNoEspaco, destino: Vector2) -> void:
 	# Descongelar um corpo cinemático devolve a ele a velocidade do último
 	# empurrão do tween. Recolocar zera as três coisas: posição, velocidade e giro.
 	_nave.reposicionar(destino)
+
+
+## A demarcação responde ao pouso: quem está descendo precisa saber que o contato
+## valeu sem tirar o olho da nave. A nave avisa por sinal, e a cena do sistema
+## repassa, porque uma região não conhece a nave.
+func _ao_mudar_o_pouso(novo: Nave.Estado) -> void:
+	for no: Node in get_tree().get_nodes_in_group("pontos_de_coleta"):
+		if no is PontoDeColeta:
+			(no as PontoDeColeta).mostrar(novo)
 
 
 func _ao_escolher_regiao(ficha: FichaDeRegiao) -> void:
