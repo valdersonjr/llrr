@@ -8,7 +8,8 @@ Ferramenta de dev. Não entra no build e não é jogo.
 | `voo_check.tscn` | mede a gravidade em queda livre, solta a nave sobre o deque e pilota uma descida freada, sem abrir janela |
 | `cenario_check.tscn` | desce um raio sob cada peça de cenário e acusa quem está flutuando ou enterrado |
 | `orbita_check.tscn` | entra e sai de um planeta pelo caminho inteiro: chegada, volta ao mundo, tela de regiões e espaço |
-| `menu_check.tscn` | confere a primeira tela: foco, opções ligadas e o destino de "jogar" |
+| `menu_check.tscn` | confere a primeira tela: foco, opções ligadas, música em laço e o destino de "jogar" |
+| `paleta_check.tscn` | percorre os PNG do jogo e acusa cor fora da paleta do projeto |
 
 ```
 godot --path . --scene res://tools/foto.tscn -- \
@@ -25,13 +26,19 @@ godot --headless --path . --scene res://tools/voo_check.tscn
 
 ```
 godot --headless --path . --scene res://tools/cenario_check.tscn -- \
-    --regiao res://mundo/planetas/arvo/regioes/bosque/bosque_regiao.tscn
+    --regiao res://mundo/planetas/arvo/regioes/outpost/outpost_regiao.tscn
 ```
 
 `orbita_check` guarda a promessa central da entrada: **onde a nave aparece é escolha de quem desenhou o lugar**. Se a chegada parar em outro ponto, ou parar andando, o pouso começa diferente do que o projetista desenhou e nenhum lugar fica calibrável. Ele também confere a volta ao mundo da região, que é a única saída pelos lados, e o convite de entrada no espaço.
 
 ```
 godot --headless --path . --scene res://tools/orbita_check.tscn
+```
+
+`paleta_check` existe porque cor fora da paleta não dá erro em lugar nenhum: não trava, não aparece em revisão de código, e só se manifesta na tela, tarde, quando já existe conteúdo demais para refazer. Ele tem uma lista de perdoados, com motivo declarado por pasta, e **essa lista é a lista de tarefas**: arte de terceiros sai de lá quando for convertida ou substituída.
+
+```
+godot --headless --path . --scene res://tools/paleta_check.tscn
 ```
 
 `menu_check` cobra o defeito mais caro e mais silencioso de um menu: botão que não leva a lugar nenhum, ou destino que deixou de existir depois de alguém mover uma cena. Nada disso aparece em compilação, só em quem abriu o jogo e clicou.
