@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://entities/cenario/dono_do_saloon/art/dono_do_saloon_parado.png" id="1_3budn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1xm0"]
+atlas = ExtResource("1_3budn")
+region = Rect2(0, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wi5y1"]
+atlas = ExtResource("1_3budn")
+region = Rect2(20, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kjvk"]
+atlas = ExtResource("1_3budn")
+region = Rect2(40, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aneu6"]
+atlas = ExtResource("1_3budn")
+region = Rect2(0, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxx5q"]
+atlas = ExtResource("1_3budn")
+region = Rect2(60, 0, 20, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iorw1"]
+animations = [{
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_l1xm0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wi5y1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kjvk")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_aneu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxx5q")
+}],
+"loop": 1,
+"name": &"parado",
+"speed": 5.0
+}]
+
+[node name="DonoDoSaloon" type="Node2D" unique_id=94191783]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1227094921]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_iorw1")
+animation = &"parado"
+autoplay = "parado"
+centered = false
+offset = Vector2(-10, -28)

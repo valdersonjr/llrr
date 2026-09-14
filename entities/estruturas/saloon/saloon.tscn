@@ -1,0 +1,229 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/parede_tabuas.png" id="1_acw0a"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/placa.png" id="2_v5243"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/janela.png" id="3_pf0yh"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/porta.png" id="4_irtjk"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/barril.png" id="5_msq7l"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/banco.png" id="6_2ywfo"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/varanda_poste.png" id="7_qgt1s"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/varanda_telhado.png" id="8_aysmd"]
+[ext_resource type="Texture2D" path="res://entities/estruturas/saloon/art/varanda_piso.png" id="9_5euob"]
+
+[node name="Saloon" type="Node2D" unique_id=1991274710]
+
+[node name="Parede00" type="Sprite2D" parent="." unique_id=1738171357 groups=["solto"]]
+texture_filter = 1
+position = Vector2(16, -70)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede01" type="Sprite2D" parent="." unique_id=613214706 groups=["solto"]]
+texture_filter = 1
+position = Vector2(48, -70)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede02" type="Sprite2D" parent="." unique_id=286369996 groups=["solto"]]
+texture_filter = 1
+position = Vector2(80, -70)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede03" type="Sprite2D" parent="." unique_id=1894830578 groups=["solto"]]
+texture_filter = 1
+position = Vector2(112, -70)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede10" type="Sprite2D" parent="." unique_id=76902387 groups=["solto"]]
+texture_filter = 1
+position = Vector2(16, -54)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede11" type="Sprite2D" parent="." unique_id=331734795 groups=["solto"]]
+texture_filter = 1
+position = Vector2(48, -54)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede12" type="Sprite2D" parent="." unique_id=2020326442 groups=["solto"]]
+texture_filter = 1
+position = Vector2(80, -54)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede13" type="Sprite2D" parent="." unique_id=1450795608 groups=["solto"]]
+texture_filter = 1
+position = Vector2(112, -54)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede20" type="Sprite2D" parent="." unique_id=1649217514 groups=["solto"]]
+texture_filter = 1
+position = Vector2(16, -38)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede21" type="Sprite2D" parent="." unique_id=1854229559 groups=["solto"]]
+texture_filter = 1
+position = Vector2(48, -38)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede22" type="Sprite2D" parent="." unique_id=1626472196 groups=["solto"]]
+texture_filter = 1
+position = Vector2(80, -38)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede23" type="Sprite2D" parent="." unique_id=1375531393 groups=["solto"]]
+texture_filter = 1
+position = Vector2(112, -38)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede30" type="Sprite2D" parent="." unique_id=965630628 groups=["solto"]]
+texture_filter = 1
+position = Vector2(16, -22)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede31" type="Sprite2D" parent="." unique_id=1226920885 groups=["solto"]]
+texture_filter = 1
+position = Vector2(48, -22)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede32" type="Sprite2D" parent="." unique_id=859840872 groups=["solto"]]
+texture_filter = 1
+position = Vector2(80, -22)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Parede33" type="Sprite2D" parent="." unique_id=879493296 groups=["solto"]]
+texture_filter = 1
+position = Vector2(112, -22)
+texture = ExtResource("1_acw0a")
+centered = false
+
+[node name="Placa" type="Sprite2D" parent="." unique_id=2067531901 groups=["solto"]]
+texture_filter = 1
+position = Vector2(65, -68)
+texture = ExtResource("2_v5243")
+centered = false
+
+[node name="JanelaEsquerda" type="Sprite2D" parent="." unique_id=1095395064 groups=["solto"]]
+texture_filter = 1
+position = Vector2(28, -48)
+texture = ExtResource("3_pf0yh")
+centered = false
+
+[node name="JanelaDireita" type="Sprite2D" parent="." unique_id=565716308 groups=["solto"]]
+texture_filter = 1
+position = Vector2(116, -48)
+texture = ExtResource("3_pf0yh")
+centered = false
+
+[node name="Porta" type="Sprite2D" parent="." unique_id=1998507123 groups=["solto"]]
+texture_filter = 1
+position = Vector2(68, -40)
+texture = ExtResource("4_irtjk")
+centered = false
+
+[node name="Barril" type="Sprite2D" parent="." unique_id=1831340324 groups=["solto"]]
+texture_filter = 1
+position = Vector2(132, -24)
+texture = ExtResource("5_msq7l")
+centered = false
+
+[node name="Banco" type="Sprite2D" parent="." unique_id=874141104 groups=["solto"]]
+texture_filter = 1
+position = Vector2(98, -18)
+texture = ExtResource("6_2ywfo")
+centered = false
+
+[node name="Poste0" type="Sprite2D" parent="." unique_id=1444881103 groups=["solto"]]
+texture_filter = 1
+position = Vector2(8, -56)
+texture = ExtResource("7_qgt1s")
+centered = false
+
+[node name="Poste1" type="Sprite2D" parent="." unique_id=2016330191 groups=["solto"]]
+texture_filter = 1
+position = Vector2(56, -56)
+texture = ExtResource("7_qgt1s")
+centered = false
+
+[node name="Poste2" type="Sprite2D" parent="." unique_id=591207192 groups=["solto"]]
+texture_filter = 1
+position = Vector2(96, -56)
+texture = ExtResource("7_qgt1s")
+centered = false
+
+[node name="Poste3" type="Sprite2D" parent="." unique_id=732007427 groups=["solto"]]
+texture_filter = 1
+position = Vector2(146, -56)
+texture = ExtResource("7_qgt1s")
+centered = false
+
+[node name="Beiral0" type="Sprite2D" parent="." unique_id=233523605 groups=["solto"]]
+texture_filter = 1
+position = Vector2(0, -58)
+texture = ExtResource("8_aysmd")
+centered = false
+
+[node name="Beiral1" type="Sprite2D" parent="." unique_id=91032200 groups=["solto"]]
+texture_filter = 1
+position = Vector2(32, -58)
+texture = ExtResource("8_aysmd")
+centered = false
+
+[node name="Beiral2" type="Sprite2D" parent="." unique_id=434120433 groups=["solto"]]
+texture_filter = 1
+position = Vector2(64, -58)
+texture = ExtResource("8_aysmd")
+centered = false
+
+[node name="Beiral3" type="Sprite2D" parent="." unique_id=292392608 groups=["solto"]]
+texture_filter = 1
+position = Vector2(96, -58)
+texture = ExtResource("8_aysmd")
+centered = false
+
+[node name="Beiral4" type="Sprite2D" parent="." unique_id=1556080951 groups=["solto"]]
+texture_filter = 1
+position = Vector2(128, -58)
+texture = ExtResource("8_aysmd")
+centered = false
+
+[node name="Calcada0" type="Sprite2D" parent="." unique_id=13139951]
+texture_filter = 1
+position = Vector2(0, -8)
+texture = ExtResource("9_5euob")
+centered = false
+
+[node name="Calcada1" type="Sprite2D" parent="." unique_id=633097693]
+texture_filter = 1
+position = Vector2(32, -8)
+texture = ExtResource("9_5euob")
+centered = false
+
+[node name="Calcada2" type="Sprite2D" parent="." unique_id=1820907399]
+texture_filter = 1
+position = Vector2(64, -8)
+texture = ExtResource("9_5euob")
+centered = false
+
+[node name="Calcada3" type="Sprite2D" parent="." unique_id=2134409342]
+texture_filter = 1
+position = Vector2(96, -8)
+texture = ExtResource("9_5euob")
+centered = false
+
+[node name="Calcada4" type="Sprite2D" parent="." unique_id=994282857]
+texture_filter = 1
+position = Vector2(128, -8)
+texture = ExtResource("9_5euob")
+centered = false

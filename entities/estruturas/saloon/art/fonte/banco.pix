@@ -1,0 +1,28 @@
+nome: banco
+tipo: objeto
+camada: cenario
+conjunto: faroeste
+luz: cima_esquerda
+superficie: cima
+encaixe: nenhum
+uso: banco de madeira da varanda; o cowboy sentado apoia o quadril na tábua de cima; os pés do banco apoiam no piso da varanda
+tamanho: 16x10
+
+paleta:
+  . transparente
+  t neutros_quentes:4   tábua, luz
+  m neutros_quentes:3   madeira
+  s neutros_quentes:2   madeira na sombra
+  G neutros_quentes:1   pé do banco na sombra
+
+pixels:
+tttttttttttttttt
+mmmmmmmmmmmmmmms
+ssssssssssssssss
+.ms.........ms..
+.ms.........ms..
+.mssssssssssms..
+.ms.........ms..
+.ms.........ms..
+.ms.........ms..
+.GG.........GG..

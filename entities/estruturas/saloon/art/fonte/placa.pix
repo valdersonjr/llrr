@@ -1,0 +1,27 @@
+nome: placa
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+tamanho: 30x10
+luz: cima_esquerda
+encaixe: nenhum
+uso: placa com o nome do saloon, presa na fachada acima da porta; letras pintadas em madeira clara para ler de longe
+
+paleta:
+  . transparente
+  t neutros_quentes:4    tábua, borda iluminada
+  m neutros_quentes:3    tábua, base
+  s neutros_quentes:2    borda e sombra
+  G neutros_quentes:1    letras e sombra funda
+
+pixels:
+.ssssssssssssssssssssssssssss.
+sttttttttttttttttttttttttttttG
+smmGGGmmGmmGmmmGGGmGGGmGmmGmmG
+smmGmmmGmGmGmmmGmGmGmGmGGmGmmG
+smmGGGmGGGmGmmmGmGmGmGmGmGGmmG
+smmmmGmGmGmGmmmGmGmGmGmGmmGmmG
+smmGGGmGmGmGGGmGGGmGGGmGmmGmmG
+smmmmmmmmmmmmmmmmmmmmmmmmmmmmG
+sssssssssssssssssssssssssssssG
+.GGGGGGGGGGGGGGGGGGGGGGGGGGGG.

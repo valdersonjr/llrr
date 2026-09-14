@@ -1,0 +1,65 @@
+nome: varanda_poste
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+luz: cima_esquerda
+encaixe: nenhum
+uso: poste da varanda, do piso até o beiral; um a cada 32 ou 48 px; a base apoia no piso da varanda
+tamanho: 6x48
+
+paleta:
+  . transparente
+  m neutros_quentes:3    madeira, base
+  s neutros_quentes:2    madeira, sombra e veio
+  D neutros_quentes:0    sombra mais funda
+  G neutros_quentes:1    sombra funda, junta
+
+pixels:
+.mssG.
+mmssGD
+GGGGGD
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mGsG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.msGG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mGsG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+.mssG.
+mmssGD
+ssssGD
+GGGGGD
+.DDDD.

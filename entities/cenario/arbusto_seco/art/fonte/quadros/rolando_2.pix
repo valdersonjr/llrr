@@ -1,0 +1,35 @@
+nome: rolando_2
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+tamanho: 16x18
+luz: cima_esquerda
+encaixe: nenhum
+uso: arbusto seco rolando com o vento, quadro 2 de 8 (45 graus por quadro, com quique); galhos finos com vazios; a sombra é sombra
+
+paleta:
+  . transparente
+  T neutros_quentes:4   ponta de galho ao sol
+  L neutros_quentes:3   galho
+  M neutros_quentes:2   galho na meia-sombra
+  S neutros_quentes:1   galho na sombra
+
+pixels:
+................
+................
+.....TTTTT......
+....T...T.LL....
+.......L....L...
+...TLL.L.LL..L..
+...LL.LLLL.L....
+.T.L.LLL.L.MMM..
+.T.L.LLLLLM.M.M.
+.L.L..LLL...M.S.
+.L.LLLL..MMM..S.
+.LL.LL.....MSS..
+..L.LM......SS..
+...L.M......SS..
+...MMM.....S....
+......MSSSS.....
+................
+................

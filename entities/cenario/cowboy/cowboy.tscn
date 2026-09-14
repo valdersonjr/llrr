@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://entities/cenario/cowboy/art/cowboy_sentado.png" id="1_bes27"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8bua"]
+atlas = ExtResource("1_bes27")
+region = Rect2(0, 0, 22, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ldm6"]
+atlas = ExtResource("1_bes27")
+region = Rect2(22, 0, 22, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rfcxr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8bua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ldm6")
+}],
+"loop": 1,
+"name": &"sentado",
+"speed": 0.8
+}]
+
+[node name="Cowboy" type="Node2D" unique_id=1395362666]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1797021400]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_rfcxr")
+animation = &"sentado"
+autoplay = "sentado"
+centered = false
+offset = Vector2(-11, -26)

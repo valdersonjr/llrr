@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/estruturas/sinal_de_pouso/sinal_de_pouso.gd" id="1_cy5bl"]
+[ext_resource type="Texture2D" path="res://assets/luz_redonda.png" id="2_ubjsh"]
+
+[node name="SinalDePouso" type="Node2D" unique_id=727545422]
+script = ExtResource("1_cy5bl")
+piscando = PackedInt32Array(1, 2)
+cores_da_luz = PackedColorArray(0, 0, 0, 0, 0.91, 0.23, 0.23, 1, 0.98, 0.76, 0.17, 1, 0.12, 0.74, 0.45, 1)
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=763011469 groups=["solto"]]
+texture_filter = 1
+centered = false
+
+[node name="Luz" type="PointLight2D" parent="." unique_id=708157418]
+position = Vector2(4, 3)
+energy = 1.1
+texture = ExtResource("2_ubjsh")
+texture_scale = 0.22

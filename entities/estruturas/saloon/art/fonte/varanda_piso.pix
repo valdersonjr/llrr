@@ -1,0 +1,26 @@
+nome: varanda_piso
+tipo: objeto
+camada: cenario
+conjunto: faroeste
+luz: cima_esquerda
+superficie: cima
+encaixe: esquerda,direita
+uso: calçada de tábuas na frente do saloon, repete na horizontal; porta, postes e barris apoiam na tábua de cima
+tamanho: 32x8
+
+paleta:
+  . transparente
+  t neutros_quentes:4    madeira, luz
+  m neutros_quentes:3    madeira, base
+  s neutros_quentes:2    madeira, sombra e veio
+  G neutros_quentes:1    sombra funda, junta
+
+pixels:
+tttttttttttttttttttttttttttttttt
+mmmmmmmsmmmmmmmsmmmmmmmsmmmmmmms
+mmmmmmmGmmmsmmmGmmmmmmmGmsmmmmmG
+sssssssGsssssssGsssssssGsssssssG
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+sG......sG......sG......sG......
+sG......sG......sG......sG......
+GG......GG......GG......GG......

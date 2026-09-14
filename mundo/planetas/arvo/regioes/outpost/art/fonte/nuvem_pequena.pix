@@ -1,0 +1,27 @@
+nome: nuvem_pequena
+tipo: cenario
+camada: fundo
+conjunto: faroeste
+luz: cima_esquerda
+encaixe: nenhum
+uso: nuvem pequena e distante
+tamanho: 24x10
+
+paleta:
+  . transparente
+  W neutros_frios:4   nuvem ao sol
+  C neutros_frios:3   nuvem, corpo
+  G neutros_frios:2   nuvem, sombra e base
+  B azuis:4            fio de céu claro sob a base
+
+pixels:
+.......WWWWWCCC.........
+......WWWWWWWCCCG.......
+...CCCWWWWWWWCCCCG......
+..CWWCCWWWWWCCCCCCC.....
+.CWWWWCCCCCCCCWWWWWCC...
+.CCWWWGCCCCCCCWWWWWCCG..
+..CCCCCGCCCCCCGCCCCGGGG.
+..GCCCCGGGGGGGGGGGGGGG..
+...GGGGGGGGGGGG.GGGGG...
+...BBB...BBBBBB...BBB...

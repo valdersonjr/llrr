@@ -1,0 +1,32 @@
+nome: parede_tabuas
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+tamanho: 32x16
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: parede de tábuas longas do saloon, repete nas quatro direções; uma tábua gasta mais escura a cada três; emendas espaçadas para ler como madeira, não tijolo
+
+paleta:
+  t neutros_quentes:4    tábua, borda de cima iluminada
+  m neutros_quentes:3    tábua, base
+  s neutros_quentes:2    veio e fresta
+  G neutros_quentes:1    emenda, prego e fresta na sombra
+
+pixels:
+tttttttttttttttttttttGtttttttttt
+mmmmmssssmmmmmmmmmmmmGtmmmmmmmmm
+mmmmmmmmmmmmmsssmmmmmGtmmmmmssmm
+sssssssssssssssssssssGssssssssss
+mmmmmmmGmmmmmmmmmmmmmmmmmmmmmmmm
+sssssssGmssssssssssGGGssssssssss
+ssGGsssGmsssssssssssssssssGGssss
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+ttttttttttttttttttttttttttttGttt
+mmssmmmmmmmmmmmmmmmmmmmmmmmmGtmm
+mmmmmmmmmmmsssssmmmmmmmmmmmmGtmm
+ssssssssssssssssssssssssssssGsss
+ttttttttttttttGttttttttttttttttt
+mmmmmmmmmmmmGmGtmmmmmmmssssmmmmm
+mmmmssmmmmmmmmGtmmmmmmmmmmmmmmss
+ssssssssssssssGsssssssssssssssss

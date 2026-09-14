@@ -1,0 +1,57 @@
+nome: pouso_meio
+tipo: objeto
+camada: pouso
+conjunto: faroeste
+luz: cima_esquerda
+superficie: cima
+encaixe: esquerda,direita
+uso: trecho da base de pouso, repete entre as pontas; a tábua clara de cima é a colisão; palafita, travessa em X e sapata de pedra apoiam na areia
+tamanho: 32x32
+
+paleta:
+  . transparente
+  L terras:4               tábua de pouso ao sol
+  t neutros_quentes:4      madeira, luz
+  m neutros_quentes:3      madeira, base
+  s neutros_quentes:2      madeira, sombra e travessa
+  G neutros_quentes:1      sombra funda e junta
+  D neutros_quentes:0      poste na sombra
+  h verdes_acinzentados:3  testeira, luz
+  e verdes_acinzentados:2  testeira, base
+  v verdes_acinzentados:1  testeira, sombra
+  Y vermelho_laranja:4     faixa de aviso e chama
+  O vermelho_laranja:3     faixa de aviso na sombra e chama
+
+pixels:
+LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+mmmmmmmsmmmmmmmsmmmmmmmsmmmmmmms
+mmmmmmmGmmmsmmmGmmmmmmmGmsmmmmmG
+sssssssGsssssssGsssssssGsssssssG
+hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+eeeYYYeeeeeeeeeeeeeYYYeeeeeeeeee
+eeYYYeeeeeeeeeeeeeYYYeeeeeeeeeee
+eOOOeeeeeeeeeeeeeOOOeeeeeeeeeeee
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+ssssssssssssssssssssssssssssssss
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+...msGGD.sG...................sG
+...msGGD..sG.................sG.
+...msGGD...sG...............sG..
+...msGGD.....sG...........sG....
+...msGGD......sG.........sG.....
+...msGGD.......sG.......sG......
+...msGGD.........sG...sG........
+...msGGD..........sG.sG.........
+...msGGD...........ssG..........
+...msGGD...........sGG..........
+...msGGD..........sG.sG.........
+...msGGD........sG.....sG.......
+...msGGD.......sG.......sG......
+...msGGD......sG.........sG.....
+...msGGD....sG.............sG...
+...msGGD...sG...............sG..
+...msGGD..sG.................sG.
+...msGGD.sG...................sG
+..tmmmmms.......................
+..sssssGG.......................

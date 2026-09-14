@@ -1,0 +1,37 @@
+nome: areia_topo_a
+tipo: tile
+camada: terreno
+conjunto: faroeste
+luz: cima_esquerda
+encaixe: esquerda,direita,baixo
+uso: topo do chão de areia; a faixa clara de cima é o chão visto um pouco de cima; a linha 0 é a colisão; alterna com a b
+tamanho: 16x16
+
+paleta:
+  . transparente
+  L magentas:5          crista da marola ao sol
+  l magentas:4          plano de cima da areia
+  g terras:3            areia, face
+  r terras:2            traço de areia na sombra
+  k terras:1            oclusão sob a pedra
+  q neutros_quentes:4   pedrinha, luz
+  p neutros_quentes:3   pedrinha
+  n neutros_quentes:2   pedrinha, sombra
+
+pixels:
+llllllllllllllll
+lLLLLLllllllllll
+lllgggllllllllll
+llllllllllLLLLLL
+llllllllllllgggg
+gggggggggggggggg
+gggggggggggggggg
+gggggggggggggggg
+ggllgggggggggggg
+gggrrrgggggggggg
+ggggggrrrggggggg
+gggggggggggggrrg
+ggggggggggggrggg
+gggggggggggrgggg
+gggggggggggglggg
+gggggggggggggggg

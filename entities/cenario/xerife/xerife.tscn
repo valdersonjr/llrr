@@ -1,0 +1,104 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://entities/cenario/xerife/art/xerife_anda.png" id="1_86t6j"]
+[ext_resource type="Texture2D" path="res://entities/cenario/xerife/art/xerife_parado.png" id="2_nnbx7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y137x"]
+atlas = ExtResource("1_86t6j")
+region = Rect2(0, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bw5uv"]
+atlas = ExtResource("1_86t6j")
+region = Rect2(20, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2evte"]
+atlas = ExtResource("1_86t6j")
+region = Rect2(40, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40tnj"]
+atlas = ExtResource("1_86t6j")
+region = Rect2(60, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xd66g"]
+atlas = ExtResource("1_86t6j")
+region = Rect2(80, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ob1d3"]
+atlas = ExtResource("1_86t6j")
+region = Rect2(100, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjfw2"]
+atlas = ExtResource("2_nnbx7")
+region = Rect2(0, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pq4o"]
+atlas = ExtResource("2_nnbx7")
+region = Rect2(20, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2cl0"]
+atlas = ExtResource("2_nnbx7")
+region = Rect2(40, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vn7he"]
+atlas = ExtResource("2_nnbx7")
+region = Rect2(0, 0, 20, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtbnj"]
+atlas = ExtResource("2_nnbx7")
+region = Rect2(60, 0, 20, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q3xbj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y137x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bw5uv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2evte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40tnj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xd66g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ob1d3")
+}],
+"loop": 1,
+"name": &"anda",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_wjfw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pq4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2cl0")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_vn7he")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtbnj")
+}],
+"loop": 1,
+"name": &"parado",
+"speed": 5.0
+}]
+
+[node name="Xerife" type="Node2D" unique_id=1567680419]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1777139529]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_q3xbj")
+animation = &"parado"
+autoplay = "parado"
+centered = false
+offset = Vector2(-10, -28)

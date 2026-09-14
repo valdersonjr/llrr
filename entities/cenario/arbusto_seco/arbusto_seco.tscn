@@ -1,0 +1,86 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/cenario/arbusto_seco/arbusto_seco.gd" id="1_h1ono"]
+[ext_resource type="Texture2D" path="res://entities/cenario/arbusto_seco/art/sombra.png" id="2_ju8fg"]
+[ext_resource type="Texture2D" path="res://entities/cenario/arbusto_seco/art/arbusto_seco_rolando.png" id="3_pg0n4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqau2"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(0, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3q3x"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(16, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg4nh"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(32, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_100ni"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(48, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhp6x"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(64, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uuabi"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(80, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02jk4"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(96, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xib0a"]
+atlas = ExtResource("3_pg0n4")
+region = Rect2(112, 0, 16, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rjm8j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqau2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3q3x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rg4nh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_100ni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhp6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uuabi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02jk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xib0a")
+}],
+"loop": 1,
+"name": &"rolando",
+"speed": 12.0
+}]
+
+[node name="ArbustoSeco" type="Node2D" unique_id=1271966208]
+script = ExtResource("1_h1ono")
+
+[node name="Sombra" type="Sprite2D" parent="." unique_id=1949591607]
+texture_filter = 1
+position = Vector2(-6, -2)
+texture = ExtResource("2_ju8fg")
+centered = false
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=51055481]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_rjm8j")
+animation = &"rolando"
+autoplay = "rolando"
+centered = false
+offset = Vector2(-8, -18)

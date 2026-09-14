@@ -1,0 +1,55 @@
+nome: porta
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+tamanho: 24x32
+luz: cima_esquerda
+encaixe: nenhum
+uso: porta do saloon com as meias-portas de vaivém, sobreposta à parede; a base apoia no chão ou no deque; quadro 0 da futura animação de balanço
+
+# As meias-portas são de madeira dourada, o único ponto quente da fachada além
+# dos barris, para o olho achar a entrada. Painel rebaixado: sombra em cima e à
+# esquerda, luz embaixo e à direita.
+paleta:
+  . transparente
+  m neutros_quentes:3    batente, base
+  s neutros_quentes:2    batente, sombra; piso perto da porta
+  G neutros_quentes:1    sombra funda, piso
+  D neutros_quentes:0    interior escuro
+  l terras:3             meia-porta, luz
+  g terras:2             meia-porta, base
+  r terras:1             meia-porta, sombra e painel
+
+pixels:
+.mmmmmmmmmmmmmmmmmmmmms.
+ssssssssssssssssssssssGG
+.GGGGGGGGGGGGGGGGGGGGGG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGllDDDDDDDDDDDDllmsG.
+.msGggllDDDDDDDDllggmsG.
+.msGgggglllDDlllggggmsG.
+.msGgggggggllgggggggmsG.
+.msGgrrrrrrrlrrrrrrgmsG.
+.msGgrgggglrlrgggglgmsG.
+.msGgrgggglrlrgggglgmsG.
+.msGgrgggglrlrgggglgmsG.
+.msGgrgggglrlrgggglgmsG.
+.msGgllllllrlllllllgmsG.
+.msGgggggggrlgggggggmsG.
+.msGrrrrrrrGrrrrrrrrmsG.
+.msGGGGGGGGGGGGGGGGGmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGDDDDDDDDDDDDDDDDmsG.
+.msGGGGGGGGGGGGGGGGGmsG.
+.msGGGGGGGGGGGGGGGGGmsG.
+.msGGGGGGGGGGGGGGGGGmsG.
+.msGGGGGGGGGGGGGGGGGmsG.
+.mmmmmmmmmmmmmmmmmmmmms.

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FichaDeRegiao" format=3]
+
+[ext_resource type="PackedScene" path="res://mundo/planetas/arvo/regioes/outpost/outpost_regiao.tscn" id="1_luu2g"]
+[ext_resource type="Script" path="res://mundo/ficha_de_regiao.gd" id="2_arbtp"]
+
+[resource]
+script = ExtResource("2_arbtp")
+nome = "Outpost"
+assunto = "Posto de fronteira no deserto: saloon, xerife e um deque sobre palafitas onde se pega e entrega contrato."
+cena = ExtResource("1_luu2g")
+onde_a_nave_aparece = Vector2(348, 150)
+de_onde_a_nave_vem = Vector2(348, -110)
+ponto_no_corpo = Vector2(0.34, 0.26)

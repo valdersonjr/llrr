@@ -1,0 +1,45 @@
+nome: janela
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+tamanho: 16x24
+luz: cima_esquerda
+encaixe: nenhum
+uso: janela do saloon, sobreposta à parede de tábuas; o reflexo em diagonal diz vidro e o lampião aceso diz que tem gente lá dentro
+
+paleta:
+  . transparente
+  m neutros_quentes:3    moldura, base
+  s neutros_quentes:2    moldura, sombra
+  G neutros_quentes:1    sombra funda
+  k verdes_acinzentados:0  vidro, sombra sob a moldura
+  v verdes_acinzentados:1  vidro
+  e verdes_acinzentados:2  reflexo
+  h verdes_acinzentados:3  reflexo, brilho
+  Y vermelho_laranja:3   lampião lá dentro
+
+pixels:
+.mmmmmmmmmmmmms.
+ssssssssssssssGG
+.GGGGGGGGGGGGGG.
+.mssssssssssssG.
+.mGkkkksGkkkksG.
+.mGkvvvsGkvvvsG.
+.mGvvvhsGvvvhsG.
+.mGvvevsGvvevsG.
+.mGvevesGvevvsG.
+.mGevevsGevvvsG.
+.mGvevvsGvvvvsG.
+.mssssssGsssssG.
+.mGkkkksGkkkksG.
+.mGvvvvsGvvYvsG.
+.mGvvhvsGvYYvsG.
+.mGvevvsGvvYvsG.
+.mGevvvsGvvvvsG.
+.mGvvvvsGvvvvsG.
+.mGvvvvsGvvvvsG.
+.mssssssssssssG.
+.sGGGGGGGGGGGGG.
+mmmmmmmmmmmmmmss
+sssssssssssssGGG
+.GGGGGGGGGGGGGG.

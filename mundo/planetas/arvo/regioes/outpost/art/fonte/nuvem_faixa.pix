@@ -1,0 +1,26 @@
+nome: nuvem_faixa
+tipo: cenario
+camada: fundo
+conjunto: faroeste
+luz: cima_esquerda
+encaixe: nenhum
+uso: nuvem comprida e baixa perto do horizonte, a mais distante
+tamanho: 64x9
+
+paleta:
+  . transparente
+  W neutros_frios:4   nuvem ao sol
+  C neutros_frios:3   nuvem, corpo
+  G neutros_frios:2   nuvem, sombra e base
+  B azuis:4            fio de céu claro sob a base
+
+pixels:
+.................CCCCCCCCCCCC...................................
+.............CCCCCWWWWWWWWWWWCCCC...............................
+....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC...................
+.CCCCCWWWWWCCCCCCCCCCCCCCCCCCCCCCCCWWWWWWWWWCCCCCCCCCCCCC.......
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCWWWWWWWCCC.....
+.CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCG...
+..GGCCCCCCCCCCGGGCCCCCCCCCCCCGGGGCCCCCCCCCCCCCCCCCCCCCCCCCCGGG..
+.....GGGGGGGGGGG..GGGGGGGGGGGGG...GGGGGGGGGGGGGGGGGGGGGGGGGGG...
+.....B...BBBBBB...BBBBBB...BBBB.....BBBBBB...BBBBBB...BBBBBB....

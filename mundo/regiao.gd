@@ -2,7 +2,7 @@ class_name Regiao
 extends Node2D
 
 ## A superfície visitável de um lugar: terreno, cenário e o ponto de coleta.
-## Planeta e outpost usam a mesma forma de cena.
+## Toda região usa esta forma de cena, inclusive a de outpost.
 ##
 ## Uma região não conhece a nave e não conhece a ficha do planeta. Quem entra num
 ## lugar é que aplica as condições dele, com `aplicar()`. Isso mantém a região
@@ -14,6 +14,13 @@ extends Node2D
 ## dentro dela para dar a volta nas bordas.
 const TAMANHO: Vector2 = Vector2(640.0, 360.0)
 
+## Um outpost pode destoar da luz do planeta: é trabalho humano no meio do
+## lugar, e o conceito deixa a ambientação dele contrastar com o resto. Com
+## `luz_propria` ligada, a região usa as cores dela em vez das da ficha.
+@export var luz_propria: bool = false
+@export var cor_ambiente_propria: Color = Color.WHITE
+@export var cor_do_ceu_propria: Color = Color.WHITE
+
 var _ambiente_do_lugar: Color = Color.WHITE
 
 @onready var _campo: Area2D = $CampoGravitacional
@@ -24,9 +31,10 @@ var _ambiente_do_lugar: Color = Color.WHITE
 func aplicar(planeta: Planeta) -> void:
 	_campo.gravity = Escala.para_pixels(planeta.gravidade)
 	_campo.linear_damp = planeta.arrasto_do_ar
-	_ambiente_do_lugar = planeta.cor_ambiente
-	_ambiente.color = planeta.cor_ambiente
-	_ceu.color = planeta.cor_do_ceu
+	var ambiente: Color = cor_ambiente_propria if luz_propria else planeta.cor_ambiente
+	_ambiente_do_lugar = ambiente
+	_ambiente.color = ambiente
+	_ceu.color = cor_do_ceu_propria if luz_propria else planeta.cor_do_ceu
 
 
 ## A região chega desvanecendo, junto com a aproximação da câmera: é a atmosfera

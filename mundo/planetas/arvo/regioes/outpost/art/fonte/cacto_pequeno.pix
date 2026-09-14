@@ -1,0 +1,31 @@
+nome: cacto_pequeno
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+luz: cima_esquerda
+encaixe: nenhum
+uso: cacto redondo pequeno com flor, espalhado pela areia perto das peças grandes
+tamanho: 10x10
+
+paleta:
+  . transparente
+  T verdes_acinzentados:4   gomo batido de sol
+  L verdes_acinzentados:3   lado iluminado
+  M verdes_acinzentados:2   corpo
+  S verdes_acinzentados:1   sulco entre gomos
+  K verdes_acinzentados:0   lado na sombra
+  H neutros_frios:3         aréola sobre o gomo
+  E neutros_quentes:4       espinho para fora, lê contra céu e névoa
+  f magentas:2             flor
+
+pixels:
+....ffE...
+..ELTMSE..
+..LTMMSKE.
+ELTMSHSKK.
+ELTMSMSKKE
+.LTHSMSKKE
+ELHMSMSKK.
+..LMSHSKE.
+..KSSSKK..
+..EKKKK...

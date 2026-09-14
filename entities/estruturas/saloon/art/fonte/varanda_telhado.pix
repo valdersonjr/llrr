@@ -1,0 +1,29 @@
+nome: varanda_telhado
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+luz: cima_esquerda
+encaixe: esquerda,direita
+uso: beiral da varanda do saloon, repete na horizontal por cima dos postes; testeira pintada de verde como na referência
+tamanho: 32x8
+
+paleta:
+  . transparente
+  t neutros_quentes:4    madeira, luz
+  m neutros_quentes:3    madeira, base
+  s neutros_quentes:2    madeira, sombra e veio
+  G neutros_quentes:1    sombra funda, junta
+  h verdes_acinzentados:3  testeira, luz
+  e verdes_acinzentados:2  testeira, base
+  v verdes_acinzentados:1  testeira, sombra
+  k verdes_acinzentados:0  junta da testeira
+
+pixels:
+ttttttt.ttttttt.ttttttt.ttttttt.
+mmmmmmmsmmmmmmmsmmmmmmmsmmmmmmms
+hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+eeeeeevveeeeeeeeeeeeeeeeeevveeee
+eeeeeeeeeeeeeeekeeeeeeeeeeeeeeee
+vvvvvvvvvvvvvvvkvvvvvvvvvvvvvvvv
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+G.G.G.G.G.G.G.G.G.G.G.G.G.G.G.G.

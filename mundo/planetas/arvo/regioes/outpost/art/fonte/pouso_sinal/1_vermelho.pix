@@ -1,0 +1,29 @@
+nome: 1_vermelho
+tipo: objeto
+camada: pouso
+conjunto: faroeste
+tamanho: 8x8
+luz: emissivo
+encaixe: nenhum
+uso: sinal da base de pouso, quadro "vermelho"; fica em cima dos postes das pontas; mesmo tamanho e mesma base nos quatro quadros para trocar sem pular
+
+paleta:
+  . transparente
+  a vermelho_laranja:0   luz vermelha acesa, borda
+  b vermelho_laranja:1   luz vermelha acesa, base
+  c vermelhos:3   luz vermelha acesa, brilho
+  w magentas:3   luz vermelha acesa, núcleo
+  t neutros_quentes:4   suporte, luz
+  m neutros_quentes:3   suporte, base
+  s neutros_quentes:2   suporte, sombra
+  G neutros_quentes:1   suporte, sombra funda
+
+pixels:
+..abba..
+.bcwcba.
+.bwccba.
+.bccbba.
+..abba..
+tmmmmmsG
+.msssGG.
+..sGGG..

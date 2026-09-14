@@ -13,12 +13,14 @@ extends Node
 ## nasce onde o corpo dela está no sistema, e o canto é somado na hora de usar.
 ## Ar aberto no meio do vale, e dentro do campo gravitacional da região.
 const ALTURA_DE_MEDICAO: Vector2 = Vector2(330.0, 100.0)
-const ALTURA_DE_SOLTURA: Vector2 = Vector2(472.0, 170.0)
+## Soltura e partida são medidas a partir do ponto de coleta da região, e não em
+## coordenada fixa: assim a conferência vale para qualquer região que seja a
+## primeira do planeta, e não para um desenho de terreno em particular.
+const SOLTURA_ACIMA_DO_PONTO: Vector2 = Vector2(20.0, -78.0)
 const QUADROS_DE_MEDICAO: int = 12
 const QUADROS_DE_POUSO: int = 420
-## Ponto de partida do pouso controlado, no ar livre do bolsão. Alto demais
-## encosta na saliência de cima, e aí a nave nasce entalada em vez de voando.
-const PARTIDA_DO_POUSO: Vector2 = Vector2(472.0, 168.0)
+## Ponto de partida do pouso controlado, acima do ponto de coleta, no ar livre.
+const PARTIDA_ACIMA_DO_PONTO: Vector2 = Vector2(20.0, -80.0)
 ## Velocidade de descida que o piloto automático da conferência persegue, em m/s.
 const DESCIDA_ALVO: float = 1.4
 const QUADROS_DE_DESCIDA: int = 1500
@@ -26,6 +28,7 @@ const QUADROS_DE_DESCIDA: int = 1500
 var _visto: PackedStringArray = PackedStringArray()
 var _falhas: int = 0
 var _canto: Vector2 = Vector2.ZERO
+var _ponto: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -49,6 +52,12 @@ func _ready() -> void:
 		if sistema.em_superficie():
 			break
 	_canto = lugar.canto_da_regiao()
+	var pontos: Array[Node] = get_tree().get_nodes_in_group("pontos_de_coleta")
+	if pontos.is_empty():
+		push_error("voo_check: a região %s não tem ponto de coleta" % planeta.regioes[0].nome)
+		get_tree().quit(1)
+		return
+	_ponto = (pontos[0] as Node2D).global_position
 
 	var formas: int = 0
 	for filho: Node in nave.get_children():
@@ -65,7 +74,7 @@ func _ready() -> void:
 	nave.pouso_mudou.connect(func(novo: Nave.Estado) -> void:
 		_visto.append(Nave.Estado.keys()[novo])
 	)
-	nave.reposicionar(_canto + ALTURA_DE_SOLTURA)
+	nave.reposicionar(_ponto + SOLTURA_ACIMA_DO_PONTO)
 	var pico: float = 0.0
 	for _i: int in QUADROS_DE_POUSO:
 		await get_tree().physics_frame
@@ -102,7 +111,7 @@ func _ready() -> void:
 ## ação `empuxo` do mapa de entrada. Se este critério falha, o empuxo da ficha não
 ## dá conta da gravidade do planeta e o pouso é impossível, não difícil.
 func _pouso_controlado(nave: Nave) -> Dictionary:
-	nave.reposicionar(_canto + PARTIDA_DO_POUSO)
+	nave.reposicionar(_ponto + PARTIDA_ACIMA_DO_PONTO)
 	# Esperar a nave largar o estado do teste anterior. Sem isto o laço abaixo
 	# encerra na primeira volta ainda POUSADA e o critério passa sem voar nada.
 	for _espera: int in 30:

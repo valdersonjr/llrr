@@ -1,0 +1,17 @@
+nome: sombra
+tipo: cenario
+camada: cenario
+conjunto: faroeste
+luz: cima_esquerda
+encaixe: nenhum
+uso: sombra do arbusto seco na areia; fica parada no chão enquanto o arbusto quica por cima
+tamanho: 12x3
+
+paleta:
+  . transparente
+  s terras:3   sombra na areia clara
+
+pixels:
+..ssssssss..
+ssssssssssss
+..ssssssss..
