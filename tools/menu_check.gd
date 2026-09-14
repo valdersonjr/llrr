@@ -10,7 +10,9 @@ extends Node
 ## abriu o jogo e clicou.
 ##
 ## Ela também cobra o que separa menu de protótipo de menu de jogo: opção sob o
-## foco assim que a tela abre, e todas alcançáveis pelo teclado.
+## foco assim que a tela abre, todas alcançáveis pelo teclado, e a música tocando
+## em laço. A música é só do menu, e "só do menu" é fácil de quebrar sem ninguém
+## perceber: basta alguém mover o nó para uma cena que não morre na troca.
 
 var _falhas: int = 0
 
@@ -42,6 +44,17 @@ func _ready() -> void:
 		todas_no_teclado = todas_no_teclado and botao.focus_mode == Control.FOCUS_ALL
 	_exigir(todas_ligadas, "nenhuma opção do menu leva a lugar nenhum")
 	_exigir(todas_no_teclado, "todas as opções são alcançáveis pelo teclado")
+
+	var musica: AudioStreamPlayer = menu.musica()
+	var em_laco: bool = musica.stream != null and musica.stream.get("loop") == true
+	print("  música:              %s, autoplay %s, laço %s" % [
+		"nenhuma" if musica.stream == null else musica.stream.resource_path.get_file(),
+		"sim" if musica.autoplay else "não", "sim" if em_laco else "não"
+	])
+	_exigir(musica.stream != null, "o menu tem música")
+	_exigir(musica.autoplay, "a música começa sozinha ao abrir a tela")
+	_exigir(em_laco, "a música do menu toca em laço, e não uma vez só")
+	_exigir(musica.playing, "a música está tocando quando a tela está de pé")
 
 	print("  jogar abre:          %s" % Menu.JOGO)
 	_exigir(ResourceLoader.exists(Menu.JOGO), "a cena que o menu abre existe")

@@ -12,14 +12,18 @@ extends Control
 ## entram quando existirem tela de opções e save, e não antes: menu com item
 ## morto ensina o jogador a desconfiar do que ele lê.
 ##
-## O fundo é arte de espaço puxada para o azul, e por cima dele um véu escuro.
-## O véu não é enfeite: sem ele o texto disputa leitura com as estrelas, que é o
-## erro mais comum de menu com arte bonita atrás.
+## O fundo é a tela desenhada para o jogo, com o título e os botões apagados
+## dela: o que está na arte é paisagem, e o que se lê e se clica é interface de
+## verdade, com foco de teclado e nome que um dia vira chave de tradução.
+##
+## A música é só daqui. Ela morre junto com a cena quando o jogo começa, e é isso
+## que se quer: o silêncio do espaço não é ausência de trilha, é o assunto.
 
 const JOGO: String = "res://mundo/sistema/sistema.tscn"
 
 @onready var _jogar: Button = $Opcoes/Jogar
 @onready var _sair: Button = $Opcoes/Sair
+@onready var _musica: AudioStreamPlayer = $Musica
 
 
 func _ready() -> void:
@@ -36,3 +40,8 @@ func jogar() -> void:
 
 func sair() -> void:
 	get_tree().quit()
+
+
+## A música do menu, para quem precise conferir que ela está tocando.
+func musica() -> AudioStreamPlayer:
+	return _musica

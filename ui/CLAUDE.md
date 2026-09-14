@@ -17,11 +17,15 @@ O HUD não procura a nave sozinho. Quem monta a cena chama `acompanhar(nave)`. T
 
 **Sem botão que não leva a lugar nenhum.** Configurações e continuar partida entram quando existirem tela de opções e save, e não antes: menu com item morto ensina o jogador a desconfiar do que ele lê. Hoje são duas opções, jogar e sair.
 
-O fundo é arte de espaço puxada para o azul pelo `modulate`, e não no arquivo: assim dá para calibrar a cor no inspetor sem regerar imagem. Por cima dele vai um véu em degradê, escuro à esquerda, onde o texto mora. O véu não é enfeite: sem ele o texto disputa leitura com as estrelas, que é o erro mais comum de menu com arte bonita atrás.
+O fundo é a tela desenhada para o jogo. **O título e os botões foram apagados da imagem**, e no lugar deles vai interface de verdade, na mesma posição e na mesma paleta. O que está na arte é paisagem; o que se lê e se clica tem foco de teclado, estado de mouse e texto que um dia vira chave de tradução. Um botão pintado no fundo não tem nada disso.
 
-O foco começa na primeira opção, e a opção sob o foco ganha uma barra à esquerda em vez de um contorno. Barra lê como marcador de menu; contorno lê como caixa de formulário.
+A geometria não foi inventada: as posições do título e das duas caixas saíram medidas do desenho, em pixels, e a paleta também. A fonte é a Luckiest Guy, escolhida por comparação lado a lado com a letra do desenho.
 
-Duas coisas são placeholder declarado: o título, que é o nome da pasta do projeto, e a fonte, que é a padrão do Godot desde que a antiga saiu.
+O foco começa na primeira opção. Sob o foco, a caixa ganha preenchimento claro e uma borda esquerda mais grossa, porque no fundo claro um contorno sozinho quase não aparece.
+
+A música do menu é só do menu, e é por construção: o `AudioStreamPlayer` vive na cena do menu, que morre quando o jogo começa. O laço está ligado no importador do mp3, não em código. Uma região pode ter música própria pelo mesmo caminho, dentro da cena dela: o Outpost de Arvo é a primeira (ver `mundo/CLAUDE.md`).
+
+O título continua sendo placeholder, e agora ele é honesto sobre isso: "Ainda sem nome".
 
 ## Órbita
 
