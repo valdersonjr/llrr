@@ -20,3 +20,6 @@ export.cfg
 
 # Cache do Python
 __pycache__/
+
+# Conferência que a skill de pixel art deixa ao lado do .pix; a fonte é o .pix e o PNG do jogo é gerado em art/
+**/art/fonte/**/*.png
