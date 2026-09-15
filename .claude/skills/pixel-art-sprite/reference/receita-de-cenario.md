@@ -114,7 +114,7 @@ entities/cenario/<personagem>/      Node2D + AnimatedSprite2D, origem nos pés
 
 **Luz**: se o lugar destoa da luz do planeta, `luz_propria` na raiz da região, com ambiente branco e céu da paleta.
 
-**Integração**: ficha `<região>.tres` (nome, assunto, cena, onde a nave aparece acima do pouso, de onde vem, ponto no corpo) e uma linha na lista `regioes` da ficha do planeta.
+**Integração**: ficha `<região>.tres` (nome, assunto, cena, especificação de pouso do lugar, onde a nave aparece acima do pouso, de onde vem, ponto na carta) e uma linha na lista `regioes` da ficha do planeta.
 
 **Conferir sempre**
 ```
@@ -140,3 +140,4 @@ Peça solta de propósito (fundo, peça sobre construção, sinal no poste) entr
 - [ ] personagens parados
 - [ ] entrada e música
 - [ ] cena montada, ficha, linha no planeta, conferências e foto mostrada ao usuário
+- [ ] marcador na carta do planeta (`ponto_na_carta`) sobre um chão coerente com o lugar; se o lugar pede um chão que a carta não tem, uma camada nova no conjunto `carta`

@@ -1,0 +1,25 @@
+nome: 12_toque_duro
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: situação: pousada, mas o toque passou do limite do trem; quadro 12 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  K neutros_quentes:0    contorno
+  C vermelho_laranja:1   lâmpada
+  L vermelhos:3   brilho
+  S vermelho_laranja:0   sombra
+
+pixels:
+..KKKK..
+.KCCCCK.
+KCLLCCCK
+KCLCCCCK
+KCCCCCCK
+KCCCCCSK
+.KCCSSK.
+..KKKK..

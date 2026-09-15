@@ -1,0 +1,23 @@
+nome: 2_amarela
+tipo: objeto
+camada: cenario
+conjunto: nave
+luz: emissivo
+encaixe: nenhum
+uso: lâmpada do poste da doca de pouso da tela de título, quadro 2 de 4: amarela, piscando com a vermelha na descida; fica em cima do poste
+tamanho: 6x6
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno
+  C vermelho_laranja:4   lâmpada
+  L olivas:4             brilho
+  S vermelho_laranja:3   sombra
+
+pixels:
+.KKKK.
+KCLCCK
+KLCCCK
+KCCCSK
+KCCSSK
+.KKKK.

@@ -1,0 +1,23 @@
+nome: 3_verde
+tipo: objeto
+camada: cenario
+conjunto: nave
+luz: emissivo
+encaixe: nenhum
+uso: lâmpada do poste da doca de pouso da tela de título, quadro 3 de 4: verde, nave pousada; fica em cima do poste
+tamanho: 6x6
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno
+  C verdes:2             lâmpada
+  L verdes:4             brilho
+  S verdes:1             sombra
+
+pixels:
+.KKKK.
+KCLCCK
+KLCCCK
+KCCCSK
+KCCSSK
+.KKKK.

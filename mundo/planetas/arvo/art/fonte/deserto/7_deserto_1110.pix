@@ -1,0 +1,32 @@
+nome: 7_deserto_1110
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: borda do deserto do Outpost sobre a mata, cantos 1110 (TL TR BL BR); a mata faz sombra na areia
+tamanho: 16x16
+
+paleta:
+  . transparente         
+  a terras:3             areia
+  b terras:2             vale da marola
+  c terras:4             crista ao sol, só em pontos
+
+pixels:
+aaaaaaaaaaaaaaaa
+aacaaaaaaaaaaaaa
+aabbaaaaaaaaaaaa
+aaaabbcaaaaaaaaa
+aaaaaabbbaaaaaaa
+aaaaaaaaabaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaa.
+aaaaaaaaaaacaa..
+aaaaaaaaaa......
+baaaaaaaaa......
+abbaaaaaaa......
+aaaaabaaaa......
+aaaaaabbba......
+aaaaaaaaa.......

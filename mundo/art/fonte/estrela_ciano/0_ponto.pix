@@ -1,0 +1,23 @@
+nome: 0_ponto
+tipo: efeito
+camada: efeito
+conjunto: espaco
+luz: frontal
+encaixe: nenhum
+uso: estrela ciano que cintila, quadro 0 de 4 (ponto); tocar 0,1,2,3,2,1,0 e esperar; espalhar poucas pelo espaço
+tamanho: 7x7
+
+paleta:
+  . transparente
+  W neutros_frios:4   núcleo
+  C teais:4   brilho
+  B teais:2   ponta do raio
+
+pixels:
+.......
+.......
+.......
+...C...
+.......
+.......
+.......

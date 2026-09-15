@@ -41,3 +41,11 @@ extends Resource
 ## Como o corpo se vê na vista de espaço. Cor e silhueta precisam separar este
 ## planeta de qualquer outro sem depender de rótulo.
 @export var cor_de_identidade: Color = Color.WHITE
+## A carta de superfície: o planeta visto de cima, na tela de regiões. É uma cena
+## com as camadas de tile (mar e mata, deserto, platô) no tamanho que o desenho
+## pedir; a ficha de cada região diz onde fica o marcador dela.
+@export var carta: PackedScene
+## Como o corpo aparece no mapa do sistema, desenhado já na escala do mapa: o
+## diâmetro em pixels é o do corpo no espaço reduzido na mesma proporção do mapa.
+## Pixel art não se encolhe, então a miniatura é um desenho, e não o corpo reduzido.
+@export var miniatura: Texture2D

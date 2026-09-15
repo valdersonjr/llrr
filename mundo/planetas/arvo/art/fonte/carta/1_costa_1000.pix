@@ -1,0 +1,36 @@
+nome: 1_costa_1000
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: costa entre mata e mar em esquema de dois cantos (cantos 1000: TL TR BL BR, 1 = terra); encaixa com qualquer vizinho de cantos iguais
+tamanho: 16x16
+
+paleta:
+  W teais:0            mar, fundo
+  l teais:1            marola
+  r teais:1            água rasa junto da costa
+  s azuis:0            sombra da margem na água
+  D verdes:0           vão entre copas, margem na sombra
+  B verdes:1           copa, corpo
+  L verdes:2           copa, lado da luz
+  H verdes:3           realce da copa
+
+pixels:
+DDLBBDDDDsrWWWWW
+DLHBBBDDsrrWWWWW
+LLBBBBDsrrrWWWWW
+LBBBBDsrrrWWWWWW
+BBBBBDsrrWWWWWWW
+DDDDDsrrlWWWWWWW
+sssssrrrWWWWWWWW
+rrrrrrrWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWllWWW
+WWWWWWWWWWlWWlWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW

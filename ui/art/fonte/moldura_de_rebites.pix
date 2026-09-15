@@ -1,0 +1,43 @@
+nome: moldura_de_rebites
+tipo: interface
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: moldura de metal com rebites para as telas escuras (carta de superfície, mapa do sistema) num NinePatchRect com margens de 8; o miolo vazado deixa a carta aparecer
+tamanho: 24x24
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno e sombra do chanfro
+  B neutros_quentes:1   corpo da moldura
+  L neutros_quentes:2   chanfro na luz
+  r neutros_frios:3     rebite, brilho
+  R neutros_frios:2     rebite
+  k neutros_frios:1     rebite, sombra
+
+pixels:
+.KKKKKKKKKKKKKKKKKKKKKK.
+KLLLLLLLLLLLLLLLLLLLLLKK
+KLrRBBBBBBBBBBBBBBBBrRKK
+KLRkBBBBBBBBBBBBBBBBRkKK
+KLBBBBBBBBBBBBBBBBBBBBKK
+KLBBBBBBBBBBBBBBBBLBBBKK
+KLBBBBKKKKKKKKKKKKLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBK..........KLBBBKK
+KLBBBBKKKKKKKKKKKKLBBBKK
+KLBBBLLLLLLLLLLLLLLBBBKK
+KLBBBBBBBBBBBBBBBBBBBBKK
+KLrRBBBBBBBBBBBBBBBBrRKK
+KLRkBBBBBBBBBBBBBBBBRkKK
+KKKKKKKKKKKKKKKKKKKKKKKK
+.KKKKKKKKKKKKKKKKKKKKKK.

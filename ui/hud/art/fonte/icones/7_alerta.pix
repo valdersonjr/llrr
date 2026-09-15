@@ -1,0 +1,23 @@
+nome: 7_alerta
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: pisca no lugar do ícone da linha que está fora do limite de pouso; quadro 7 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  O vermelho_laranja:1   triângulo
+  K neutros_quentes:0    exclamação
+
+pixels:
+...OO...
+..OKKO..
+..OKKO..
+.OOKKOO.
+.OOKKOO.
+OOOOOOOO
+OOOKKOOO
+........

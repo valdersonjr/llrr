@@ -44,6 +44,8 @@ func _ready() -> void:
 		await get_tree().physics_frame
 		if sistema.nasceu():
 			break
+	# No espaço não há chão embaixo, e o altímetro tem que dizer isso em vez de um número.
+	var altitude_no_espaco: float = nave.altitude()
 	var lugar: CorpoNoEspaco = sistema.corpos()[0]
 	var planeta: Planeta = lugar.planeta
 	sistema.chegar_em(lugar, planeta.regioes[0])
@@ -75,6 +77,9 @@ func _ready() -> void:
 		_visto.append(Nave.Estado.keys()[novo])
 	)
 	nave.reposicionar(_ponto + SOLTURA_ACIMA_DO_PONTO)
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	var altitude_no_ar: float = nave.altitude()
 	var pico: float = 0.0
 	for _i: int in QUADROS_DE_POUSO:
 		await get_tree().physics_frame
@@ -89,10 +94,20 @@ func _ready() -> void:
 
 	_exigir(nave.estado == Nave.Estado.POUSADA, "solta em queda curta, a nave assenta")
 	_exigir(nave.velocidade() < 0.2, "parada no chão, a nave não anda sozinha")
+	print("  altímetro:           espaço %.1f m, solta no ar %.1f m, no chão %.2f m" % [
+		altitude_no_espaco, altitude_no_ar, nave.altitude()
+	])
+	_exigir(altitude_no_espaco < 0.0, "no espaço, sem chão embaixo, o altímetro não marca altitude")
+	_exigir(altitude_no_ar > 1.0, "solta acima do deque, o altímetro mede a distância até ele")
+	_exigir(nave.altitude() >= 0.0 and nave.altitude() < 0.4, "com as pernas no chão, o altímetro marca zero")
 	_exigir(_visto.has("TOCANDO"), "o contato passa por TOCANDO antes de valer")
-	_exigir(nave.velocidade_do_toque > nave.modelo.velocidade_maxima_de_toque,
-		"em queda livre o toque passa do limite do trem")
-	_exigir(nave.inclinacao_em_graus() < nave.modelo.inclinacao_em_graus,
+	_exigir(nave.especificacao != null and nave.especificacao == planeta.regioes[0].pouso,
+		"a região entrega a especificação de pouso dela à nave")
+	print("  especificação:       descida %.1f m/s, deriva %.1f m/s, %.0f°, %.0f °/s" % [
+		nave.limite_vertical(), nave.limite_horizontal(), nave.limite_de_inclinacao(), nave.limite_de_giro()
+	])
+	_exigir(not nave.toque_no_limite(), "em queda livre o toque passa do limite de pouso")
+	_exigir(nave.inclinacao_no_limite(),
 		"com o centro de massa embaixo, a nave assenta em pé e não tomba")
 
 	var descida: Dictionary = await _pouso_controlado(nave)
@@ -100,8 +115,7 @@ func _ready() -> void:
 		descida["toque"], descida["quadros"], nave.modelo.velocidade_maxima_de_toque
 	])
 	_exigir(descida["pousou"], "freando na descida, a nave chega a POUSADA")
-	_exigir(descida["toque"] <= nave.modelo.velocidade_maxima_de_toque,
-		"o empuxo disponível permite tocar dentro do limite do trem de pouso")
+	_exigir(descida["dentro"], "o empuxo disponível permite tocar dentro da especificação do lugar")
 
 	print("--- %s ---" % ("tudo certo" if _falhas == 0 else "%d critério(s) falhou(aram)" % _falhas))
 	get_tree().quit(_falhas)
@@ -120,7 +134,7 @@ func _pouso_controlado(nave: Nave) -> Dictionary:
 			break
 	if nave.estado != Nave.Estado.VOANDO:
 		# Mesmas três chaves do retorno de baixo: quem chama imprime todas elas.
-		return {"pousou": false, "toque": INF, "quadros": 0}
+		return {"pousou": false, "toque": INF, "quadros": 0, "dentro": false}
 
 	var pousou: bool = false
 	var gastos: int = 0
@@ -138,7 +152,7 @@ func _pouso_controlado(nave: Nave) -> Dictionary:
 			pousou = true
 			break
 	Input.action_release("empuxo")
-	return {"pousou": pousou, "toque": nave.velocidade_do_toque, "quadros": gastos}
+	return {"pousou": pousou, "toque": nave.velocidade_do_toque, "quadros": gastos, "dentro": nave.toque_no_limite()}
 
 
 ## Mede a aceleração numa janela curta, logo no começo da queda, onde a velocidade

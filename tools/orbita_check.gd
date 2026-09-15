@@ -43,6 +43,13 @@ func _ready() -> void:
 	_exigir(nave.global_position.distance_to(sistema.nascer_em) < 2.0,
 		"a nave nasce no ponto de partida que a cena do sistema define")
 	_exigir(not nave.congelada() and nave.visible, "abre com a nave solta e à vista")
+	# Com a câmera afastada, o desenho da nave só fica nítido se cada pixel da arte
+	# cair num pixel inteiro de janela. Mexeu no zoom sem mexer na escala, borra.
+	var zoom_do_espaco: float = (sistema.get_node("Camera") as CameraDoSistema).zoom_no_espaco
+	_exigir(absf(nave.escala_do_desenho() * zoom_do_espaco - 0.5) < 0.001,
+		"no espaço cada pixel da nave cai em meio pixel da tela base (escala %.4f, zoom %.2f)" % [
+			nave.escala_do_desenho(), zoom_do_espaco
+		])
 	_exigir(_regioes_na_cena(sistema) == 0, "abre sem região nenhuma carregada")
 
 	sistema.chegar_em(lugar, ficha)
@@ -52,6 +59,7 @@ func _ready() -> void:
 		ponto.x, ponto.y, nave.global_position.x, nave.global_position.y
 	])
 	_exigir(sistema.em_superficie(), "escolher uma região põe o jogador no comando dela")
+	_exigir(is_equal_approx(nave.escala_do_desenho(), 1.0), "numa região a nave volta ao tamanho de arte")
 	_exigir(nave.global_position.distance_to(ponto) < 2.0,
 		"a chegada termina no ponto de aparecimento que a ficha da região definiu")
 	_exigir(nave.velocidade() < 0.2, "a chegada termina parada, e não andando")
@@ -154,13 +162,35 @@ func _ready() -> void:
 	_exigir(nave.global_position.y > espaco.end.y - 200.0,
 		"saindo por cima do sistema, a nave reaparece embaixo")
 
+	# Voando de verdade através da borda, a câmera não pode deslizar pelo sistema: a
+	# distância entre ela e a nave, com a volta do espaço tirada, fica a mesma de um
+	# passo para o outro. É isso que o jogador lê como continuidade.
+	var camera: Camera2D = sistema.get_node("Camera")
+	nave.reposicionar(Vector2(espaco.end.x - 1200.0, espaco.get_center().y + 300.0), Vector2(600.0, 0.0))
+	for _i: int in 90:
+		await get_tree().physics_frame
+	var anterior: Vector2 = _sem_volta(camera.get_screen_center_position() - nave.global_position, espaco.size)
+	var maior_tranco: float = 0.0
+	var atravessou: bool = false
+	for _i: int in 60:
+		await get_tree().physics_frame
+		var agora: Vector2 = _sem_volta(camera.get_screen_center_position() - nave.global_position, espaco.size)
+		maior_tranco = maxf(maior_tranco, agora.distance_to(anterior))
+		anterior = agora
+		atravessou = atravessou or nave.global_position.x < espaco.get_center().x
+	print("  voo pela borda:      atravessou %s, maior tranco da câmera %.1f px" % [
+		"sim" if atravessou else "não", maior_tranco
+	])
+	_exigir(atravessou and maior_tranco < 20.0,
+		"voando pela borda do sistema, a câmera acompanha a nave sem deslizar pelo espaço")
+
 	# A travessia só é invisível se o campo de estrelas fechar nela, e ele só
 	# fecha se uma volta inteira do sistema deslocar um número redondo de
 	# mosaicos. É uma conta, não um gosto: mexer no tamanho do espaço sem olhar
 	# para ela reabre a costura.
 	for camada: CampoDeEstrelas in sistema.get_node("Estrelas").get_children():
 		var passo: Vector2 = espaco.size * camada.fator
-		var mosaico: Vector2 = camada.textura.get_size()
+		var mosaico: Vector2 = camada.mosaico()
 		var inteiro: bool = (
 			is_zero_approx(fposmod(passo.x, mosaico.x))
 			and is_zero_approx(fposmod(passo.y, mosaico.y))
@@ -204,6 +234,11 @@ func _ready() -> void:
 	await get_tree().physics_frame
 	await get_tree().process_frame
 	_exigir(orbita.aberta(), "a tecla de entrada abre a tela de regiões")
+	var marcadores: Array = orbita.get_node("Selecao/Carta/Marcadores").get_children().filter(
+		func(no: Node) -> bool: return not no.is_queued_for_deletion()
+	)
+	_exigir(marcadores.size() == lugar.planeta.regioes.size(),
+		"a tela de regiões põe um marcador por região na carta")
 	_exigir(nave.get_instance_id() == identidade,
 		"a mesma instância da nave atravessou tudo, sem ser recriada")
 
@@ -226,6 +261,19 @@ func _ready() -> void:
 			corpo.planeta.nome, corpo.planeta.regioes.size(), ", ".join(nomes)
 		])
 		_exigir(inteiro, "as regiões de %s têm nome, cena e ponto de chegada dentro do mapa" % corpo.planeta.nome)
+		var carta: Rect2 = _retangulo_da_carta(corpo.planeta)
+		var na_carta: bool = carta.has_area()
+		for ficha_do_lugar: FichaDeRegiao in corpo.planeta.regioes:
+			na_carta = na_carta and carta.has_point(Vector2(ficha_do_lugar.ponto_na_carta))
+		print("  %-6s carta de %s px" % [corpo.planeta.nome, carta.size])
+		# O corpo é pixel art em pixel de tela: a escala da arte desfaz o zoom da
+		# câmera no espaço. Mexeu num sem mexer no outro, o planeta borra.
+		var zoom: float = (sistema.get_node("Camera") as CameraDoSistema).zoom_no_espaco
+		_exigir(absf(corpo.escala_da_arte() * zoom - 1.0) < 0.001,
+			"%s é desenhado em pixel de tela no espaço (escala da arte %.4f, zoom %.2f)" % [
+				corpo.planeta.nome, corpo.escala_da_arte(), zoom
+			])
+		_exigir(na_carta, "%s tem carta de superfície e o marcador de cada região cai dentro dela" % corpo.planeta.nome)
 
 	# --- cada região de cada lugar, em voo ------------------------------------
 	# Percorre todas, e não só a primeira de cada corpo: presumir quantas existem
@@ -253,6 +301,14 @@ func _ready() -> void:
 
 ## Aperta uma ação pelo caminho de verdade, e não chamando a função direto: o fio
 ## entre a tecla e o que ela faz é parte do que se está conferindo.
+## Uma diferença de posição com a volta do espaço tirada: a menor, nos dois eixos.
+func _sem_volta(diferenca: Vector2, tamanho: Vector2) -> Vector2:
+	return Vector2(
+		wrapf(diferenca.x, -tamanho.x * 0.5, tamanho.x * 0.5),
+		wrapf(diferenca.y, -tamanho.y * 0.5, tamanho.y * 0.5)
+	)
+
+
 func _apertar(acao: String) -> void:
 	var tecla := InputEventAction.new()
 	tecla.action = acao
@@ -265,6 +321,23 @@ func _esperar_superficie(sistema: Node2D) -> void:
 		await get_tree().physics_frame
 		if sistema.em_superficie():
 			return
+
+
+## O tamanho da carta sai dos tiles pintados, e não de um número guardado à parte:
+## é o desenho que diz até onde a carta vai.
+func _retangulo_da_carta(planeta: Planeta) -> Rect2:
+	if planeta.carta == null:
+		return Rect2()
+	var carta: Node = planeta.carta.instantiate()
+	var area := Rect2()
+	for camada: Node in carta.get_children():
+		if camada is TileMapLayer:
+			var tile: Vector2i = (camada as TileMapLayer).tile_set.tile_size
+			var usado: Rect2i = (camada as TileMapLayer).get_used_rect()
+			var em_pixels := Rect2(Vector2(usado.position * tile), Vector2(usado.size * tile))
+			area = em_pixels if not area.has_area() else area.merge(em_pixels)
+	carta.free()
+	return area
 
 
 func _regioes_na_cena(sistema: Node2D) -> int:

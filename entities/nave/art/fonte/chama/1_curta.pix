@@ -1,0 +1,35 @@
+nome: 1_curta
+tipo: efeito
+camada: efeito
+conjunto: nave
+luz: emissivo
+encaixe: cima
+uso: chama do motor do foguete, quadro 1 de 3; a linha de cima encosta na boca do bocal, tocar 0,1,0,2 em laço e esticar na vertical com o empuxo
+tamanho: 10x16
+
+paleta:
+  . transparente
+  W neutros_frios:4     núcleo branco
+  Y vermelho_laranja:4  amarelo
+  O vermelho_laranja:3  laranja
+  o vermelho_laranja:2  laranja da borda
+  R vermelho_laranja:1  vermelho
+  r vermelho_laranja:0  ponta
+
+pixels:
+YYWWWWWWYY
+OYWWWWWWYO
+oOYWWWWYOo
+RoOYWWYOoR
+.RoOYYOoR.
+.RoOYYOoR.
+..RoOOoR..
+..RooooR..
+...RooR...
+...RRoR...
+....RR....
+....r.....
+..........
+..........
+..........
+..........

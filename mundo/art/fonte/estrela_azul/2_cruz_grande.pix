@@ -1,0 +1,23 @@
+nome: 2_cruz_grande
+tipo: efeito
+camada: efeito
+conjunto: espaco
+luz: frontal
+encaixe: nenhum
+uso: estrela azul que cintila, quadro 2 de 4 (cruz_grande); tocar 0,1,2,3,2,1,0 e esperar; espalhar poucas pelo espaço
+tamanho: 7x7
+
+paleta:
+  . transparente
+  W azuis:4   núcleo
+  C azuis:3   brilho
+  B azuis:1   ponta do raio
+
+pixels:
+.......
+...B...
+...C...
+.BCWCB.
+...C...
+...B...
+.......

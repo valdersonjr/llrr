@@ -1,0 +1,29 @@
+nome: poste
+tipo: objeto
+camada: cenario
+conjunto: nave
+luz: cima_esquerda
+encaixe: baixo
+uso: poste do sinal de pouso nas pontas da doca; o sinal de 8x8 fica em cima
+tamanho: 4x12
+
+paleta:
+  . transparente
+  K neutros_quentes:0    lábio de baixo e contorno
+  p neutros_frios:1      montante, luz
+  P neutros_frios:0      montante
+  q neutros_quentes:2    montante, sombra
+
+pixels:
+.KK.
+KpPK
+KpPK
+KpPK
+KpPK
+KpPK
+KpPK
+KpPK
+KpPK
+KpPK
+KpPK
+KPqK

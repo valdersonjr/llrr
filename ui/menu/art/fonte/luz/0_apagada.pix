@@ -1,0 +1,23 @@
+nome: 0_apagada
+tipo: objeto
+camada: cenario
+conjunto: nave
+luz: emissivo
+encaixe: nenhum
+uso: lâmpada do poste da doca de pouso da tela de título, quadro 0 de 4: apagada, sem pouso em curso; fica em cima do poste
+tamanho: 6x6
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno
+  C neutros_quentes:2    lâmpada
+  L neutros_quentes:3    brilho
+  S neutros_quentes:1    sombra
+
+pixels:
+.KKKK.
+KCLCCK
+KLCCCK
+KCCCSK
+KCCSSK
+.KKKK.

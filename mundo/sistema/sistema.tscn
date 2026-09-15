@@ -1,15 +1,23 @@
-[gd_scene format=3 uid="uid://pag5nuw6c1cp"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://k8axom38tlef" path="res://mundo/sistema/sistema.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://ui/pausa/pausa.tscn" id="20_pausa"]
+[ext_resource type="Script" path="res://mundo/sistema/sistema.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://entities/nave/nave.tscn" id="2_nave"]
 [ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" path="res://mundo/planetas/arvo/arvo_corpo.tscn" id="4_arvo"]
-[ext_resource type="Script" uid="uid://c5pvr6m44i5it" path="res://mundo/sistema/camera_do_sistema.gd" id="5_camera"]
-[ext_resource type="Script" uid="uid://d2ws8fsfuftcw" path="res://mundo/art/campo_de_estrelas.gd" id="6_estrelas"]
-[ext_resource type="Texture2D" uid="uid://dq0yd5drydgye" path="res://mundo/art/estrelas_longe.png" id="7_longe"]
-[ext_resource type="Texture2D" uid="uid://dwnqt8hychexf" path="res://mundo/art/estrelas_perto.png" id="8_perto"]
+[ext_resource type="Texture2D" path="res://mundo/art/nebulosa_roxa.png" id="4_xbke5"]
+[ext_resource type="Script" path="res://mundo/sistema/camera_do_sistema.gd" id="5_camera"]
+[ext_resource type="Texture2D" path="res://mundo/art/nebulosa_azul.png" id="5_lsgu2"]
+[ext_resource type="Script" path="res://mundo/art/campo_de_estrelas.gd" id="6_estrelas"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrelas_longe.png" id="7_longe"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_ciano.png" id="7_tx1xw"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_azul.png" id="8_cskft"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrelas_perto.png" id="8_perto"]
 [ext_resource type="PackedScene" path="res://ui/orbita/orbita.tscn" id="9_orbita"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_roxo.png" id="9_ulyen"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_vermelho.png" id="10_8v7dn"]
 [ext_resource type="PackedScene" path="res://ui/mapa/mapa.tscn" id="10_mapa"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_cadente.png" id="11_ejv02"]
 
 [node name="Sistema" type="Node2D" unique_id=615822451]
 script = ExtResource("1_script")
@@ -22,12 +30,35 @@ texture_filter = 1
 script = ExtResource("6_estrelas")
 fator = 0.125
 textura = ExtResource("7_longe")
+variacoes = 4
+quadros_por_enfeite = PackedInt32Array()
+pausa_por_enfeite = PackedInt32Array()
+enfeite_de_cada = PackedInt32Array()
+posicao_de_cada = PackedVector2Array()
+
+[node name="Nebulosas" type="Node2D" parent="Estrelas" unique_id=1341849215]
+texture_filter = 1
+script = ExtResource("6_estrelas")
+fator = 0.1875
+periodo = Vector2i(12, 9)
+enfeites = Array[Texture2D]([ExtResource("4_xbke5"), ExtResource("5_lsgu2")])
+quadros_por_enfeite = PackedInt32Array(1, 1)
+pausa_por_enfeite = PackedInt32Array(0, 0)
+enfeite_de_cada = PackedInt32Array(0, 1, 0, 1, 0, 1, 0, 1, 0, 1)
+posicao_de_cada = PackedVector2Array(60, 40, 108, 60, 86, 92, 400, 250, 446, 270, 420, 302, 620, 80, 250, 340, 560, 190, 700, 380)
 
 [node name="Perto" type="Node2D" parent="Estrelas" unique_id=293067502]
 texture_filter = 1
 script = ExtResource("6_estrelas")
 fator = 0.25
 textura = ExtResource("8_perto")
+variacoes = 4
+periodo = Vector2i(16, 12)
+enfeites = Array[Texture2D]([ExtResource("7_tx1xw"), ExtResource("8_cskft"), ExtResource("9_ulyen"), ExtResource("10_8v7dn"), ExtResource("11_ejv02")])
+quadros_por_enfeite = PackedInt32Array(4, 4, 4, 4, 5)
+pausa_por_enfeite = PackedInt32Array(10, 14, 12, 18, -90)
+enfeite_de_cada = PackedInt32Array(0, 0, 1, 0, 2, 1, 0, 3, 1, 2, 0, 1, 0, 0, 1, 0, 2, 1, 0, 3, 1, 2, 0, 1, 0, 0, 1, 0, 4, 4)
+posicao_de_cada = PackedVector2Array(777, 303, 947, 173, 762, 155, 905, 491, 429, 494, 952, 302, 694, 11, 978, 321, 769, 232, 596, 82, 649, 495, 610, 467, 195, 101, 191, 497, 979, 93, 745, 519, 205, 245, 490, 234, 244, 191, 102, 70, 93, 136, 779, 39, 452, 92, 291, 161, 221, 310, 659, 167, 75, 51, 167, 78, 300, 100, 760, 380)
 
 [node name="Corpos" type="Node2D" parent="." unique_id=669173014]
 
@@ -41,8 +72,6 @@ position = Vector2(110, 56)
 
 [node name="Camera" type="Camera2D" parent="." unique_id=608536526]
 position = Vector2(320, 180)
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
 script = ExtResource("5_camera")
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=2028255105]
@@ -57,3 +86,9 @@ grow_vertical = 2
 [node name="Orbita" parent="Interface" unique_id=1256459295 instance=ExtResource("9_orbita")]
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Pausa" parent="Interface" instance=ExtResource("20_pausa")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0

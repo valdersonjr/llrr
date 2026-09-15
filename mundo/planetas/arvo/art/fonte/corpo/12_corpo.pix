@@ -1,0 +1,68 @@
+nome: 12_corpo
+tipo: tile
+camada: objeto
+conjunto: espaco
+luz: cima_esquerda
+encaixe: direita,cima,baixo
+uso: peça 0,2 (coluna, linha) do corpo de Arvo visto do espaço, 6x6 peças de 48 num TileMapLayer; atlas na posição 12
+tamanho: 48x48
+
+paleta:
+  . transparente
+  a teais:1
+  b teais:3
+  c verdes:1
+  d verdes:0
+  e verdes:2
+  f teais:0
+  g teais:2
+
+pixels:
+.........aabcddcdccddeddccdaaafafafaaaaaggggggee
+.........abccdecdcddecddcddaafafafaaaaaagggggeee
+.........abdcdcdccddecddcdaafafafafaaaaaaagggeec
+........aabdeecddddeccdddeafafafafaaaaaaaaaggccc
+........abcdccccdecccdcddeaffafafaaaaaaaaaaggcce
+........abedccecdcccceccccafafafafaaaaaaaaaggece
+.......aabcdddccdcddecccdaaafafafaaaaaaaaaaggece
+.......abdcdceccddcdecccdaafafafafaaaaaaaaaggecc
+.......abcdecccddecdcccddaaafafafaaaaaaaaaaggccc
+.......abcdccccddccdccddaaffafafafaaaaaaaaaggccc
+......aabddcdcdddcddcdddaafafafafafaaaaaaaaggccc
+......abedededddcddeddddafffafafafaaaaaaaaagccce
+......abcdcdcddecdecdddeaffafafafafaaaaaaaagccee
+......abddcdcddecdecdddaffffafafafaaaaaaaaagccee
+.....aabdecccdeccdccddeafffafafafafaaaaaaaggceee
+.....abcecccdecccdccecafffffafafafaaaaaaaaggeeee
+.....abdccddecccdddeecaffffafafafafaaaaaaaggeeee
+.....abdccddccccdddecaafffffafafafafaaaaaaaggeee
+....aabcddcdcccdeddcaafffffffafafafaaaaaaaagggec
+....abccdecdcddeccdcafffffffafafafafaaaaaaaggggc
+....abcdcccddedeccddaffffffffafafafaaaaaaaaggggc
+....abcddccddedcccdaafffffffafafafafaaaaaaaagggc
+....abeedcdcdcdccdcafffffffffafafafafaaaaaaaaggc
+...aabcccceccccccecaffffffffffafafafaaaaaaaaagge
+...abdccddccdcddecaffffffffffafafafafaaaaaaaaggc
+...abdcdcdccddcdeaafffffffffffafafafafaaaaaaagge
+...abccdccccaecdcafffffffffffafafafafafaaaaaagge
+...abcdccdcaaaccaaffffffffffffafafafafaaaaaaaage
+...abcdddddaaaaaaffffffffffffffafafafafaaaaaaage
+...abddcdddaaaaaafffffffffffffafafafafafaaaaaagg
+..aabddcdcaaaaaafffffffffffffffafafafafafaaaaaag
+..abddeceaaaffaaffffffffffffffffafafafafaaaaaaaa
+..abcdeccaaafffafffffffffffffffafafafafafaaaaaaa
+..abcecaafffffffffffffffffffffffafafafafafaaaaaa
+..abdccaaffffffffffffffffffffffffafafafafafaaaaa
+..abdcaaffffffffffffffffffffffffffafafafafafaaaa
+..abdcaffffffffffffffffffffffffffafafafafafafaaa
+..abdcafffffffffffffffffffffffffffafafafafafafaa
+..abddaffffffffffffffffffffffffffffafafafafafafa
+..abddafffffffffffffffffffffffffffffafafafafafaf
+.aabceaffffffffffffffffffffffffffffffafafafafafa
+.aabccafffffffffffffffffffffffffffffafafafafafaf
+.aabcdaffffffffffffffffffffffffffffffafafafafafa
+.aabcdafffffffffffffffffffffffffffffffafafafafaf
+.aabcdaffffffffffffffffffffffffffffffffafafafafa
+.aabcdafffffffffffffffffffffffffffffffffafafafaf
+.aabcdaffffffffffffffffffffffffffffffffffafafafa
+.aabddffffffffffffffffffffffffffffffffffffafafaf

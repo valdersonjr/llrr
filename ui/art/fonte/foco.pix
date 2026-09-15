@@ -1,0 +1,34 @@
+nome: foco
+tipo: interface
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: cantos de seleção piscando em volta do que está em foco (marcador de região, nave no mapa), centrados no mesmo ponto
+tamanho: 19x19
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno
+  W neutros_frios:4     canto
+
+pixels:
+WWWWKK.......KKWWWW
+WKKKKK.......KKKKKW
+WK...............KW
+WK...............KW
+KK...............KK
+KK...............KK
+...................
+...................
+...................
+...................
+...................
+...................
+...................
+KK...............KK
+KK...............KK
+WK...............KW
+WK...............KW
+WKKKKK.......KKKKKW
+WWWWKK.......KKWWWW

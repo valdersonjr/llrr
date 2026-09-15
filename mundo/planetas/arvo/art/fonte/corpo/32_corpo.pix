@@ -1,0 +1,70 @@
+nome: 32_corpo
+tipo: tile
+camada: objeto
+conjunto: espaco
+luz: cima_esquerda
+encaixe: esquerda,direita,cima
+uso: peça 2,5 (coluna, linha) do corpo de Arvo visto do espaço, 6x6 peças de 48 num TileMapLayer; atlas na posição 32
+tamanho: 48x48
+
+paleta:
+  . transparente
+  a neutros_frios:2
+  b neutros_frios:3
+  c verdes:0
+  d verdes:1
+  e neutros_frios:1
+  f neutros_quentes:1
+  g azuis:1
+  h azuis:0
+  i roxos:0
+
+pixels:
+aaaaaabbccccccccccddccccccccccccddcccccccccccccd
+aaaaaaaaabccccdcccdcccccccccdcccdcccccccccdccccd
+aaaaaaaaaecccccccccccccccccccccccccccccccccccccc
+eeeeeeeeeffccccccccccccccccccccccccccccccccccccc
+cfffffffffffcdcccccdcccccccccccccdcccccccdcccccd
+cffffccffffccdccccddccccccddccccddccccccddccccdd
+ccccccccccdcdccccccccccdddccccccccccddcdcccccccc
+cccccccccddcccccccccccddccccccccccccdccccccccccc
+ccccccccccdcccccccccccccccccccccccccdccccccccccc
+ccccccdcccccccccccddcccccccccccddcccccccccccddcc
+ccdccdccccccccdccccccccccccdccdcccccccccdccccccc
+ccddccccccdcccddcccccccccccdccccccccccccdccccccc
+ccccccccccddccccccccccddcccccccccccdcccccccccccc
+ccccccdcccdcccccccdcccdcccccccdcccdccccccccdcccd
+ccccccddccccccccccdcccccccccccdcccccccccccddccfc
+cccccccccccccccccccccccccccccccccccccccccccfcfcf
+cccccccccccdccccccdccccdcccccccccccdccfcfcfcfcfd
+cdcccccdcccddcccccdccccdcccccddccfdfcfcfcfdfcfdf
+gccccdcccccccccdddccccccccfdfcfcfcfcfcfdfcfcfcfc
+ghcfcfcfcfcfcfcfdfcfcfcfcfdfcfcfcfcfcfdfcfcfcfcf
+hghghgfcfcfcfcfcfcfcfcfdfcfcfcfcfcfcfcfcfcfcffff
+ghghghgfcfcfdfcfcfcfcfdfcfcfcfcfcfdfcfcfffffffff
+hghghghgfcfcfcfcfcfcfcfcfcfcfcfcfcffffffffffffff
+ghghghghgfcfcfcfdfcfcfcfcfdfffffffffffffffffffff
+hhhhhhhhhhffffffffffffffffffffffffffffffffffffff
+hhhhhhhhhhhhffffffffffffffffffffffffffffffffffff
+hhhhhhhhhhhhffffffffffffffffffffffffffffffffffff
+hhhhhhhhhhhhhfffffffffffffffffffffffffffffffffff
+hhhhhhhhhhhhhhffffffffffffffffffffffffffffffffff
+fhhhhhhhhhhhhhhhffffffffffffffffffffffffffffffff
+ffhhhhhhhhhhhhhhhhffffffffffffffffffffffffffffff
+fffhhhhhhhhhhhhhhhhffffffffffffffffffffffffffifi
+ififihhhhhhhhhhhhhhhffffffffffffffffffififififif
+fififihihihihihihihihifififififififififififififi
+iiihihihihihihihihihihififihihififififififififif
+iiiiiiiihihihihihihihihihihihihifififififiiiiiii
+iiiiiiiiiiiiiiiiiiihihihihihihihiiiiiiiiiiiiiiii
+.iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+....iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+.......iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+...........iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+...............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+...................iiiiiiiiiiiiiiiiiiiiiiiiiiiii
+........................iiiiiiiiiiiiiiiiiiiiiiii
+...............................iiiiiiiiiiiiiiiii
+................................................
+................................................
+................................................

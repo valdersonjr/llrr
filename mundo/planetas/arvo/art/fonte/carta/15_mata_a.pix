@@ -1,0 +1,32 @@
+nome: 15_mata_a
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: cantos 1111; mata baixa de Arvo vista de cima, copas redondas; repete nos quatro lados
+tamanho: 16x16
+
+paleta:
+  D verdes:0           vão entre copas, sombra
+  B verdes:1           copa, corpo
+  L verdes:2           copa, lado da luz
+  H verdes:3           realce da copa
+
+pixels:
+DDLBBDDDDLBDDDDD
+DLHBBBDDLHBBDDDD
+LLBBBBBDBBBBBDDD
+LBBBBBBDDBBBDLLB
+BBBBBBDDDDDDLHBB
+BBBBBDDDDDDDLBBB
+BDBDDDLLBDDDBBBB
+DDDDDLHBBBDDDBBB
+DLBDDLBBBBBDDDDD
+LHBBDBBBBBDLBBDD
+BBBBBDBBBDLHBBBD
+DBBBDDDDDLLBBBBB
+DDDDLBDDDLBBBBBB
+DDDLHBBDDBBBBBBD
+DDDBBBBBDDBBBBDD
+DDDDBBBDDDDBDDDD

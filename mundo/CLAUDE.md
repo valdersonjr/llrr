@@ -24,7 +24,7 @@ Um lugar tem duas formas: `<nome>_corpo.tscn`, como ele se vê de longe, e a cen
 
 **Onde a nave aparece é escolha, não trajetória.** É a diferença entre esta versão e a anterior, que entrava descendo sobre o corpo sem nada ser recolocado. Aquilo dava inércia contínua e tirava do projetista o controle de onde a nave chega, que é o que um lugar desenhado à mão precisa ter. `tools/orbita_check.tscn` guarda a promessa nova: a chegada termina no ponto da ficha, e termina parada.
 
-**O espaço é finito e dá a volta nos quatro lados.** Sair por cima é entrar por baixo, sair pela direita é entrar pela esquerda. O conceito pede um sistema finito, e fechar o espaço em vez de cercá-lo evita tanto a parede invisível quanto a deriva infinita. O tamanho é o `Rect2` exportado em `sistema.tscn`, e é calibração: hoje cabem umas três telas de espaço em cada direção, e ele cresce quando entrarem mais corpos. **Cruzar a borda não é um evento, e não deve parecer um.** O movimento não muda, a câmera pula junto sem deslizar e sem ler o salto como aceleração, e o campo de estrelas fecha porque o tamanho do sistema é múltiplo do mosaico dele. Quem atravessa só descobre olhando o mapa. Medido: o mesmo ponto do espaço, alcançado direto e atravessando a borda, dá o mesmo quadro.
+**O espaço é finito e dá a volta nos quatro lados.** Sair por cima é entrar por baixo, sair pela direita é entrar pela esquerda. O conceito pede um sistema finito, e fechar o espaço em vez de cercá-lo evita tanto a parede invisível quanto a deriva infinita. O tamanho é o `Rect2` exportado em `sistema.tscn`, e é calibração: hoje cabem umas três telas de espaço em cada direção, e ele cresce quando entrarem mais corpos. **Cruzar a borda não é um evento, e não deve parecer um.** O movimento não muda, a câmera pula junto sem deslizar e sem ler o salto como aceleração, e o campo de estrelas fecha porque o tamanho do sistema é múltiplo do mosaico dele. **A suavização da câmera é do script, e não do `Camera2D`.** Na travessia o alvo da câmera pula o tamanho do espaço; com a suavização do motor, ou a câmera deslizava pelo sistema inteiro na frente do jogador, ou pulava direto ao alvo e perdia o atraso que tinha, e a imagem dava um tranco. `camera_do_sistema.gd` guarda o ponto suavizado e, no quadro em que o alvo muda mais que `SALTO_DE_BORDA`, anda com ele o mesmo salto: o atraso continua igual e nada muda na imagem. O salto é lido quando aparece, e não quando a volta é pedida, porque o servidor de física só publica a posição nova da nave um passo depois. `orbita_check` voa através da borda e reprova se a distância entre câmera e nave der tranco. Quem atravessa só descobre olhando o mapa. Medido: o mesmo ponto do espaço, alcançado direto e atravessando a borda, dá o mesmo quadro.
 
 **Dentro de uma região, os lados dão a volta.** Sair pela esquerda é entrar pela direita, sem tocar em velocidade, ângulo nem giro: a região é uma tela, não há mapa ao lado para onde ir, e sumir pela borda seria pior. Para baixo está o chão, e para cima está a tela de regiões.
 
@@ -49,7 +49,10 @@ A seção 17 do conceito avisa do risco de planetas intercambiáveis, e a regra 
 mundo/planetas/arvo/
 ├── art/                        # arte do corpo, e o que mais de uma região usar
 ├── arvo.tres                   # a ficha: gravidade, recurso, e a lista de regiões
-├── arvo_corpo.tscn             # como ele se vê na vista de espaço
+├── arvo_corpo.tscn             # como ele se vê na vista de espaço: 36 peças de 48 em pixel de tela
+├── arvo_corpo_tileset.tres     # as peças do corpo
+├── arvo_carta.tscn             # a carta de superfície, vista de cima, na tela de regiões
+├── arvo_carta_tileset.tres     # mar e mata, deserto e platô, com terrenos de cantos para pintar
 └── regioes/outpost/            # uma pasta por superfície
     ├── art/                    # arte só desta região, com a fonte .pix em art/fonte/
     ├── sound/                  # som só desta região
@@ -103,7 +106,7 @@ Nada fica na frente da rota de pouso. A seção 16 do conceito manda cortar efei
 
 ## O desenho de um corpo
 
-`arvo_corpo.png` tem 640 pixels, a mesma largura de uma região, e é a partir dele que o raio do corpo é lido. A paleta saiu da arte de superfície do próprio planeta: oliva da copa nos continentes, teal da neblina nos mares, e o ciano da ficha no ar. Quatro bandas de luz com dither só na emenda entre elas, para ser rampa de pixel art e não gradiente liso.
+O corpo de Arvo é pixel art em pixel de tela: 288 px de diâmetro, em 36 peças de 48 (`art/corpo.png`) num `TileMapLayer` dentro de `Arte`, que tem escala `1 / zoom_no_espaco` da câmera. Assim o corpo fica nítido com a câmera afastada, e continua com 640 px de mundo, a mesma largura de uma região; o raio é lido das peças pintadas. Os continentes são os da carta de superfície projetados na esfera, com luz de cima à esquerda em seis níveis da rampa de cada chão, terminador em xadrez, nuvens de bolhas e fio de atmosfera (conjunto `espaco` da skill `pixel-art-sprite`; o rascunho e a montagem estão em `reference/modelos/corpo_arvo.py` e `montar_corpo_arvo.gd`). `orbita_check` reprova se a escala da arte e o zoom do espaço se desencontrarem.
 
 Um corpo novo é um PNG quadrado com fundo transparente. Se ele for maior, o planeta fica maior e a fronteira acompanha sozinha, porque ela é medida em região, não em corpo.
 
@@ -115,8 +118,9 @@ Arte nova sai da skill `pixel-art-sprite`, na paleta do projeto.
 
 1. `mundo/planetas/<planeta>/regioes/<nome>/` com `art/`, a cena do terreno e a ficha.
 2. A ficha diz o nome, o assunto de uma linha, **onde a nave aparece** e de onde ela vem. Esses dois pontos são a chegada inteira: o piloto automático vai de um ao outro.
-3. `ponto_no_corpo` põe o marcador dela sobre o disco do planeta, de -1 a 1 nos dois eixos. É só leitura, não existe geografia por trás.
-4. A cena precisa de `CampoGravitacional`, do relevo com colisão e de um corpo no grupo `pontos_de_coleta`.
+3. `ponto_na_carta` põe o marcador dela na carta de superfície do planeta, em pixels da carta a partir do canto de cima à esquerda. A carta é leitura: mostra que chão cerca a região, e não liga uma região a outra no voo.
+4. `pouso` é a especificação de pouso do lugar (`EspecificacaoDePouso`): descida, deriva, inclinação e giro máximos. Vale sempre o mais apertado entre ela e o trem de pouso da nave; a cena do sistema a entrega à nave na chegada e retira no espaço. É por ela que o HUD pinta cada número de verde ou vermelho e que o toque vale ou não.
+5. A cena precisa de `CampoGravitacional`, do relevo com colisão e de um corpo no grupo `pontos_de_coleta`.
 5. Uma linha na lista `regioes` da ficha do planeta, e pronto: a tela de regiões monta o marcador sozinha.
 
 ## Outpost é uma região

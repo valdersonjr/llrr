@@ -1,0 +1,69 @@
+nome: 33_corpo
+tipo: tile
+camada: objeto
+conjunto: espaco
+luz: cima_esquerda
+encaixe: esquerda,direita,cima
+uso: peça 3,5 (coluna, linha) do corpo de Arvo visto do espaço, 6x6 peças de 48 num TileMapLayer; atlas na posição 33
+tamanho: 48x48
+
+paleta:
+  . transparente
+  a verdes:1
+  b verdes:0
+  c neutros_quentes:1
+  d terras:1
+  e roxos:1
+  f roxos:0
+  g neutros_frios:2
+  h neutros_frios:1
+
+pixels:
+abbbbbbbbbbbbbabbbbbbbbbbbbbaabbcbcdedededeeeeee
+bbbbbbbbbabbbabbbbbbbbbabbbbacbcbcbedededeeeeeee
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbcbcbcbededeeeeeeeeee
+bbbbbbbbbbbbbbbbbbbbbbbbbcbcbcbcbededeeeeeeeeeee
+bbbbbbbabbbbbabbbbbbbabbcbcacbcbededeeeeeeeeeeee
+bbbbbbaabbbbaabbbbbbacbcbcacbcbcdeeeeeeeeeeeeeee
+bbaababbbbbbbbbbaabacbcbcbcbcbcdeeeeeeeeeeeeeeee
+bbabbbbbbbbbbbbaacbcbcbcbcbcbcbeeeeeeeeeeeeeeeee
+babbbbbbbbbbbbbacbcbcbcbcbcbccceeeeeeeeeeeeeeeee
+bbbbbbbbbbaabcbcbcbcbcbcacbcccceeeeeeeeeeeeeeeee
+bbbbbbbbbacbcbcbcbcacbcbccccccceeeeeeeeeeeeeeeee
+bbbbbabcbcbcbcacbcacbccccccccccceeeeeeeeeeeeeeee
+abbbcbcbcbcbcacbcbcbccccccccccccceeeeeeeeeeeeeee
+bcbcbcbcacbcacbcbcccccccccccccccceeeeeeeeeeeefef
+cbcbcbcacbcbcbccccccccccccccccccceeeeeeeeeeefefe
+bcbcbcbcbcbccccccccccccccccccccccceeeeeeefcfefef
+cbcbcbcbcbcccccccccccccccccccccccccceeecfcfcfcfe
+bcbcbcaccccccccccccccccccccccccccccccfcfcfcfcfef
+cbccccccccccccccccccccccccccccccccccfcfcfcfcffff
+cccccccccccccccccccccccccccccccccfcfcfcfcfcfffff
+ccccccccccccccccccccccccccccccccfcfcfcfcffffffff
+cccccccccccccccccccccccccccccfcfcfcfcfcfffffffff
+cccccccccggggcccccccccccccccfcfcfcfcffffffffffff
+cccccccgghhhhgggcccccccccfcfcfcfcfcfffffffffffff
+ccccccghhhhhhhhhhgccccfcfcfcfcfcffffffffffffffff
+ccccccceeeeeeeeeeccfcfcfcfcfcfcfffffffffffffffff
+ccccccccccccccccfcfcfcfcfcfcffffffffffffffffffff
+cccccccccccccfcfcfcfcfcfcfffffffffffffffffffffff
+ccccccccccfcfcfcfcfcfcffffffffffffffffffffffffff
+cccccfcfcfcfcfcfcfcfffffffffffffffffffffffffffff
+ccfcfcfcfcfcfcfcffffffffffffffffffffffffffffffff
+cfcfcfcfcfcfcfffffffffffffffffffffffffffffffffff
+fcfcfcfcfcffffffffffffffffffffffffffffffffffffff
+cfcfcfffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffffffffffffffffffffffffffff
+fffffffffffffffffffffffffffffffffffffffffffffff.
+ffffffffffffffffffffffffffffffffffffffffffff....
+fffffffffffffffffffffffffffffffffffffffff.......
+fffffffffffffffffffffffffffffffffffff...........
+fffffffffffffffffffffffffffffffff...............
+fffffffffffffffffffffffffffff...................
+ffffffffffffffffffffffff........................
+fffffffffffffffff...............................
+................................................
+................................................
+................................................

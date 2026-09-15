@@ -1,49 +1,261 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://ui/hud/hud.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://ui/art/moldura.png" id="2_moldura"]
+[ext_resource type="Texture2D" path="res://ui/art/painel.png" id="2_painel"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_painel"]
+content_margin_left = 6.0
+content_margin_top = 4.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+texture = ExtResource("2_painel")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
 
 [node name="Hud" type="Control"]
+texture_filter = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="Moldura" type="NinePatchRect" parent="."]
-texture_filter = 1
+[node name="Painel" type="PanelContainer" parent="."]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 6.0
-offset_right = 118.0
-offset_bottom = 54.0
-texture = ExtResource("2_moldura")
-patch_margin_left = 12
-patch_margin_top = 12
-patch_margin_right = 12
-patch_margin_bottom = 12
+offset_right = 6.0
+offset_bottom = 6.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_painel")
 
-[node name="Linhas" type="VBoxContainer" parent="Moldura"]
-offset_left = 9.0
-offset_top = 7.0
-offset_right = 104.0
-offset_bottom = 42.0
-theme_override_constants/separation = -1
+[node name="Linhas" type="VBoxContainer" parent="Painel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
 
-[node name="Velocidade" type="Label" parent="Moldura/Linhas"]
-theme_override_font_sizes/font_size = 10
-text = "VEL"
+[node name="Vertical" type="Control" parent="Painel/Linhas"]
+custom_minimum_size = Vector2(68, 15)
+layout_mode = 2
+mouse_filter = 2
 
-[node name="Inclinacao" type="Label" parent="Moldura/Linhas"]
-theme_override_font_sizes/font_size = 10
-text = "INC"
+[node name="Icone" type="TextureRect" parent="Painel/Linhas/Vertical"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 11.0
+mouse_filter = 2
 
-[node name="Giro" type="Label" parent="Moldura/Linhas"]
-theme_override_font_sizes/font_size = 10
-text = "GIR"
+[node name="Valor" type="Label" parent="Painel/Linhas/Vertical"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -2.0
+offset_right = 42.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.78039217, 0.8627451, 0.8156863, 1)
+text = "0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="Situacao" type="Label" parent="."]
-offset_left = 7.0
-offset_top = 58.0
-offset_right = 120.0
-offset_bottom = 72.0
-theme_override_font_sizes/font_size = 10
+[node name="Unidade" type="Label" parent="Painel/Linhas/Vertical"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = -2.0
+offset_right = 69.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.49803922, 0.4392157, 0.5411765, 1)
+text = "m/s"
+horizontal_alignment = 0
+vertical_alignment = 1
+
+[node name="Horizontal" type="Control" parent="Painel/Linhas"]
+custom_minimum_size = Vector2(68, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icone" type="TextureRect" parent="Painel/Linhas/Horizontal"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 11.0
+mouse_filter = 2
+
+[node name="Valor" type="Label" parent="Painel/Linhas/Horizontal"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -2.0
+offset_right = 42.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.78039217, 0.8627451, 0.8156863, 1)
+text = "0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Unidade" type="Label" parent="Painel/Linhas/Horizontal"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = -2.0
+offset_right = 69.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.49803922, 0.4392157, 0.5411765, 1)
+text = "m/s"
+horizontal_alignment = 0
+vertical_alignment = 1
+
+[node name="Altitude" type="Control" parent="Painel/Linhas"]
+custom_minimum_size = Vector2(68, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icone" type="TextureRect" parent="Painel/Linhas/Altitude"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 11.0
+mouse_filter = 2
+
+[node name="Valor" type="Label" parent="Painel/Linhas/Altitude"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -2.0
+offset_right = 42.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.78039217, 0.8627451, 0.8156863, 1)
+text = "0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Unidade" type="Label" parent="Painel/Linhas/Altitude"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = -2.0
+offset_right = 69.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.49803922, 0.4392157, 0.5411765, 1)
+text = "m"
+horizontal_alignment = 0
+vertical_alignment = 1
+
+[node name="Inclinacao" type="Control" parent="Painel/Linhas"]
+custom_minimum_size = Vector2(68, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icone" type="TextureRect" parent="Painel/Linhas/Inclinacao"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 11.0
+mouse_filter = 2
+
+[node name="Valor" type="Label" parent="Painel/Linhas/Inclinacao"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -2.0
+offset_right = 42.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.78039217, 0.8627451, 0.8156863, 1)
+text = "0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Unidade" type="Label" parent="Painel/Linhas/Inclinacao"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = -2.0
+offset_right = 69.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.49803922, 0.4392157, 0.5411765, 1)
+text = "°"
+horizontal_alignment = 0
+vertical_alignment = 1
+
+[node name="Giro" type="Control" parent="Painel/Linhas"]
+custom_minimum_size = Vector2(68, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icone" type="TextureRect" parent="Painel/Linhas/Giro"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 11.0
+mouse_filter = 2
+
+[node name="Valor" type="Label" parent="Painel/Linhas/Giro"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -2.0
+offset_right = 42.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.78039217, 0.8627451, 0.8156863, 1)
+text = "0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Unidade" type="Label" parent="Painel/Linhas/Giro"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = -2.0
+offset_right = 69.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.49803922, 0.4392157, 0.5411765, 1)
+text = "°/s"
+horizontal_alignment = 0
+vertical_alignment = 1
+
+[node name="Estab" type="Control" parent="Painel/Linhas"]
+custom_minimum_size = Vector2(68, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icone" type="TextureRect" parent="Painel/Linhas/Estab"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 11.0
+mouse_filter = 2
+
+[node name="Texto" type="Label" parent="Painel/Linhas/Estab"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -2.0
+offset_right = 52.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.49803922, 0.4392157, 0.5411765, 1)
+text = "ESTAB"
+horizontal_alignment = 0
+vertical_alignment = 1
+
+[node name="Situacao" type="Control" parent="Painel/Linhas"]
+custom_minimum_size = Vector2(68, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icone" type="TextureRect" parent="Painel/Linhas/Situacao"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 11.0
+mouse_filter = 2
+
+[node name="Texto" type="Label" parent="Painel/Linhas/Situacao"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = -2.0
+offset_right = 64.0
+offset_bottom = 16.0
+theme_override_colors/font_color = Color(0.78039217, 0.8627451, 0.8156863, 1)
+text = ""
+horizontal_alignment = 0
+vertical_alignment = 1

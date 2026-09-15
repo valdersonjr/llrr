@@ -1,0 +1,146 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/configuracoes/configuracoes.gd" id="1_tela"]
+[ext_resource type="Script" path="res://ui/configuracoes/linha_de_opcao.gd" id="2_linha"]
+[ext_resource type="Theme" path="res://ui/tema_das_telas.tres" id="3_tema"]
+
+[node name="Configuracoes" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("3_tema")
+script = ExtResource("1_tela")
+
+[node name="Painel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Conteudo" type="VBoxContainer" parent="Painel"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Titulo" type="Label" parent="Painel/Conteudo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9764706, 0.7607843, 0.16862745, 1)
+text = "OPÇÕES"
+horizontal_alignment = 1
+
+[node name="Opcoes" type="VBoxContainer" parent="Painel/Conteudo"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Geral" type="Button" parent="Painel/Conteudo/Opcoes"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+alignment = 0
+script = ExtResource("2_linha")
+rotulo = "VOLUME GERAL"
+
+[node name="Valor" type="Label" parent="Painel/Conteudo/Opcoes/Geral"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -8.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Musica" type="Button" parent="Painel/Conteudo/Opcoes"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+alignment = 0
+script = ExtResource("2_linha")
+rotulo = "MÚSICA"
+
+[node name="Valor" type="Label" parent="Painel/Conteudo/Opcoes/Musica"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -8.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Efeitos" type="Button" parent="Painel/Conteudo/Opcoes"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+alignment = 0
+script = ExtResource("2_linha")
+rotulo = "EFEITOS"
+
+[node name="Valor" type="Label" parent="Painel/Conteudo/Opcoes/Efeitos"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -8.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TelaCheia" type="Button" parent="Painel/Conteudo/Opcoes"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+alignment = 0
+script = ExtResource("2_linha")
+rotulo = "TELA CHEIA"
+
+[node name="Valor" type="Label" parent="Painel/Conteudo/Opcoes/TelaCheia"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -8.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Escala" type="Button" parent="Painel/Conteudo/Opcoes"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+alignment = 0
+script = ExtResource("2_linha")
+rotulo = "ESCALA DA JANELA"
+
+[node name="Valor" type="Label" parent="Painel/Conteudo/Opcoes/Escala"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -8.0
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Controles" type="Button" parent="Painel/Conteudo/Opcoes"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+text = "CONTROLES"
+
+[node name="Voltar" type="Button" parent="Painel/Conteudo/Opcoes"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+text = "VOLTAR"
+
+[node name="Lista" type="VBoxContainer" parent="Painel/Conteudo"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Linhas" type="Label" parent="Painel/Conteudo/Lista"]
+layout_mode = 2
+
+[node name="Voltar" type="Button" parent="Painel/Conteudo/Lista"]
+custom_minimum_size = Vector2(280, 22)
+layout_mode = 2
+text = "VOLTAR"

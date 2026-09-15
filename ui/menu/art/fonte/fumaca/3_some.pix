@@ -1,0 +1,23 @@
+nome: 3_some
+tipo: efeito
+camada: efeito
+conjunto: nave
+luz: cima_esquerda
+encaixe: nenhum
+uso: baforada de vapor dos motores quando o foguete encosta na doca, quadro 3 de 4; tocar uma vez
+tamanho: 16x8
+
+paleta:
+  . transparente
+  s neutros_frios:2      vapor, borda
+  d neutros_frios:1      vapor, fiapo
+
+pixels:
+................
+d..............d
+sd............ds
+ds............sd
+.d............d.
+................
+................
+................

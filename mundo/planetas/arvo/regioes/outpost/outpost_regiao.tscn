@@ -366,11 +366,13 @@ shape = SubResource("RectangleShape2D_k6xr3")
 [node name="Som" type="Node" parent="." unique_id=744093224]
 
 [node name="Entrada" type="AudioStreamPlayer" parent="Som" unique_id=121764990]
+bus = &"Musica"
 stream = ExtResource("30_2bnj3")
 volume_db = -8.0
 autoplay = true
 
 [node name="Musica" type="AudioStreamPlayer" parent="Som" unique_id=1766963608]
+bus = &"Musica"
 stream = ExtResource("31_w24ns")
 volume_db = -8.0
 

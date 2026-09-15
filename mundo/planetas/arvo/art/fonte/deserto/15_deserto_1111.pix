@@ -1,0 +1,31 @@
+nome: 15_deserto_1111
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: deserto do Outpost visto de cima, marolas de areia em S; camada sobre a mata (cantos 1111); repete nos quatro lados
+tamanho: 16x16
+
+paleta:
+  a terras:3            areia
+  b terras:2            vale da marola
+  c terras:4            crista ao sol, só em pontos
+
+pixels:
+aaaaaaaaaaaaaaaa
+aacaaaaaaaaaaaaa
+aabbaaaaaaaaaaaa
+aaaabbcaaaaaaaaa
+aaaaaabbbaaaaaaa
+aaaaaaaaabaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaa
+aaaaaaaaaaacaaaa
+aaaaaaaaaaabbaaa
+baaaaaaaaaaaabbb
+abbaaaaaaaaaaaaa
+aaaaabaaaaaaaaaa
+aaaaaabbbaaaaaaa
+aaaaaaaaaaaaaaaa

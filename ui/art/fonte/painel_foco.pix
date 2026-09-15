@@ -1,0 +1,38 @@
+nome: painel_foco
+tipo: interface
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: anel de foco por cima do painel ou do botão, em todas as telas com menu (StyleBox de foco, margens de 8); miolo vazado para o painel e a letra aparecerem
+tamanho: 24x24
+
+paleta:
+  . transparente
+  W neutros_frios:3     anel de foco
+
+pixels:
+........................
+..WWWWWWWWWWWWWWWWWWWW..
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+.W....................W.
+..WWWWWWWWWWWWWWWWWWWW..
+........................

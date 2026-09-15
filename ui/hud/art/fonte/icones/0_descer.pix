@@ -1,0 +1,22 @@
+nome: 0_descer
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: velocidade vertical, descendo; quadro 0 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  W neutros_frios:3      seta
+
+pixels:
+...WW...
+...WW...
+...WW...
+...WW...
+.WWWWWW.
+..WWWW..
+...WW...
+........

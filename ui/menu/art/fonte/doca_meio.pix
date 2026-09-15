@@ -1,0 +1,40 @@
+nome: doca_meio
+tipo: terreno
+camada: cenario
+conjunto: nave
+luz: cima_esquerda
+encaixe: esquerda,direita
+uso: meio da doca de pouso da tela de título; repete na horizontal entre as pontas; a linha 0 é onde o foguete pousa
+tamanho: 32x16
+
+paleta:
+  . transparente
+  L neutros_frios:3      borda de cima do deque, onde se pousa
+  M neutros_frios:2      chapa do deque
+  m neutros_frios:1      emenda da chapa
+  D neutros_frios:1      face do deque, sombra
+  Y vermelho_laranja:4   faixa de aviso
+  k neutros_quentes:1    faixa de aviso, escuro
+  K neutros_quentes:0    lábio de baixo e contorno
+  B neutros_frios:0      viga da treliça
+  p neutros_frios:1      montante, luz
+  P neutros_frios:0      montante
+  q neutros_quentes:2    montante, sombra
+
+pixels:
+LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMmMMMMMMMMMMMMMMMm
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+YYYYkkkkYYYYkkkkYYYYkkkkYYYYkkkk
+kYYYYkkkkYYYYkkkkYYYYkkkkYYYYkkk
+kkYYYYkkkkYYYYkkkkYYYYkkkkYYYYkk
+KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+......pPPq............pPPq......
+......pPPq............pPPq......
+......pPPq............pPPq......
+......pPPq............pPPq......
+......pPPq............pPPq......
+......pPPq............pPPq......
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB

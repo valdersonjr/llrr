@@ -1,0 +1,23 @@
+nome: 5_inclinacao
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: inclinação fora do prumo; quadro 5 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  W neutros_frios:3      ângulo
+  D neutros_frios:1      arco
+
+pixels:
+.......W
+......W.
+.....W..
+....W...
+...W.D..
+..W...D.
+.W....D.
+WWWWWWW.

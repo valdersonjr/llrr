@@ -9,7 +9,11 @@ Sistemas deste jogo. Duas espécies moram aqui e elas não se misturam.
 
 ## Autoloads
 
-Nenhum ainda. O primeiro previsto é `campanha_manager.gd`, dono dos créditos, dos contratos aceitos e do que o mundo lembra, e responsável por salvar em `user://`.
+| Autoload | Arquivo | O que faz |
+|---|---|---|
+| `ConfiguracoesManager` | `configuracoes_manager.gd` | carrega, aplica e guarda as opções do jogador (volumes nos barramentos `Master`, `Musica` e `Efeitos`, tela cheia e escala da janela); os valores têm o formato do recurso `data/configuracoes.gd`, e o arquivo é um `ConfigFile` em `user://configuracoes.cfg`, nunca um `.tres`, porque carregar recurso escrito fora do jogo executaria o script de dentro dele |
+
+O próximo previsto é `campanha_manager.gd`, dono dos créditos, dos contratos aceitos e do que o mundo lembra, e responsável por salvar em `user://`.
 
 ## Helpers
 

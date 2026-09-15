@@ -1,0 +1,22 @@
+nome: 1_subir
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: velocidade vertical, subindo; quadro 1 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  W neutros_frios:3      seta
+
+pixels:
+........
+...WW...
+..WWWW..
+.WWWWWW.
+...WW...
+...WW...
+...WW...
+...WW...

@@ -1,0 +1,25 @@
+nome: 9_estab_desligada
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: estabilização desligada; quadro 9 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  K neutros_quentes:0    contorno
+  C neutros_quentes:2    lâmpada apagada
+  L neutros_quentes:3    brilho
+  S neutros_quentes:1    sombra
+
+pixels:
+..KKKK..
+.KCCCCK.
+KCLLCCCK
+KCLCCCCK
+KCCCCCCK
+KCCCCCSK
+.KCCSSK.
+..KKKK..

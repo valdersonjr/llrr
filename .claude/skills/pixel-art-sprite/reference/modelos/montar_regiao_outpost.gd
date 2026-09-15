@@ -357,7 +357,14 @@ func _ficha() -> void:
 	ficha.cena = load(R + "outpost_regiao.tscn")
 	ficha.onde_a_nave_aparece = Vector2(348, 150)
 	ficha.de_onde_a_nave_vem = Vector2(348, -110)
-	ficha.ponto_no_corpo = Vector2(0.34, 0.26)
+	# O deque sobre palafitas é estreito: aperta mais a deriva que a descida.
+	var pouso := EspecificacaoDePouso.new()
+	pouso.vertical_maxima = 2.5
+	pouso.horizontal_maxima = 1.0
+	pouso.inclinacao_maxima = 8.0
+	pouso.giro_maximo = 10.0
+	ficha.pouso = pouso
+	ficha.ponto_na_carta = Vector2i(236, 121)
 	var erro: int = ResourceSaver.save(ficha, R + "outpost.tres", ResourceSaver.FLAG_CHANGE_PATH)
 	if erro != OK:
 		push_error("não salvei a ficha")

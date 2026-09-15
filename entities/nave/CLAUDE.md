@@ -32,7 +32,7 @@ Três coisas parecidas que não são a mesma, e que já se confundiram uma vez: 
 
 A ficha fala em quilo, em g e em metro por segundo. A conversão para pixel acontece só aqui dentro, com `Escala`. Três detalhes que não são óbvios:
 
-- **O centro de massa fica embaixo**, perto das pernas, como em qualquer módulo de pouso real. É o que decide se a nave assenta torta ou tomba: com o centro no meio do casco ela vira aos 40 graus, com ele na posição atual aguenta 60.
+- **O centro de massa fica embaixo**, perto das pernas, como em qualquer módulo de pouso real. É o que decide se a nave assenta torta ou tomba: com o centro no meio do casco ela vira aos 40 graus, a 40% do caminho entre o meio e a base do desenho aguenta 60. É uma fração da altura da arte (`CENTRO_DE_MASSA_ATE_A_BASE`), e não um ponto fixo, para trocar o casco levar o centro junto.
 - **Rotação é aceleração angular direta, não torque.** Assim a autoridade de manobra é número desenhado na ficha, e não consequência da inércia calculada da forma de colisão. Trocar a silhueta de um modelo não mexe em como ele gira.
 - **`velocidade_do_toque` é guardada no quadro anterior ao contato.** O contato zera a velocidade dentro do mesmo passo de física, então ler depois sempre dá zero. Esse é o número que uma consequência de pouso ruim vai usar quando a seção 18 do conceito for respondida.
 
@@ -46,10 +46,18 @@ Congelada ela continua sendo movida, porque o corpo é cinemático nesse estado.
 
 A avaliação soma velocidade, inclinação, giro e tempo parado, e só vale sobre um corpo do grupo `pontos_de_coleta`. `TEMPO_ATE_ASSENTAR` é quanto tempo calmo o contato precisa durar. Hoje pousar mal não custa nada: essa é a pergunta central da seção 18 do conceito, e quando ela for respondida a consequência entra aqui.
 
+## O piloto
+
+`piloto/` é o astronauta que pilota a nave, e o rosto do jogo. Ele não simula nada: aparece do lado de fora da nave onde isso faz sentido, hoje na tela de título e nos créditos. `piloto.tscn` monta as animações (`parar()`, `acenar()`, `andar(para_a_esquerda)`) a partir de três tiras de quadros de 20x22 em `piloto/art/`, com a origem no meio dos pés. O boneco ocupa as 16 colunas da esquerda do quadro; as 4 da direita são o ar para o braço do aceno, e por isso o deslocamento do desenho muda quando ele vira.
+
 ## Aparência
 
 `nave.gd` simula e avalia, e não desenha nada. Quem desenha é `apresentacao_da_nave.gd`, no nó filho `Apresentacao`, dono do casco, da chama e da luz do motor.
 
 O fluxo é de mão única: a nave manda o empuxo, a apresentação decide como mostrar. Ela não conhece `Nave` e não lê o pai, então trocar a aparência não toca em força nenhuma. O motivo de estarem separados é que chama e luz não têm relação com inércia, massa ou avaliação de pouso, e enquanto moravam juntos o código de física carregava três referências de nó de desenho no meio das forças.
 
-A chama é um `Polygon2D` provisório. É placeholder declarado: o conceito diz que arte final não é pré-requisito para provar que a pilotagem funciona.
+O casco é o foguete, `art/foguete.png` (32x48), e a chama é a tira `art/chama.png` com três quadros de 10x16 que piscam na ordem média, curta, média, longa enquanto o motor empurra; o empuxo estica a chama só para baixo, com a linha de cima presa na boca do bocal. As fontes `.pix` estão em `art/fonte/`, no conjunto `nave` da skill `pixel-art-sprite`. Quem troca o casco confere a posição do nó `Chama`, que é a boca do bocal do desenho.
+
+**No espaço a nave ganha um anel.** O contorno do casco é `neutros_quentes:0`, a mesma cor do vazio, e contra ele a borda e o lado da sombra somem: a nave parecia apagada. `ApresentacaoDaNave` monta, a partir do alfa da arte, a silhueta engordada 1 px em `neutros_frios:1`, e o nó `AnelDeEspaco` a desenha atrás do casco. Quem acende e apaga é a cena do sistema, por `realcar_no_espaco()`: aceso no espaço, apagado nas regiões, onde o céu claro já separa o casco.
+
+**No espaço a apresentação também troca de escala.** Com a câmera em `zoom_no_espaco`, cada pixel da arte cairia em 0,9 pixel de janela, e a amostragem comia e dobrava pixels: o anel saía quebrado. `Apresentacao` recebe escala `0,5 / zoom_no_espaco`, e cada pixel da arte cai em meio pixel da tela base, que é um pixel inteiro de janela. Só o desenho muda de escala, não a colisão, e a chegada numa região já devolve o tamanho de arte. `tools/orbita_check.tscn` reprova se escala e zoom se desencontrarem.

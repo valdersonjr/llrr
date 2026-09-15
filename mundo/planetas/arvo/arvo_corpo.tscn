@@ -1,14 +1,19 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=4]
 
-[ext_resource type="Script" path="res://mundo/corpo_no_espaco.gd" id="1_corpo"]
-[ext_resource type="Texture2D" path="res://mundo/planetas/arvo/art/arvo_corpo.png" id="2_arte"]
-[ext_resource type="Resource" path="res://mundo/planetas/arvo/arvo.tres" id="3_ficha"]
+[ext_resource type="Script" path="res://mundo/corpo_no_espaco.gd" id="1_mv1jf"]
+[ext_resource type="Resource" path="res://mundo/planetas/arvo/arvo.tres" id="2_f0gg3"]
+[ext_resource type="TileSet" path="res://mundo/planetas/arvo/arvo_corpo_tileset.tres" id="3_35yoq"]
 
-[node name="ArvoCorpo" type="Node2D" groups=["planetas"]]
-script = ExtResource("1_corpo")
-planeta = ExtResource("3_ficha")
+[node name="ArvoCorpo" type="Node2D" unique_id=1092468508 groups=["planetas"]]
+script = ExtResource("1_mv1jf")
+planeta = ExtResource("2_f0gg3")
 
-[node name="Arte" type="Sprite2D" parent="."]
-texture_filter = 1
+[node name="Arte" type="Node2D" parent="." unique_id=1673613418]
 z_index = -50
-texture = ExtResource("2_arte")
+texture_filter = 1
+scale = Vector2(2.2222223, 2.2222223)
+
+[node name="Pecas" type="TileMapLayer" parent="Arte" unique_id=1637498631]
+position = Vector2(-144, -144)
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAABAAAAAAACAAAAAAACAAAAAAADAAAAAAADAAAAAAAEAAAAAAAEAAAAAAAFAAAAAAAFAAAAAAAAAAEAAAAGAAAAAAABAAEAAAAHAAAAAAACAAEAAAAIAAAAAAADAAEAAAAJAAAAAAAEAAEAAAAKAAAAAAAFAAEAAAALAAAAAAAAAAIAAAAMAAAAAAABAAIAAAANAAAAAAACAAIAAAAOAAAAAAADAAIAAAAPAAAAAAAEAAIAAAAQAAAAAAAFAAIAAAARAAAAAAAAAAMAAAASAAAAAAABAAMAAAATAAAAAAACAAMAAAAUAAAAAAADAAMAAAAVAAAAAAAEAAMAAAAWAAAAAAAFAAMAAAAXAAAAAAAAAAQAAAAYAAAAAAABAAQAAAAZAAAAAAACAAQAAAAaAAAAAAADAAQAAAAbAAAAAAAEAAQAAAAcAAAAAAAFAAQAAAAdAAAAAAAAAAUAAAAeAAAAAAABAAUAAAAfAAAAAAACAAUAAAAgAAAAAAADAAUAAAAhAAAAAAAEAAUAAAAiAAAAAAAFAAUAAAAjAAAAAAA=")
+tile_set = ExtResource("3_35yoq")

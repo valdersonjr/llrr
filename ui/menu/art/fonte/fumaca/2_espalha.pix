@@ -1,0 +1,24 @@
+nome: 2_espalha
+tipo: efeito
+camada: efeito
+conjunto: nave
+luz: cima_esquerda
+encaixe: nenhum
+uso: baforada de vapor dos motores quando o foguete encosta na doca, quadro 2 de 4; tocar uma vez
+tamanho: 16x8
+
+paleta:
+  . transparente
+  W neutros_frios:4      vapor, miolo
+  w neutros_frios:3      vapor
+  s neutros_frios:2      vapor, borda
+
+pixels:
+................
+................
+.sw..........ws.
+swWws......swWws
+sswwss....sswwss
+.ssss......ssss.
+................
+................

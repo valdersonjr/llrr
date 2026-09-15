@@ -1,0 +1,25 @@
+nome: 11_pousada
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: situação: pousada dentro do limite; quadro 11 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  K neutros_quentes:0    contorno
+  C verdes:2             lâmpada
+  L verdes:4             brilho
+  S verdes:1             sombra
+
+pixels:
+..KKKK..
+.KCCCCK.
+KCLLCCCK
+KCLCCCCK
+KCCCCCCK
+KCCCCCSK
+.KCCSSK.
+..KKKK..

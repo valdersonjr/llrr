@@ -1,0 +1,31 @@
+nome: 2_deserto_0100
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: borda do deserto do Outpost sobre a mata, cantos 0100 (TL TR BL BR); a mata faz sombra na areia
+tamanho: 16x16
+
+paleta:
+  . transparente         
+  a terras:3             areia
+  k terras:1             sombra da mata sobre a areia
+
+pixels:
+........kaaaaaaa
+........kaaaaaaa
+........kaaaaaaa
+.........kaaaaaa
+...........kaaaa
+...........kaaaa
+............kaaa
+............kaaa
+................
+................
+................
+................
+................
+................
+................
+................

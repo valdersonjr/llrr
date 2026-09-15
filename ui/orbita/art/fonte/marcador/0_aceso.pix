@@ -1,0 +1,28 @@
+nome: 0_aceso
+tipo: interface
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: marcador de região sobre a carta, centrado no ponto da região; o miolo vazado mostra o lugar exato; vermelho para ler sobre mar, mata e deserto
+tamanho: 11x11
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno
+  Y vermelho_laranja:1  losango, lado da luz
+  O vermelho_laranja:0  losango, lado da sombra
+  H neutros_frios:4     brilho
+
+pixels:
+.....K.....
+....KYK....
+...KYYYK...
+..KYHKYOK..
+.KYHK.KOOK.
+KYYK...KOOK
+.KYYK.KOOK.
+..KYOKOOK..
+...KOOOK...
+....KOK....
+.....K.....

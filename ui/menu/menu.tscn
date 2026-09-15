@@ -1,125 +1,207 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://ui/menu/menu.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://ui/menu/art/tela_inicial.png" id="2_fundo"]
-[ext_resource type="FontFile" path="res://assets/fonts/luckiest_guy.ttf" id="3_fonte"]
-[ext_resource type="AudioStream" path="res://ui/menu/sound/menu.mp3" id="4_musica"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opcao"]
-content_margin_left = 10.0
-content_margin_top = 4.0
-content_margin_right = 10.0
-content_margin_bottom = 4.0
-bg_color = Color(0.78, 0.86, 0.82, 0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.18, 0.133, 0.184, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_foco"]
-content_margin_left = 10.0
-content_margin_top = 4.0
-content_margin_right = 10.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.42)
-border_width_left = 3
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.18, 0.133, 0.184, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aperto"]
-content_margin_left = 10.0
-content_margin_top = 4.0
-content_margin_right = 10.0
-content_margin_bottom = 4.0
-bg_color = Color(0.118, 0.737, 0.451, 0.55)
-border_width_left = 3
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.18, 0.133, 0.184, 1)
+[ext_resource type="Script" path="res://ui/menu/menu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://mundo/art/campo_de_estrelas.gd" id="2_campo"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrelas_longe.png" id="3_longe"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrelas_perto.png" id="4_perto"]
+[ext_resource type="Texture2D" path="res://mundo/art/nebulosa_roxa.png" id="5_neb_roxa"]
+[ext_resource type="Texture2D" path="res://mundo/art/nebulosa_azul.png" id="6_neb_azul"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_ciano.png" id="7_ciano"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_azul.png" id="8_azul"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_roxo.png" id="9_roxo"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_vermelho.png" id="10_vermelho"]
+[ext_resource type="Texture2D" path="res://mundo/art/estrela_cadente.png" id="11_cadente"]
+[ext_resource type="Script" path="res://ui/menu/cena_do_titulo.gd" id="12_cena"]
+[ext_resource type="Texture2D" path="res://ui/menu/art/doca_ponta.png" id="13_doca_ponta"]
+[ext_resource type="Texture2D" path="res://ui/menu/art/doca_meio.png" id="14_doca_meio"]
+[ext_resource type="Texture2D" path="res://ui/menu/art/poste.png" id="15_poste"]
+[ext_resource type="Texture2D" path="res://ui/menu/art/luz.png" id="16_luz"]
+[ext_resource type="Texture2D" path="res://ui/menu/art/fumaca.png" id="17_fumaca"]
+[ext_resource type="PackedScene" path="res://entities/nave/piloto/piloto.tscn" id="18_piloto"]
+[ext_resource type="Texture2D" path="res://entities/nave/art/foguete.png" id="19_foguete"]
+[ext_resource type="Texture2D" path="res://entities/nave/art/chama.png" id="20_chama"]
+[ext_resource type="Script" path="res://ui/menu/logo_do_titulo.gd" id="21_logo"]
+[ext_resource type="Theme" path="res://ui/tema_das_telas.tres" id="22_tema"]
+[ext_resource type="AudioStream" path="res://ui/menu/sound/menu.mp3" id="23_musica"]
+[ext_resource type="PackedScene" path="res://ui/configuracoes/configuracoes.tscn" id="24_configuracoes"]
+[ext_resource type="PackedScene" path="res://ui/creditos/creditos.tscn" id="25_creditos"]
 
 [node name="Menu" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1_script")
+theme = ExtResource("22_tema")
+script = ExtResource("1_menu")
 
-[node name="Fundo" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(320, 180)
+
+[node name="Estrelas" type="Node2D" parent="."]
+z_index = -100
+
+[node name="Longe" type="Node2D" parent="Estrelas"]
+script = ExtResource("2_campo")
+fator = 0.125
+textura = ExtResource("3_longe")
+variacoes = 4
+periodo = Vector2i(8, 6)
+
+[node name="Nebulosas" type="Node2D" parent="Estrelas"]
+script = ExtResource("2_campo")
+fator = 0.1875
+periodo = Vector2i(12, 9)
+enfeites = Array[Texture2D]([ExtResource("5_neb_roxa"), ExtResource("6_neb_azul")])
+quadros_por_enfeite = PackedInt32Array(1, 1)
+pausa_por_enfeite = PackedInt32Array(0, 0)
+enfeite_de_cada = PackedInt32Array(0, 1)
+posicao_de_cada = PackedVector2Array(60, 240, 340, 80)
+
+[node name="Perto" type="Node2D" parent="Estrelas"]
+script = ExtResource("2_campo")
+fator = 0.25
+textura = ExtResource("4_perto")
+variacoes = 4
+periodo = Vector2i(16, 12)
+enfeites = Array[Texture2D]([ExtResource("7_ciano"), ExtResource("8_azul"), ExtResource("9_roxo"), ExtResource("10_vermelho"), ExtResource("11_cadente")])
+quadros_por_enfeite = PackedInt32Array(4, 4, 4, 4, 5)
+pausa_por_enfeite = PackedInt32Array(10, 14, 12, 18, -90)
+enfeite_de_cada = PackedInt32Array(0, 1, 2, 0, 3, 1, 0, 2, 1, 0, 3, 2, 4)
+posicao_de_cada = PackedVector2Array(150, 120, 260, 170, 330, 60, 470, 100, 510, 220, 230, 340, 410, 360, 640, 70, 690, 260, 110, 190, 340, 240, 560, 370, 460, 140)
+
+[node name="Vitrine" type="Node2D" parent="."]
+z_index = -50
+position = Vector2(574, 394)
+
+[node name="Cena" type="Node2D" parent="."]
+position = Vector2(200, 250)
+script = ExtResource("12_cena")
+
+[node name="DocaPontaEsquerda" type="Sprite2D" parent="Cena"]
+texture = ExtResource("13_doca_ponta")
+centered = false
+
+[node name="DocaMeio" type="Sprite2D" parent="Cena"]
+position = Vector2(16, 0)
+texture = ExtResource("14_doca_meio")
+centered = false
+
+[node name="DocaMeio2" type="Sprite2D" parent="Cena"]
+position = Vector2(48, 0)
+texture = ExtResource("14_doca_meio")
+centered = false
+
+[node name="DocaPontaDireita" type="Sprite2D" parent="Cena"]
+position = Vector2(80, 0)
+texture = ExtResource("13_doca_ponta")
+centered = false
+flip_h = true
+
+[node name="PosteEsquerdo" type="Sprite2D" parent="Cena"]
+position = Vector2(2, -12)
+texture = ExtResource("15_poste")
+centered = false
+
+[node name="Luz" type="Sprite2D" parent="Cena/PosteEsquerdo"]
+position = Vector2(-1, -6)
+texture = ExtResource("16_luz")
+centered = false
+hframes = 4
+
+[node name="PosteDireito" type="Sprite2D" parent="Cena"]
+position = Vector2(90, -12)
+texture = ExtResource("15_poste")
+centered = false
+
+[node name="Luz" type="Sprite2D" parent="Cena/PosteDireito"]
+position = Vector2(-1, -6)
+texture = ExtResource("16_luz")
+centered = false
+hframes = 4
+
+[node name="Vapor" type="Sprite2D" parent="Cena"]
+visible = false
+position = Vector2(40, -8)
+texture = ExtResource("17_fumaca")
+centered = false
+hframes = 4
+
+[node name="Piloto" parent="Cena" instance=ExtResource("18_piloto")]
+position = Vector2(78, 0)
+
+[node name="Foguete" type="Node2D" parent="Cena"]
+position = Vector2(48, -24)
+
+[node name="Anel" type="Sprite2D" parent="Cena/Foguete"]
+
+[node name="Casco" type="Sprite2D" parent="Cena/Foguete"]
+texture = ExtResource("19_foguete")
+
+[node name="Chama" type="Sprite2D" parent="Cena/Foguete"]
+position = Vector2(0, 21)
+texture = ExtResource("20_chama")
+centered = false
+offset = Vector2(-5, 0)
+hframes = 3
+
+[node name="Logo" type="Control" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 24.0
+offset_right = 360.0
+offset_bottom = 124.0
 mouse_filter = 2
-texture = ExtResource("2_fundo")
-expand_mode = 1
-stretch_mode = 6
+script = ExtResource("21_logo")
 
-[node name="Titulo" type="Label" parent="."]
+[node name="Painel" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 325.0
-offset_top = 104.0
-offset_right = 620.0
-offset_bottom = 146.0
-theme_override_colors/font_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_fonts/font = ExtResource("3_fonte")
-theme_override_font_sizes/font_size = 30
-text = "Ainda sem nome"
-vertical_alignment = 1
+offset_left = 470.0
+offset_top = 110.0
+offset_right = 610.0
+offset_bottom = 230.0
 
-[node name="Opcoes" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 475.0
-offset_top = 156.0
-offset_right = 602.0
-offset_bottom = 266.0
-theme_override_constants/separation = 14
-
-[node name="Jogar" type="Button" parent="Opcoes"]
-custom_minimum_size = Vector2(127, 48)
+[node name="Opcoes" type="VBoxContainer" parent="Painel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_colors/font_focus_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_colors/font_hover_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_colors/font_pressed_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_fonts/font = ExtResource("3_fonte")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_opcao")
-theme_override_styles/hover = SubResource("StyleBoxFlat_foco")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_aperto")
-theme_override_styles/focus = SubResource("StyleBoxFlat_foco")
-text = "Jogar"
+theme_override_constants/separation = 2
 
-[node name="Sair" type="Button" parent="Opcoes"]
-custom_minimum_size = Vector2(127, 48)
+[node name="NovoJogo" type="Button" parent="Painel/Opcoes"]
+custom_minimum_size = Vector2(120, 24)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_colors/font_focus_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_colors/font_hover_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_colors/font_pressed_color = Color(0.18, 0.133, 0.184, 1)
-theme_override_fonts/font = ExtResource("3_fonte")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_opcao")
-theme_override_styles/hover = SubResource("StyleBoxFlat_foco")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_aperto")
-theme_override_styles/focus = SubResource("StyleBoxFlat_foco")
-text = "Sair"
+text = "NOVO JOGO"
+
+[node name="Configuracoes" type="Button" parent="Painel/Opcoes"]
+custom_minimum_size = Vector2(120, 24)
+layout_mode = 2
+text = "OPÇÕES"
+
+[node name="Creditos" type="Button" parent="Painel/Opcoes"]
+custom_minimum_size = Vector2(120, 24)
+layout_mode = 2
+text = "CRÉDITOS"
+
+[node name="Sair" type="Button" parent="Painel/Opcoes"]
+custom_minimum_size = Vector2(120, 24)
+layout_mode = 2
+text = "SAIR"
 
 [node name="Rodape" type="Label" parent="."]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 334.0
-offset_right = 320.0
-offset_bottom = 348.0
-theme_override_colors/font_color = Color(0.78, 0.87, 0.82, 1)
-theme_override_font_sizes/font_size = 9
+offset_left = 40.0
+offset_top = 332.0
+offset_right = 600.0
+offset_bottom = 352.0
+theme_override_colors/font_color = Color(0.49803922, 0.4392157, 0.5411765, 1)
 text = "SETAS OU MOUSE  ESCOLHER      ENTER  CONFIRMAR"
-vertical_alignment = 1
 
 [node name="Musica" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_musica")
+stream = ExtResource("23_musica")
 volume_db = -8.0
 autoplay = true
+bus = &"Musica"
+
+[node name="Configuracoes" parent="." instance=ExtResource("24_configuracoes")]
+layout_mode = 1
+
+[node name="Creditos" parent="." instance=ExtResource("25_creditos")]
+layout_mode = 1

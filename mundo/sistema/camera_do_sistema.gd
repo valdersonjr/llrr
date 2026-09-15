@@ -34,11 +34,22 @@ const SALTO_DE_BORDA: float = 1000.0
 @export var antecipacao: float = 0.45
 @export var antecipacao_maxima: float = 300.0
 
+## Quanto a câmera corre atrás do alvo, por segundo, na mesma conta da suavização
+## do `Camera2D`. A suavização é feita aqui, e não pela do motor: na borda do
+## sistema o alvo pula o tamanho do espaço, e só com o ponto suavizado nas mãos dá
+## para pular junto sem perder o atraso que a câmera já tinha. Com a do motor, pular
+## zerava esse atraso e a imagem dava um tranco no instante da travessia.
+@export var suavizacao: float = 8.0
+
 var _seguido: Node2D = null
 var _limites: Rect2 = Rect2()
 var _fora: float = 1.0
 var _a_frente: Vector2 = Vector2.ZERO
 var _ultimo_ponto: Vector2 = Vector2.INF
+## O ponto que a câmera mostra, correndo atrás do alvo. `INF` quer dizer "sem
+## história": o próximo quadro nasce já no alvo.
+var _suave: Vector2 = Vector2.INF
+var _alvo_anterior: Vector2 = Vector2.INF
 
 
 ## A nave que a câmera segue. Quem monta a cena diz qual é: a câmera não procura
@@ -54,29 +65,19 @@ func enquadrar(limites: Rect2, fora: float) -> void:
 	_fora = clampf(fora, 0.0, 1.0)
 
 
-## A nave cruzou a borda do sistema e reapareceu do outro lado. A câmera vai
-## junto, sem reagir: não desliza atrás dela e não recalcula o rumo como se ela
-## tivesse atravessado o sistema inteiro num quadro. A antecipação é preservada,
-## porque o voo não mudou, só a coordenada.
-func pular(por: Vector2) -> void:
-	if _ultimo_ponto != Vector2.INF:
-		_ultimo_ponto += por
-	_aplicar()
-	reset_smoothing()
-
-
 ## Aplica o enquadramento sem suavização, para quem abre a cena já numa vista.
 ## Sem isto a câmera nasce onde a cena a deixou e chega deslizando.
 func assentar() -> void:
 	_a_frente = Vector2.ZERO
 	_ultimo_ponto = Vector2.INF
-	_aplicar()
-	reset_smoothing()
+	_suave = Vector2.INF
+	_alvo_anterior = Vector2.INF
+	_aplicar(0.0)
 
 
 func _process(delta: float) -> void:
 	_medir_o_rumo(delta)
-	_aplicar()
+	_aplicar(delta)
 
 
 ## A câmera deduz para onde a nave vai olhando o quanto ela andou, em vez de ler
@@ -101,7 +102,7 @@ func _medir_o_rumo(delta: float) -> void:
 	_a_frente = _a_frente.lerp(pedido, clampf(delta * 3.0, 0.0, 1.0))
 
 
-func _aplicar() -> void:
+func _aplicar(delta: float) -> void:
 	var escala: float = lerpf(zoom_na_superficie, zoom_no_espaco, _fora)
 	zoom = Vector2(escala, escala)
 	if _seguido == null:
@@ -110,4 +111,16 @@ func _aplicar() -> void:
 	# manda inteira, com um pouco de antecipação.
 	var perto: Vector2 = _seguido.global_position.clamp(_limites.position, _limites.end)
 	var longe: Vector2 = _seguido.global_position + _a_frente
-	global_position = perto.lerp(longe, _fora)
+	var alvo: Vector2 = perto.lerp(longe, _fora)
+	if _suave == Vector2.INF:
+		_suave = alvo
+	elif _alvo_anterior != Vector2.INF and alvo.distance_to(_alvo_anterior) > SALTO_DE_BORDA:
+		# A nave cruzou a borda do sistema e o alvo pulou o tamanho do espaço. O
+		# ponto suavizado anda o mesmo salto, e o atraso que a câmera tinha continua
+		# igual: do lado de cá da borda, nada mudou na imagem. O salto é lido aqui,
+		# no quadro em que aparece, porque o servidor de física só publica a posição
+		# nova da nave um passo depois da volta.
+		_suave += alvo - _alvo_anterior
+	_alvo_anterior = alvo
+	_suave = _suave.lerp(alvo, clampf(suavizacao * delta, 0.0, 1.0))
+	global_position = _suave

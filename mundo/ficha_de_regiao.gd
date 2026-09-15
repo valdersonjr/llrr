@@ -9,7 +9,7 @@ extends Resource
 ## ser um lugar com mapas dentro.
 ##
 ## A ficha existe para a tela de regiões poder listar tudo **sem carregar cena
-## nenhuma**. Nome, assunto e posição no disco são dados leves; a cena do terreno
+## nenhuma**. Nome, assunto e posição na carta são dados leves; a cena do terreno
 ## só é instanciada quando o jogador escolhe descer.
 ##
 ## Ela é irmã de `Planeta`: descreve, não guarda estado de partida. O que o
@@ -35,8 +35,13 @@ extends Resource
 ## cima é a chegada que se vê.
 @export var de_onde_a_nave_vem: Vector2 = Vector2(110.0, -80.0)
 
+@export_group("Pouso")
+## O que o lugar de pouso desta região exige. Sem especificação, valem só os
+## limites do trem de pouso da nave.
+@export var pouso: EspecificacaoDePouso
+
 @export_group("Leitura de longe")
-## Onde o marcador desta região fica sobre o disco do corpo, de -1 a 1 nos dois
-## eixos. É só leitura: não existe geografia por trás, e duas regiões próximas no
-## disco não são vizinhas de nada.
-@export var ponto_no_corpo: Vector2 = Vector2.ZERO
+## Onde o marcador desta região fica na carta de superfície do planeta, em pixels
+## da carta, a partir do canto de cima à esquerda. É leitura: a carta mostra que
+## chão cerca a região, e duas regiões próximas nela não são vizinhas de nada no voo.
+@export var ponto_na_carta: Vector2i = Vector2i.ZERO

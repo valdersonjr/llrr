@@ -27,28 +27,51 @@ const MARGEM_DE_SAIDA: float = 40.0
 ## A que distância do corpo o convite de entrada acende, medido da borda dele.
 const ALCANCE_DE_ENTRADA: float = 300.0
 
+## O canto de cima à esquerda da mira de entrada; os outros três são ele espelhado.
+const MIRA: Texture2D = preload("res://mundo/art/mira.png")
+## Quanto a mira fica afastada da borda do corpo, em pixels de tela.
+const FOLGA_DA_MIRA: float = 12.0
+
 @export var planeta: Planeta
 
 var _destacado: bool = false
 
-@onready var _arte: Sprite2D = $Arte
+## O desenho do corpo é um `TileMapLayer` de peças dentro de `Arte`. Ele é pixel
+## art em pixel de tela: a câmera do espaço fica afastada, e um corpo desenhado em
+## pixel de mundo encolheria e borraria. Por isso `Arte` tem escala
+## `1 / zoom_no_espaco` da câmera, e as peças centradas nela.
+@onready var _arte: Node2D = $Arte
 
 
 func _ready() -> void:
 	assert(planeta != null, "Um CorpoNoEspaco precisa da ficha do lugar em `planeta`.")
-	assert(_arte.texture != null, "Um CorpoNoEspaco precisa do desenho do corpo em Arte.")
+	assert(_desenho() != null, "Um CorpoNoEspaco precisa do desenho do corpo: um TileMapLayer dentro de Arte.")
 
 
 ## O raio do corpo sai do próprio desenho: quem troca a arte troca o tamanho do
 ## planeta, e o alcance do convite acompanha sem ninguém mexer em número nenhum.
+## É o lado das peças pintadas, em pixel de tela, vezes a escala da arte.
 func raio() -> float:
-	return _arte.texture.get_size().x * 0.5
+	return raio_na_tela() * _arte.scale.x
 
 
-## O desenho do corpo, para a tela de regiões mostrar o mesmo planeta que a nave
-## está vendo pela janela.
-func textura() -> Texture2D:
-	return _arte.texture
+## O raio em pixels de tela, que é o que o desenho tem de verdade.
+func raio_na_tela() -> float:
+	var desenho: TileMapLayer = _desenho()
+	return float(desenho.get_used_rect().size.x * desenho.tile_set.tile_size.x) * 0.5
+
+
+## Quantos pixels de mundo cada pixel do desenho ocupa. Vezes o zoom da câmera no
+## espaço, tem que dar 1: é isso que deixa o corpo nítido.
+func escala_da_arte() -> float:
+	return _arte.scale.x
+
+
+func _desenho() -> TileMapLayer:
+	for filho: Node in _arte.get_children():
+		if filho is TileMapLayer:
+			return filho
+	return null
 
 
 ## A nave está perto o bastante para o convite de entrada acender.
@@ -104,10 +127,13 @@ func destacar(aceso: bool) -> void:
 func _draw() -> void:
 	if not _destacado:
 		return
-	var cor: Color = planeta.cor_de_identidade.lightened(0.45)
-	cor.a = 0.9
-	var distancia: float = raio() + 26.0
-	# Quatro cantos em vez de um anel fechado: lê como mira, não como órbita.
-	for canto: int in 4:
-		var comeco: float = PI * 0.25 + canto * PI * 0.5 - 0.34
-		draw_arc(Vector2.ZERO, distancia, comeco, comeco + 0.68, 12, cor, 4.0)
+	# Quatro cantos em vez de um anel fechado: lê como mira, não como órbita. Eles
+	# ficam nas diagonais, logo fora da borda, e são desenhados na escala da arte
+	# para caírem em pixel de tela como o corpo.
+	var escala: float = _arte.scale.x
+	var canto: float = floorf((raio_na_tela() + FOLGA_DA_MIRA) * sqrt(0.5))
+	for virar_x: float in [1.0, -1.0]:
+		for virar_y: float in [1.0, -1.0]:
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2(escala * virar_x, escala * virar_y))
+			draw_texture(MIRA, Vector2(-canto - 1.0, -canto - 1.0))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)

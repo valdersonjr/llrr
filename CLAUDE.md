@@ -235,7 +235,7 @@ A ficha de Arvo diz `gravidade = 9.80665`, e é a região que converte para pixe
 
 ## Estado global
 
-Comece com **um** autoload: `campanha_manager.gd`, dono dos créditos, dos contratos aceitos e do que o mundo lembra, e responsável por salvar e carregar. Separar a persistência num segundo autoload é fácil depois, quando a costura doer. Antes disso é costura inventada.
+O primeiro autoload é `configuracoes_manager.gd`, dono das opções do jogador. O próximo é `campanha_manager.gd`, dono dos créditos, dos contratos aceitos e do que o mundo lembra, e responsável por salvar e carregar. Separar a persistência num segundo autoload é fácil depois, quando a costura doer. Antes disso é costura inventada.
 
 `depuracao_manager.gd` entra quando o primeiro `print` virar permanente: sinalizadores por assunto, mais um rótulo em tela ligado por tecla, em vez de `print` espalhado que ninguém tira depois.
 

@@ -1,0 +1,72 @@
+nome: 24_corpo
+tipo: tile
+camada: objeto
+conjunto: espaco
+luz: cima_esquerda
+encaixe: direita,cima,baixo
+uso: peça 0,4 (coluna, linha) do corpo de Arvo visto do espaço, 6x6 peças de 48 num TileMapLayer; atlas na posição 24
+tamanho: 48x48
+
+paleta:
+  . transparente
+  a verdes:0
+  b verdes:1
+  c neutros_frios:4
+  d neutros_frios:3
+  e teais:0
+  f teais:1
+  g verdes:2
+  h neutros_frios:2
+  i neutros_quentes:1
+  j azuis:1
+  k verdes_acinzentados:0
+
+pixels:
+...........abaabbbabbbccddddddddddcdddccefffgbba
+...........aaaaagabbbcdddddddddddddddddddccfbbbb
+............aaababaahddddddddddddddddddddddhbbbb
+............aaabaabaahhhhhhhhhhhhhhhhhhhhhhbbbbb
+.............aaaaaaaabaiaaiiiaaaiaajjjjjjjaiiabb
+.............aaaaaaaaabiiaiiiiaaiiaijjjjjjaiiaaa
+.............aaababaaabaabaaagbaagbaaffffaaagbaa
+..............aaaabaaabbabaaagbbagbbaaagbbaagbba
+..............gaaaaaaaababbaagbbbbbbbaagbbbbbbbb
+...............baaaaabbababaggbbbabbagbgbbbbabbb
+...............bbaaaababaaaagbbbbaaaagbbbbbbaaaa
+................bbaaabaabaaagbbbbaaaagbbbbbaaaaa
+................bbaabaaaaababbbaaagbabbbbbaaggaa
+.................gbabaaaaagaabbabagbaabbbabaagba
+.................bbaaaaaaabbaabaaagbbaabbaaaggbb
+..................bbaaaaaaaabaaagaabbbaaaagaabbb
+..................bgkaababaaaaaagbabbbabaagbabbb
+...................bbaaaaaaaaagaabbabbggbabbbabb
+...................bbkaaaaaaaabbaaaaaagbbbbbbaaa
+....................bbkabaaabababaaabaabbbbaaaba
+....................bbbbaaaabaaaabaabbabbbbaaggb
+.....................bbkaaaaaaaaaaaabababbbaaabb
+.....................bbbkaaaaaaaaaaaabaaabaaaaab
+......................bbkabaaaaabaaaaaaaaaaaaagb
+......................igbkaaaaaabaaaagaabgaaaagb
+.......................bbgkaaabaaaaaabbaaabaaagb
+........................bgkaabbaaaaabbaaaaabbgbb
+........................bbkkaaaaaaaabaaaaaaagbba
+.........................bgkkabaaaaaaaaaaaaaabab
+..........................gkkbaaaaaaaaaaaabaaaba
+..........................ibkkaaaaabaaaaaabaaaab
+...........................ikkbaaaabaaaaaaaaaaaa
+............................bkaaaabaaabaabaaaaaa
+............................bgkaaaaaaabaaaaaaaba
+.............................gkaabaaaaaaaaaaaaaa
+..............................bkaaaaabaaaaaabaaa
+...............................kkaaaaaaaaaaaaaaa
+...............................ikaaaaaaaaaaaaaaa
+................................ikaaaaaaaaaaaaaa
+.................................ikbaaabaabaaaba
+..................................iaaaaaaaaaaaba
+..................................iibaaaaaaaabaa
+...................................iiaaabaaaaaba
+....................................iiaaaaaaaaaa
+.....................................iiaaaaaaaaa
+......................................iiaaaaabaa
+.......................................iiaaaaaaa
+........................................iiaiaaaa

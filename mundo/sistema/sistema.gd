@@ -70,6 +70,7 @@ var _nasceu: bool = false
 @onready var _hud: Hud = $Interface/Hud
 @onready var _orbita: Orbita = $Interface/Orbita
 @onready var _mapa: Mapa = $Interface/Mapa
+@onready var _pausa: TelaDePausa = $Interface/Pausa
 @onready var _estrelas: Node2D = $Estrelas
 
 
@@ -97,7 +98,7 @@ func _ready() -> void:
 func _conferir_a_costura() -> void:
 	for camada: CampoDeEstrelas in _estrelas.get_children():
 		var passo: Vector2 = espaco.size * camada.fator
-		var mosaico: Vector2 = camada.textura.get_size()
+		var mosaico: Vector2 = camada.mosaico()
 		var sobra := Vector2(
 			fposmod(passo.x, mosaico.x), fposmod(passo.y, mosaico.y)
 		)
@@ -151,6 +152,12 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(evento: InputEvent) -> void:
+	# A pausa só abre sem outra tela na frente: com o mapa ou a tela de regiões
+	# abertos, o Esc é delas.
+	if evento.is_action_pressed("pausa") and not _pausa.aberta() and not _orbita.aberta() and not _mapa.aberto():
+		get_viewport().set_input_as_handled()
+		_pausa.abrir()
+		return
 	# O mapa é sobre o sistema, então ele só abre no espaço: dentro de uma região
 	# não há para onde navegar. Ele não para o jogo: é para se localizar **no meio
 	# do voo**, e a nave continua andando com o marcador acompanhando.
@@ -210,6 +217,8 @@ func chegar_em(corpo: CorpoNoEspaco, ficha: FichaDeRegiao) -> void:
 	var destino: Vector2 = canto + ficha.onde_a_nave_aparece
 	_guardar_nave()
 	_nave.show()
+	# A chegada já é superfície: a câmera está perto e a nave volta ao tamanho de arte.
+	_nave.realcar_no_espaco(false)
 	_nave.rotation = 0.0
 	_nave.global_position = entrada
 	vista = Vista.CHEGANDO
@@ -249,6 +258,8 @@ func voltar_para_o_espaco() -> void:
 		deixado.aparecer(true)
 	_estrelas.modulate.a = 1.0
 	_hud.show()
+	_nave.especificacao = null
+	_nave.realcar_no_espaco(true, _camera.zoom_no_espaco)
 	_hud.avaliar_pouso(false)
 	vista = Vista.ESPACO
 	_nave.show()
@@ -320,7 +331,7 @@ func _fechar_o_espaco() -> void:
 	if volta == Vector2.ZERO:
 		return
 	_nave.deslocar(volta)
-	_camera.pular(volta)
+	# A câmera trata o salto sozinha, no quadro em que a física publica a posição nova.
 
 
 func _guardar_nave() -> void:
@@ -357,6 +368,9 @@ func _ao_terminar_a_chegada(_corpo: CorpoNoEspaco, destino: Vector2) -> void:
 	_chegada = null
 	vista = Vista.SUPERFICIE
 	_hud.show()
+	# O lugar diz o que exige do pouso; no espaço não há lugar e valem só os
+	# limites do trem de pouso.
+	_nave.especificacao = _ficha.pouso if _ficha != null else null
 	_hud.avaliar_pouso(true)
 	_nave.soltar()
 	# Descongelar um corpo cinemático devolve a ele a velocidade do último

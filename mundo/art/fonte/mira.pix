@@ -1,0 +1,26 @@
+nome: mira
+tipo: interface
+camada: interface
+conjunto: espaco
+luz: frontal
+encaixe: nenhum
+uso: canto de cima à esquerda da mira de entrada em volta de um corpo; os outros três cantos são esta peça espelhada, em pixel de tela; a margem de 1 px em cima e à esquerda é o ar do lado de fora
+tamanho: 11x11
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno
+  W neutros_frios:4     canto
+
+pixels:
+...........
+.KKKKKKKKKK
+.KWWWWWWWWK
+.KWWWWWWWWK
+.KWWKKKKKKK
+.KWWK......
+.KWWK......
+.KWWK......
+.KWWK......
+.KWWK......
+.KKKK......

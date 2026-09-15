@@ -1,0 +1,23 @@
+nome: nave
+tipo: icone
+camada: interface
+conjunto: carta
+luz: frontal
+encaixe: nenhum
+uso: a nave no mapa do sistema, centrada no ponto dela, com os cantos de foco piscando em volta
+tamanho: 7x7
+
+paleta:
+  . transparente
+  K neutros_quentes:0   contorno
+  W neutros_frios:4     corpo
+  T teais:3             miolo
+
+pixels:
+...K...
+..KWK..
+.KWWWK.
+KWWTWWK
+.KWWWK.
+..KWK..
+...K...

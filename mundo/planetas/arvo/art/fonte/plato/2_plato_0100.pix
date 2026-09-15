@@ -1,0 +1,36 @@
+nome: 2_plato_0100
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: platô de Arvo sobre a mata, cantos 0100 (TL TR BL BR); camada acima da base; penhasco cai para baixo e para a direita
+tamanho: 16x16
+
+paleta:
+  . transparente         
+  b verdes:1             vão entre copas do platô
+  p verdes:2             copa do platô, corpo
+  q verdes:3             copa do platô, lado da luz
+  Q verdes:4             realce da copa do platô
+  f verdes_acinzentados:2 face do penhasco, alto
+  F verdes_acinzentados:1 face do penhasco, baixo
+  k verdes_acinzentados:0 sombra no pé do penhasco
+
+pixels:
+.......bbqpbbbbb
+.......fqQppbbbb
+.......Ffppppbbb
+.......kFfppbqqp
+........kFfbqQpp
+.........kFbqppp
+..........kffffp
+...........FFFFf
+...........kkkkF
+...............k
+................
+................
+................
+................
+................
+................

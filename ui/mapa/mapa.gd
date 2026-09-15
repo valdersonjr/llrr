@@ -16,11 +16,16 @@ extends Control
 ## andando com o mapa aberto, e o marcador dela acompanha, quadro a quadro. Quem
 ## quiser parar para pensar tem a pausa, que é outra tela.
 
-const FUNDO: Color = Color(0.05, 0.07, 0.1, 0.92)
-const MOLDURA: Color = Color(0.55, 0.6, 0.6, 0.6)
-const NAVE: Color = Color(0.95, 0.96, 0.9, 1.0)
-const LETRA: Color = Color(0.78, 0.82, 0.78, 1.0)
-const DICA: Color = Color(0.5, 0.55, 0.55, 1.0)
+const FUNDO: Color = Color(0.18039216, 0.13333334, 0.18431373, 1)  # neutros_quentes:0
+const GRADE: Color = Color(0.38431373, 0.33333334, 0.39607844, 1)  # neutros_quentes:2
+const LETRA: Color = Color(0.78039217, 0.8627451, 0.8156863, 1)  # neutros_frios:3
+const DICA: Color = Color(0.49803922, 0.4392157, 0.5411765, 1)  # neutros_frios:1
+## A mesma grade da carta de superfície, mais apagada: aqui ela só dá chão ao
+## olho, não há setor para ler.
+const PASSO_DA_GRADE: int = 32
+const NAVE: Texture2D = preload("res://ui/mapa/art/nave.png")
+const FOCO: Texture2D = preload("res://ui/art/foco.png")
+const PISCA_A_CADA_MS: int = 450
 
 var _nave: Node2D = null
 var _corpos: Array[CorpoNoEspaco] = []
@@ -74,29 +79,53 @@ func ponto_da_nave() -> Vector2:
 func desenhar_em(quadro: Control) -> void:
 	var lado: Vector2 = quadro.size
 	quadro.draw_rect(Rect2(Vector2.ZERO, lado), FUNDO)
-	quadro.draw_rect(Rect2(Vector2.ZERO, lado), MOLDURA, false, 1.0)
+	_desenhar_grade(quadro, lado)
 	if _nave == null or _area.size.x <= 0.0:
 		return
 
+	# A fonte do jogo só fica nítida no tamanho do tema e nos múltiplos dele.
 	var fonte: Font = quadro.get_theme_default_font()
+	var tamanho: int = quadro.get_theme_default_font_size()
 	for corpo: CorpoNoEspaco in _corpos:
-		var onde: Vector2 = _no_mapa(corpo.global_position, lado)
-		var raio: float = maxf(3.0, corpo.raio() / _area.size.x * lado.x)
-		quadro.draw_circle(onde, raio, corpo.planeta.cor_de_identidade.lightened(0.25))
+		var miniatura: Texture2D = corpo.planeta.miniatura
+		if miniatura == null:
+			continue
+		# Tudo em pixel inteiro: miniatura em meio pixel sai borrada.
+		var onde: Vector2 = _no_mapa(corpo.global_position, lado).floor()
+		var meio: Vector2 = (miniatura.get_size() * 0.5).floor()
+		# O espaço dá a volta, e a miniatura também: perto da borda do quadro ela
+		# aparece cortada dos dois lados, como o corpo aparece no voo.
+		for dx: int in [-1, 0, 1]:
+			for dy: int in [-1, 0, 1]:
+				quadro.draw_texture(miniatura, onde - meio + Vector2(dx, dy) * lado)
 		quadro.draw_string(
-			fonte, onde + Vector2(raio + 4.0, 3.0), corpo.planeta.nome.to_upper(),
-			HORIZONTAL_ALIGNMENT_LEFT, -1.0, 9, LETRA
+			fonte, onde + Vector2(meio.x + 6.0, 6.0), corpo.planeta.nome.to_upper(),
+			HORIZONTAL_ALIGNMENT_LEFT, -1.0, tamanho, LETRA
 		)
 
-	# A nave é um quadrado de três pixels com uma mira em volta: num mapa deste
-	# tamanho, desenho com forma vira borrão, e o que importa é achá-la rápido.
-	var ponto: Vector2 = _no_mapa(_nave.global_position, lado)
-	quadro.draw_rect(Rect2(ponto - Vector2(1.5, 1.5), Vector2(3.0, 3.0)), NAVE)
-	quadro.draw_arc(ponto, 7.0, 0.0, TAU, 16, NAVE * Color(1, 1, 1, 0.5), 1.0)
+	# A nave é um losango pequeno com os cantos de foco piscando em volta: num mapa
+	# deste tamanho, desenho com forma de nave vira borrão, e o que importa é
+	# achá-la rápido.
+	var ponto: Vector2 = _no_mapa(_nave.global_position, lado).floor()
+	quadro.draw_texture(NAVE, ponto - (NAVE.get_size() * 0.5).floor())
+	if floori(Time.get_ticks_msec() / float(PISCA_A_CADA_MS)) % 2 == 0:
+		quadro.draw_texture(FOCO, ponto - (FOCO.get_size() * 0.5).floor())
 	quadro.draw_string(
-		fonte, Vector2(8.0, lado.y - 8.0), "M   FECHAR",
-		HORIZONTAL_ALIGNMENT_LEFT, -1.0, 9, DICA
+		fonte, Vector2(10.0, lado.y - 9.0), "M   FECHAR",
+		HORIZONTAL_ALIGNMENT_LEFT, -1.0, tamanho, DICA
 	)
+
+
+## Pontilhado, um ponto sim e um não, como na carta de superfície.
+func _desenhar_grade(quadro: Control, lado: Vector2) -> void:
+	for x: int in range(PASSO_DA_GRADE, int(lado.x), PASSO_DA_GRADE):
+		for y: int in range(0, int(lado.y)):
+			if (x + y) % 2 == 0:
+				quadro.draw_rect(Rect2(x, y, 1, 1), GRADE)
+	for y: int in range(PASSO_DA_GRADE, int(lado.y), PASSO_DA_GRADE):
+		for x: int in range(0, int(lado.x)):
+			if (x + y) % 2 == 0:
+				quadro.draw_rect(Rect2(x, y, 1, 1), GRADE)
 
 
 ## Leva um ponto do mundo para o mapa, dando a volta junto com o espaço: quem

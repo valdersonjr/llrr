@@ -1,0 +1,22 @@
+nome: 3_direita
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: velocidade horizontal, para a direita; quadro 3 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  W neutros_frios:3      seta
+
+pixels:
+........
+....W...
+....WW..
+WWWWWWW.
+WWWWWWW.
+....WW..
+....W...
+........

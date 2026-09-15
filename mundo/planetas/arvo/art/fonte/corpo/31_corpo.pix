@@ -1,0 +1,70 @@
+nome: 31_corpo
+tipo: tile
+camada: objeto
+conjunto: espaco
+luz: cima_esquerda
+encaixe: esquerda,direita,cima
+uso: peça 1,5 (coluna, linha) do corpo de Arvo visto do espaço, 6x6 peças de 48 num TileMapLayer; atlas na posição 31
+tamanho: 48x48
+
+paleta:
+  . transparente
+  a verdes:0
+  b verdes:1
+  c neutros_frios:3
+  d neutros_frios:2
+  e neutros_frios:1
+  f neutros_quentes:1
+  g azuis:1
+  h roxos:0
+  i azuis:0
+
+pixels:
+abaaaaaabaaaaaaaabaaaaaccddddddddddddddddddddddd
+babaaaaaabaaaaaaaaaaaacddddddddddddddddddddddddd
+aaaaaaaaaaaaaaaaaaaaaaeddddddddddddddddddddddddd
+aaaaaaaaaaaaaaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeee
+fafaaaaabaaaaaaabaaabaaafaffffafffffaffffaffffff
+afafaaaaabaabaaabaaabaaaafafffafffffaffffaafffff
+fffbfaaabbaaaaabaaaaaaaabaaaaaaaaababaaaaaaaabba
+ffffafafabaaaaaabaaaaaaabaaaaaaaaabaaaaaaaaaabba
+.ffffafafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+..ffffafafafaaabaaaaaabbaaaaaaaabaaaaaaaaabaaaaa
+...ffffffafafaabaaaaaaaaaaaaabaaaaaaaaabaabaaaaa
+....ffffffafafbfaaaaabaaaaaaaabaaaaabaabbaaaaaaa
+.....ffffffffbfafafbaaaaaaabaaaaaaaabbaaaaaaaaab
+......ffffffffafafafbfaaabaaaaaaaaaaaaaaaaabaaaa
+........fffffffffafafafafabaaaaaaabaaaaaaggabaaa
+.........fffffffffafafafafafaaaaaaaaaaaaaggggaaa
+..........hffffffffffafbfafbfafaaaabaaabaaggggga
+............ffffffffffffbfafbfafafafbaabbggggggg
+.............ffffffffffffffbfafafafbfaigigiggggg
+..............fhffffffffffffffafafafafgigigigigi
+................hffffffffffffffffbfafafgigigigig
+.................hffffffffffffffffffafafgigigigi
+...................fhffffffffffffffffffffgigigig
+....................hhffffffffffffffffffffiiiiii
+......................hfhfffffffffffffffffffiiii
+.......................hfhfhfffffffffffffffffiii
+.........................hhfhfffffffffffffffffii
+...........................hhhfhfffffffffffffffi
+.............................hhfhfhfffffffffffff
+...............................hhhfhfhffffffffff
+.................................hhhhfhfhfhfffff
+...................................hhhhhfhfhfhfh
+.....................................hhhhhhfhfhf
+.......................................hhhhhhhfh
+.........................................hhhhhhh
+............................................hhhh
+..............................................hh
+................................................
+................................................
+................................................
+................................................
+................................................
+................................................
+................................................
+................................................
+................................................
+................................................
+................................................

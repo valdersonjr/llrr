@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ModeloDeNave" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://entities/nave/modelo_de_nave.gd" id="1_esquema"]
-[ext_resource type="Texture2D" path="res://entities/nave/art/utilitario_leve.png" id="2_arte"]
+[ext_resource type="Texture2D" path="res://entities/nave/art/foguete.png" id="2_arte"]
 
 [resource]
 script = ExtResource("1_esquema")

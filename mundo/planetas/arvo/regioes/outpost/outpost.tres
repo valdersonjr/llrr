@@ -2,12 +2,21 @@
 
 [ext_resource type="PackedScene" path="res://mundo/planetas/arvo/regioes/outpost/outpost_regiao.tscn" id="1_luu2g"]
 [ext_resource type="Script" path="res://mundo/ficha_de_regiao.gd" id="2_arbtp"]
+[ext_resource type="Script" path="res://mundo/especificacao_de_pouso.gd" id="3_pouso"]
+
+[sub_resource type="Resource" id="Resource_pouso"]
+script = ExtResource("3_pouso")
+vertical_maxima = 2.5
+horizontal_maxima = 1.0
+inclinacao_maxima = 8.0
+giro_maximo = 10.0
 
 [resource]
 script = ExtResource("2_arbtp")
 nome = "Outpost"
 assunto = "Posto de fronteira no deserto: saloon, xerife e um deque sobre palafitas onde se pega e entrega contrato."
 cena = ExtResource("1_luu2g")
+pouso = SubResource("Resource_pouso")
 onde_a_nave_aparece = Vector2(348, 150)
 de_onde_a_nave_vem = Vector2(348, -110)
-ponto_no_corpo = Vector2(0.34, 0.26)
+ponto_na_carta = Vector2i(236, 121)

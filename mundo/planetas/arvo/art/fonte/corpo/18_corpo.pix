@@ -1,0 +1,69 @@
+nome: 18_corpo
+tipo: tile
+camada: objeto
+conjunto: espaco
+luz: cima_esquerda
+encaixe: direita,cima,baixo
+uso: peça 0,3 (coluna, linha) do corpo de Arvo visto do espaço, 6x6 peças de 48 num TileMapLayer; atlas na posição 18
+tamanho: 48x48
+
+paleta:
+  . transparente
+  a teais:1
+  b teais:3
+  c verdes:0
+  d teais:0
+  e verdes:2
+  f verdes:1
+  g neutros_frios:4
+  h neutros_frios:3
+
+pixels:
+.aabccdddddddddddddddddddddddddddddddddddddadada
+.aabceddddddddddddddddddddddddddddddddddddddadad
+.aabfedddddddddddddddddddddddddddddddddddddddada
+.aabcfddddddddddddddddddddddddddddddddddddddddad
+.aabcfddddddddddddddddddddddddddddddddddddddddda
+.aabefdddddddddddddddddddddddddddddddddddddddddd
+.aabefdddddddddddddddddddddddddddddddddddddddddd
+.aabfadddddddddddddddddddddddddddddddddddddddddd
+..abccdddddddddddddddddddddddddddddddddddddddddd
+..abccaddddddddddddddddddddddddddddddddddddddddd
+..abecaddddddddddddddddddddddddddddddddddddddddd
+..abccaadddddddddddddddddddddddddddddddddddddddd
+..abecfaaddddddddddddddddddddddddddddddddddddddd
+..abeffcaadddddddddddddddddddddddddddddddddddddd
+..abefcfcaddddddddddddddddddddddddddddddddddddda
+..abcfcfcfddddddddddddddddddddddddddddddddddddda
+..abcfcfcfaddaaaddddddddddddddddddddddddddddddaa
+..aabccfccaddaaaddddddddddddddddddddddddddddddaa
+...abccfcfcaaaaaadddddddddddddddddddddddddddddaa
+...abccfcfcaaaaaadddddddddddddddddddddddddddddaa
+...abfcfcecceafcaaddddddddddddddddddddddddddddaa
+...abccffffceffcfaadddddddddddddddddddddddddddaa
+...afceffcfeeffcfaadddddddddddddddddddddddddaaaa
+...afceffccefffcccaaddddddddddddddddddddddddaaaa
+...aacfffccffffcccaaddddddddddddddddddddddddaaaa
+....accfcecfffcefcfaaddddddddddddddddddddddaaaaa
+....accfcefcfccefccaaddddddddddddddddddddddaaaac
+....acfccefcfcceffcfaaddddddddddddddddddddaaaacc
+....accceefcccceffcccaddddddddddddddddddddaaaefc
+....aaccecfefefcffcfcaaddddddddddddddddddaaaeeff
+.....acecffefcffffefffadddddddddddddddddddaaffff
+.....acfffceffffccefffaaddddddddddddddddddaaffff
+.....acfccceffccfcefffaaadddddddddddddddddaafccc
+.....aacfcfcffccfcfffccaadddddddddddddddddaaccce
+......acccffffccffcffccaaddddddddddddddddddaaccc
+......acccffffccffcffcccaddddddddddddddddddaaccc
+......accccfcccccfccfcccaddddddddddddddddddaaccc
+........ccccccccfcceccccaddddddddddddddddddaacce
+........cccfcfccefcefcccaddddddddddddddddddaacce
+........ccccfffcefffffceeddddddddddddddddddaacee
+........fcffcffefffcffeffaddddddddddddddddddafef
+.........cfcfccefffccceffaddddddddddddddddddafff
+.........ccccccffffccceffadddddddddddddddddaaaff
+.........ccccfcffccefcfffaddddddddddddddaaaaaaff
+..........fcceccfcceffcffaadddddddddddddaaaaaaac
+..........ccccfcccfcfffccaaaddddddddddddaaaaaacc
+..........cccccfccecfffcccagggggdddddddddaaacccc
+...........ccfcceceffffegghhhhhhggdgggdddaaaefcc

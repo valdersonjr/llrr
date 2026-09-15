@@ -4,6 +4,8 @@
 [ext_resource type="Resource" path="res://entities/carga/data/ambar_bruto.tres" id="2_recurso"]
 [ext_resource type="Script" path="res://mundo/ficha_de_regiao.gd" id="2_wfl3w"]
 [ext_resource type="Resource" path="res://mundo/planetas/arvo/regioes/outpost/outpost.tres" id="4_cia4c"]
+[ext_resource type="PackedScene" path="res://mundo/planetas/arvo/arvo_carta.tscn" id="5_carta"]
+[ext_resource type="Texture2D" path="res://mundo/planetas/arvo/art/miniatura.png" id="6_miniatura"]
 
 [resource]
 script = ExtResource("1_esquema")
@@ -15,3 +17,5 @@ regioes = Array[ExtResource("2_wfl3w")]([ExtResource("4_cia4c")])
 cor_ambiente = Color(0.66, 0.73, 0.76, 1)
 cor_do_ceu = Color(0.62, 0.9, 0.9, 1)
 cor_de_identidade = Color(0.32, 0.51, 0.4, 1)
+carta = ExtResource("5_carta")
+miniatura = ExtResource("6_miniatura")

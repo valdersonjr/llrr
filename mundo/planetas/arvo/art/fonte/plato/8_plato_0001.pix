@@ -1,0 +1,31 @@
+nome: 8_plato_0001
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: platô de Arvo sobre a mata, cantos 0001 (TL TR BL BR); camada acima da base; penhasco cai para baixo e para a direita
+tamanho: 16x16
+
+paleta:
+  . transparente         
+  b verdes:1             vão entre copas do platô
+  p verdes:2             copa do platô, corpo
+
+pixels:
+................
+................
+................
+................
+................
+................
+................
+................
+................
+.............pbb
+.............ppb
+............pppp
+............pppp
+...........ppppb
+........bbppppbb
+.......bbbbpbbbb

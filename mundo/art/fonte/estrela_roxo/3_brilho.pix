@@ -1,0 +1,23 @@
+nome: 3_brilho
+tipo: efeito
+camada: efeito
+conjunto: espaco
+luz: frontal
+encaixe: nenhum
+uso: estrela roxo que cintila, quadro 3 de 4 (brilho); tocar 0,1,2,3,2,1,0 e esperar; espalhar poucas pelo espaço
+tamanho: 7x7
+
+paleta:
+  . transparente
+  W roxos:4   núcleo
+  C roxos:3   brilho
+  B roxos:1   ponta do raio
+
+pixels:
+...B...
+...C...
+..CWC..
+BCWWWCB
+..CWC..
+...C...
+...B...

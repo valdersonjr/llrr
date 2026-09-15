@@ -1,0 +1,30 @@
+nome: 0_mar_a
+tipo: tile
+camada: terreno
+conjunto: carta
+luz: cima_esquerda
+encaixe: esquerda,direita,cima,baixo
+uso: mar aberto da carta de Arvo, vista de cima; repete nos quatro lados
+tamanho: 16x16
+
+paleta:
+  W teais:0            mar, fundo
+  l teais:1            marola
+
+pixels:
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWllWWWWWWWWWWW
+WWlWWlWWlWWWWWWW
+WWWWWWllWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWllWWW
+WWWWWWWWWWlWWlWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWW

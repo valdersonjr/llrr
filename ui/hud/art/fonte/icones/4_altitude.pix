@@ -1,0 +1,23 @@
+nome: 4_altitude
+tipo: icone
+camada: interface
+conjunto: carta
+luz: cima_esquerda
+encaixe: nenhum
+uso: ícone do painel de telemetria: altitude sobre o chão logo abaixo; quadro 4 da tira icones.png
+tamanho: 8x8
+
+paleta:
+  . transparente
+  W neutros_frios:3      régua
+  D neutros_frios:1      marcas e chão
+
+pixels:
+.WWW....
+..W.....
+..W.DD..
+..W.....
+..W.DD..
+..W.....
+.WWW....
+.DDDDDD.
